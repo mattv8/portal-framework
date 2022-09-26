@@ -30,7 +30,7 @@
             </li>
             {/if}
           </ul>
-          {if $auth_type neq "none"}
+          {if $auth_type neq "none" and isset($authenticated)}
           <form class="navbar-form navbar-right" action="index.php?page=login" method="post">
             <div class="form-group">
               <button type="submit" class="btn btn-success" name="logoff" value="yes">
