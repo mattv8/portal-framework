@@ -1,0 +1,65 @@
+<?php
+#==============================================================================
+# Webguy Portal Framework v2.0
+#
+#==============================================================================
+
+#==============================================================================
+# PLEASE DO NOT MODIFY VALUES IN THIS FILE
+# Default values are kept in this file. Please create a file called
+# "config.inc.local.php" and place your override values there.
+#==============================================================================
+
+# Language
+$lang ="en";
+$date_specifiers = "%Y-%m-%d %H:%M:%S (%Z)";
+
+# Graphics
+$logo = "images/logo.png";
+$background_image = "images/unsplash-space.jpeg";
+$custom_css = "";
+$display_footer = true;
+#$logout_link = "http://auth.example.com/logout";
+
+# Debug mode
+$debug = true;
+$smarty_debug = true;
+
+# Cache directory
+$smarty_compile_dir = "../templates_c";
+$smarty_cache_dir = "../cache";
+
+# Authentication
+// Specify whether you'd like to secure the portal with authentication.
+$auth_type = 'ldap';//Chose from 'none', 'ldap' or 'sql';
+
+
+# LDAP Configuration
+$ldap_url = "ldap://localhost";
+$ldap_starttls = false;
+$ldap_binddn = "cn=manager,dc=example,dc=com";
+$ldap_bindpw = "secret";
+$ldap_base = "dc=example,dc=com";
+$ldap_user_base = "ou=users,".$ldap_base;
+$ldap_user_filter = "(objectClass=inetOrgPerson)";
+$ldap_size_limit = 100;
+#$ldap_default_ppolicy = "cn=default,ou=ppolicy,dc=example,dc=com";
+$ldap_user_attributes = array('uid', 'cn', 'mail', 'samaccountname');
+
+# LDAP Authentication Configuration. These are pre-filled with examples, please modify to suit your needs.
+$ldap_allowed_admin_users = array("Administrator");// UID's or SamAccountName(s) of users who are allowed to login and edit all accounts.
+$ldap_allowed_admin_ous = array("OU=Managers,DC=example,DC=com");// Organizational Unit(s) of users who are allowed to login and edit all accounts.
+$ldap_allowed_admin_groups = array("CN=Administrators,OU=Groups,DC=example,DC=com");// Security Group(s) of users who are allowed to login and edit all accounts.
+$ldap_disallowed_ous = array("OU=Guests,DC=example,DC=com");// Organizational Units of users who are NOT allowed to log in at all.
+
+# Allow to override current settings with local configuration
+if (file_exists (dirname (__FILE__) . '/config.inc.local.php')) {
+    include dirname (__FILE__) . '/config.inc.local.php';
+}
+
+# Smarty
+if (!defined("SMARTY")) {
+    define("SMARTY", "../public_html/vendor/smarty4/libs/Smarty.class.php");
+}
+
+?>
