@@ -69,21 +69,23 @@ foreach ($messages as $key => $message) {
 #==============================================================================
 # Authentication
 #==============================================================================
+
 switch ($auth_type) {
     case 'none':
-        $isadmin = $_SESSION["authenticated"] = true;
-        $authenticated = $_SESSION["isadmin"] = true;
+        $isadmin = true;
+        $authenticated = true;
         break;
     default:
         file_exists("auth/auth_$auth_type.php") ? require_once("auth/auth_$auth_type.php") : $error = 'specifyauth'; // Loads auth driver functions
         require_once("login.php");// Maintains session variables
+        $isadmin = $_SESSION["isadmin"];
+        $authenticated = $_SESSION["authenticated"];
 }
 
 $smarty->assign('auth_type',$auth_type);
-$smarty->assign('authenticated',$_SESSION["authenticated"]);
-$smarty->assign('isadmin',$_SESSION["isadmin"]);
+$smarty->assign('authenticated',$authenticated);
+$smarty->assign('isadmin',$isadmin);
 $smarty->assign('displayname',$_SESSION["displayname"]);
-$smarty->assign('ldap_authentication',$ldap_authentication);
 
 #==============================================================================
 # Route to page
