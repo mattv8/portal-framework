@@ -5,14 +5,10 @@
 
 // Declare volatile variables
 $autherror = "";
-$dn = "";
 $displayname = "";
-$memberOf = "";
-$ou = "";
-$username = "";
+$dn = "";
 $password = "";
-$search_query = "";
-$entries = array();
+$username = "";
 
 // Sensitive authentication variables:
 // These should be cleared each time login.php is called.

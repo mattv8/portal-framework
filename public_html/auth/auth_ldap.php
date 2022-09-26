@@ -3,6 +3,11 @@
  * LDAP Authentication Functions
  */
 
+$entries = array();
+$memberOf = "";
+$ou = "";
+$search_query = "";
+
 function auth_ldap( $username, $password) {
 
 # Connect to LDAP
