@@ -1,9 +1,12 @@
+# This file
+_exclusions.txt 
+
+# GIT & GitLab System Files
 .git
 .gitignore
 .gitlab-ci.yml
 .vscode
 README.md
-_exclusions.txt
 
 # Vesta Default System Folders
 cgi-bin
@@ -12,3 +15,6 @@ logs
 private
 public_shtml
 stats
+
+# Smarty Cache
+templates_c
