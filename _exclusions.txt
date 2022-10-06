@@ -1,5 +1,5 @@
 # This file
-_exclusions.txt 
+_exclusions.txt
 
 # GIT & GitLab System Files
 .git
