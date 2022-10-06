@@ -34,6 +34,10 @@ update-fairyland-dev-portal-framework:
         only: 
             refs:
                 - branches #Changes to branches trigger pipeline
+        except:
+            changes: #Ignore changes to the following files
+                - _exclusings.txt
+                - .* #Ignore dot files
         when: manual #Runner will only run with manual intervention
         script:
             - if [ -z "$fairyland_portal_root" ]; then echo "Need to set webroot as GitLab CI/CD variable" && exit 1; fi
@@ -53,6 +57,10 @@ update-fairyland-production-portal-framework:
         variables:
             GIT_STRATEGY: clone #Fixes bug specific to CentOS7
         when: manual #Runner will only run with manual intervention
+        except:
+            changes: #Ignore changes to the following files
+                - _exclusings.txt
+                - .* #Ignore dot files
         script:
             - if [ -z "$altalodge_production_webroot" ]; then echo "Need to set webroot as GitLab CI/CD variable" && exit 1; fi
             - sudo rsync -rv ./ $altalodge_production_webroot/ --exclude-from=./_exclusions.txt
