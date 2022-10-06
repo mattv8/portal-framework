@@ -1,30 +1,55 @@
-# Select image from https://hub.docker.com/_/php/
-image: php:5.6
+#####################################################
+#
+#   WEBGUY PORTAL FRAMEWORK CI/CD PIPELINE
+#
+#
 
-# Select what we should cache
-cache:
-  paths:
-  - vendor/
+stages:
+    - development   #Pushes the Portal Framework code to dev.webguyinternet.com server.
+    - staging       #Pushes Portal Framework code to non-production sites using the Portal Framework on the Dev server.
+    - production    #Pushes Portal Framework code to production server(s).
 
-before_script:
-# Install git, the php image doesn't have installed
-- apt-get update -yqq
-- apt-get install git -yqq
+#### PORTAL-FRAMEWORK DEVELOPMENT ####
+deploy-to-development-server:
+        stage: development
+        tags:
+            - webguy-development-server #Only runner with this tag will run this pipeline
+        only: 
+            refs:
+                - branches #Changes to branches trigger pipeline
+        script:
+            - if [ -z "$portal_development_root" ]; then echo "Need to set webroot as GitLab CI/CD variable" && exit 1; fi
+            - sudo rsync -rv ./ $portal_development_root/ --exclude-from=./_exclusions.txt --delete
+            - sudo chown admin:admin $portal_development_root -R
 
-# Install composer
-- curl -sS https://getcomposer.org/installer | php
+#### FAIRYLAND DEVELOPMENT ####
+update-fairyland-dev-portal-framework:
+        stage: staging
+        tags:
+            - webguy-development-server #Only runner with this tag will run this pipeline
+        only: 
+            refs:
+                - branches #Changes to branches trigger pipeline
+        when: manual #Runner will only run with manual intervention
+        script:
+            - if [ -z "$fairyland_portal_root" ]; then echo "Need to set webroot as GitLab CI/CD variable" && exit 1; fi
+            - sudo rsync -rv ./ $fairyland_portal_root/ --exclude-from=./_exclusions.txt
+            - sudo chown fairyland:fairyland $fairyland_portal_root -R
 
-# Install all project dependencies
-- php composer.phar install
-
-# We test PHP5.6
-test:
-  script:
-  - vendor/bin/phpunit tests/
-
-# We test PHP7
-test:php7:
-  image: php:7
-  script:
-  - vendor/bin/phpunit tests/
-
+#### FAIRYLAND PRODUCTION ####
+update-fairyland-production-portal-framework:
+        environment:
+            name: alta-lodge-production
+        stage: production
+        tags:
+            - alta-lodge-production #Only runner with this tag will run this pipeline
+        only: 
+            refs:
+                - branches #Changes to branches trigger pipeline
+        variables:
+            GIT_STRATEGY: clone #Fixes bug specific to CentOS7
+        when: manual #Runner will only run with manual intervention
+        script:
+            - if [ -z "$altalodge_production_webroot" ]; then echo "Need to set webroot as GitLab CI/CD variable" && exit 1; fi
+            - sudo rsync -rv ./ $altalodge_production_webroot/ --exclude-from=./_exclusions.txt
+            - sudo chown apache:nobody $altalodge_production_webroot -R

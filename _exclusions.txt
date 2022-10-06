@@ -1,0 +1,6 @@
+.git
+.gitignore
+.gitlab-ci.yml
+.vscode
+README.md
+_exclusions.txt
