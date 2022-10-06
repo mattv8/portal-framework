@@ -17,6 +17,10 @@ deploy-to-development-server:
         only: 
             refs:
                 - branches #Changes to branches trigger pipeline
+        except:
+            changes: #Ignore changes to the following files
+                - _exclusings.txt
+                - .* #Ignore dot files
         script:
             - if [ -z "$portal_development_root" ]; then echo "Need to set webroot as GitLab CI/CD variable" && exit 1; fi
             - sudo rsync -rv ./ $portal_development_root/ --exclude-from=./_exclusions.txt --delete
