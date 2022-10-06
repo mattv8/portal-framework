@@ -4,3 +4,9 @@
 .vscode
 README.md
 _exclusions.txt
+
+# Default
+document_errors
+stats
+logs
+private
