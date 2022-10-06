@@ -5,8 +5,10 @@
 README.md
 _exclusions.txt
 
-# Default
+# Vesta Default System Folders
+cgi-bin
 document_errors
-stats
 logs
 private
+public_shtml
+stats
