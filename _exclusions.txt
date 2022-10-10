@@ -13,3 +13,7 @@ templates_c
 
 # User config
 config.inc.local.php
+
+# Framework Placeholders
+/templates/examplepage.tpl
+examplepage.php
