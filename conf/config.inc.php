@@ -14,6 +14,9 @@
 $lang ="en";
 $date_specifiers = "%Y-%m-%d %H:%M:%S (%Z)";
 
+# Default page
+$default_page = "welcome";// First page to show upon authentication
+
 # Graphics
 $logo = "images/logo.png";
 $background_image = "images/unsplash-space.jpeg";

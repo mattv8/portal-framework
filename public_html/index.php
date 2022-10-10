@@ -92,7 +92,7 @@ $smarty->assign('displayname',$_SESSION["displayname"]);
 #==============================================================================
 $page = "login";// Default route to login page
 
-if ( $authenticated ) { $page = "welcome"; }// If authenticated, route to display
+if ( $authenticated ) { $page = $default_page; }// If authenticated, route to default page
 if ( isset($_GET["page"]) and $_GET["page"] and !$authenticated) { $page = "login"; }// If not authenticated, route to login
 if ( isset($_GET["page"])  and $_GET["page"] and $_GET["page"] != "login" and $authenticated) { $page = $_GET["page"]; }
 if ( file_exists($page.".php") ) { require_once($page.".php"); }
