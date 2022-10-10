@@ -36,6 +36,7 @@ if(isset($_POST["username"]) and isset($_POST["password"]) and isset($auth_type)
                 $autherror = auth_ldap($username, $password);// Do the login
                 break;
             case 'sql':
+                $autherror = auth_sql($username, $password);// Do the login
                 break;
         }
         $_SESSION["authenticated"] = (!strcmp($autherror,"authsuccess")? true: false);// Log user out should any other condition fail

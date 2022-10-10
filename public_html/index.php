@@ -77,7 +77,7 @@ switch ($auth_type) {
         break;
     default:
         file_exists("auth/auth_$auth_type.php") ? require_once("auth/auth_$auth_type.php") : $error = 'specifyauth'; // Loads auth driver functions
-        require_once("login.php");// Maintains session variables
+        require_once("auth/login.php");// Maintains session variables
         $isadmin = $_SESSION["isadmin"];
         $authenticated = $_SESSION["authenticated"];
 }
