@@ -19,7 +19,7 @@ require_once("framework/lib/detectbrowserlanguage.php");
 $files = glob("framework/lang/*.php");
 $languages = str_replace(".inc.php", "", $files);
 $lang = detectLanguage($lang, $languages);
-require_once("framework/lang/$lang.inc.php");
+require_once("$lang.inc.php");
 if (file_exists("framework/conf/$lang.inc.php")) {
     require_once("framework/conf/$lang.inc.php");
 }

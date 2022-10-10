@@ -18,8 +18,8 @@ $date_specifiers = "%Y-%m-%d %H:%M:%S (%Z)";
 $default_page = "examplepage";// First page to show upon authentication
 
 # Graphics
-$logo = "images/logo.png";
-$background_image = "images/unsplash-space.jpeg";
+$logo = "framework/images/logo.png";
+$background_image = "framework/images/unsplash-space.jpeg";
 $custom_css = "";
 $display_footer = true;
 #$logout_link = "http://auth.example.com/logout";
@@ -29,8 +29,8 @@ $debug = true;
 $smarty_debug = true;
 
 # Cache directory
-$smarty_compile_dir = "../templates_c";
-$smarty_cache_dir = "../cache";
+$smarty_compile_dir = "templates_c";
+$smarty_cache_dir = "cache";
 
 # Authentication
 // Specify whether you'd like to secure the portal with authentication.
@@ -69,7 +69,7 @@ if (file_exists (dirname (__FILE__) . '/config.inc.local.php')) {
 
 # Smarty
 if (!defined("SMARTY")) {
-    define("SMARTY", "../public_html/vendor/smarty4/libs/Smarty.class.php");
+    define("SMARTY", "framework/vendor/smarty4/libs/Smarty.class.php");
 }
 
 ?>
