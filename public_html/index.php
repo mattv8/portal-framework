@@ -82,7 +82,6 @@ switch ($auth_type) {
         $authenticated = $_SESSION["authenticated"];
 }
 
-$smarty->assign('auth_type',$auth_type);
 $smarty->assign('authenticated',$authenticated);
 $smarty->assign('isadmin',$isadmin);
 $smarty->assign('displayname',$_SESSION["displayname"]);
