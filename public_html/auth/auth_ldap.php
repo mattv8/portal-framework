@@ -10,8 +10,10 @@ $search_query = "";
 
 function auth_ldap( $username, $password) {
 
-# Connect to LDAP
+# Load user configuration
 require("../conf/config.inc.php");
+
+# Load libraries
 require_once("../lib/ldap.inc.php");
 
 # Connect to LDAP
