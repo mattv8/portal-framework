@@ -34,7 +34,14 @@ $smarty_cache_dir = "../cache";
 
 # Authentication
 // Specify whether you'd like to secure the portal with authentication.
-$auth_type = 'ldap';//Chose from 'none', 'ldap' or 'sql';
+$auth_type = 'none';//Chose from 'none', 'ldap' or 'sql';
+
+
+# SQL Configuration
+$db_servername = "example.com";
+$db_username = "username";
+$db_password = "password";
+$db_name = "database";
 
 
 # LDAP Configuration
