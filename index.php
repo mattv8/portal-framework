@@ -105,6 +105,10 @@ if ($error) {
 }
 
 # Display
-$smarty->display('index.tpl');
+if ( file_exists("templates/index.tpl") ) {// Allow override with local index.tpl
+    $smarty->display('templates/index.tpl');
+} else {
+    $smarty->display('framework/tpl/index.tpl');
+}
 
 ?>
