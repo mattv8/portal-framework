@@ -9,19 +9,19 @@ $error = "";// Clear any error messages
 #==============================================================================
 # Configuration
 #==============================================================================
-require_once("../conf/config.inc.php");
+require_once("framework/conf/config.inc.php");
 
 #==============================================================================
 # Language
 #==============================================================================
-require_once("../lib/detectbrowserlanguage.php");
+require_once("framework/lib/detectbrowserlanguage.php");
 # Available languages
-$files = glob("../lang/*.php");
+$files = glob("framework/lang/*.php");
 $languages = str_replace(".inc.php", "", $files);
 $lang = detectLanguage($lang, $languages);
-require_once("../lang/$lang.inc.php");
-if (file_exists("../conf/$lang.inc.php")) {
-    require_once("../conf/$lang.inc.php");
+require_once("framework/lang/$lang.inc.php");
+if (file_exists("framework/conf/$lang.inc.php")) {
+    require_once("framework/conf/$lang.inc.php");
 }
 
 #==============================================================================
@@ -29,12 +29,12 @@ if (file_exists("../conf/$lang.inc.php")) {
 #==============================================================================
 require_once(SMARTY);
 
-$compile_dir = $smarty_compile_dir ? $smarty_compile_dir : "../templates_c/";
-$cache_dir = $smarty_cache_dir ? $smarty_cache_dir : "../cache/";
+$compile_dir = $smarty_compile_dir ? $smarty_compile_dir : "templates_c/";
+$cache_dir = $smarty_cache_dir ? $smarty_cache_dir : "cache/";
 
 $smarty = new Smarty();
 $smarty->escape_html = true;
-$smarty->setTemplateDir('../templates/');
+$smarty->setTemplateDir('templates/');
 $smarty->setCompileDir($compile_dir);
 $smarty->setCacheDir($cache_dir);
 $smarty->debugging = $smarty_debug;
@@ -76,8 +76,8 @@ switch ($auth_type) {
         $authenticated = true;
         break;
     default:
-        file_exists("auth/auth_$auth_type.php") ? require_once("auth/auth_$auth_type.php") : $error = 'specifyauth'; // Loads auth driver functions
-        require_once("auth/login.php");// Maintains session variables
+        file_exists("framework/auth/auth_$auth_type.php") ? require_once("framework/auth/auth_$auth_type.php") : $error = 'specifyauth'; // Loads auth driver functions
+        require_once("framework/auth/login.php");// Maintains session variables
         $isadmin = $_SESSION["isadmin"];
         $authenticated = $_SESSION["authenticated"];
 }
@@ -94,6 +94,7 @@ $page = "login";// Default route to login page
 if ( $authenticated ) { $page = $default_page; }// If authenticated, route to default page
 if ( isset($_GET["page"]) and $_GET["page"] and !$authenticated) { $page = "login"; }// If not authenticated, route to login
 if ( isset($_GET["page"])  and $_GET["page"] and $_GET["page"] != "login" and $authenticated) { $page = $_GET["page"]; }
+if ( file_exists("framework/".$page.".php") ) { require_once("framework/".$page.".php"); }
 if ( file_exists($page.".php") ) { require_once($page.".php"); }
 $smarty->assign('page',$page);
 
