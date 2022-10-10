@@ -8,14 +8,6 @@ _exclusions.txt
 .vscode
 README.md
 
-# Vesta Default System Folders
-cgi-bin
-document_errors
-logs
-private
-public_shtml
-stats
-
 # Smarty Cache
 templates_c
 
