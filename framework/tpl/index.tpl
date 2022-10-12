@@ -26,8 +26,12 @@
 {else}
     {if file_exists("$page.tpl")}
         {include file="$page.tpl"}
-    {else}
+    {else if file_exists("framework/tpl/$page.tpl")}
         {include file="framework/tpl/$page.tpl"}
+    {else}
+        <div class="alert alert-danger">
+            <i class="fa fa-fw fa-exclamation-circle"></i> {$msg_{'pagenotfound'}}
+        </div>  
     {/if}
 {/if}
 
