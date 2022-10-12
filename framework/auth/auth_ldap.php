@@ -11,10 +11,10 @@ $search_query = "";
 function auth_ldap( $username, $password) {
 
 # Load user configuration
-require("framework/conf/config.inc.php");
+require("framework/conf/config.php");
 
 # Load libraries
-require_once("framework/lib/ldap.inc.php");
+require_once("framework/lib/ldap.php");
 
 # Connect to LDAP
 $ldap_connection = wp_ldap_connect($ldap_url, $ldap_starttls, $ldap_binddn, $ldap_bindpw);

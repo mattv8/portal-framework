@@ -11,6 +11,7 @@ $displayname = $_SESSION["displayname"];
 $messages['title'] = "Portal Framework 2.0";
 $messages['welcome'] = "Welcome to the Webguy Internet Portal Framework v2";
 
+$messages['pagenotfound'] = "The requested page was not found.";
 $messages['example1'] = "Example item 1";
 $messages['example2'] = "Example item 2";
 $messages['examplelink'] = "Example Submit Button";

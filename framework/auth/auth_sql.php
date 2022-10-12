@@ -6,7 +6,7 @@
 function auth_sql($username, $password) {
 
     # Load user configuration
-    require("framework/conf/config.inc.php");
+    require("framework/conf/config.php");
 
     // $db_servername = "dev.webguyinternet.com";
     // $db_username = "admin_portal";

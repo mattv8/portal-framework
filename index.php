@@ -9,7 +9,7 @@ $error = "";// Clear any error messages
 #==============================================================================
 # Configuration
 #==============================================================================
-require_once("framework/conf/config.inc.php");
+require_once("framework/conf/config.php");
 
 #==============================================================================
 # Language
@@ -17,11 +17,11 @@ require_once("framework/conf/config.inc.php");
 require_once("framework/lib/detectbrowserlanguage.php");
 # Available languages
 $files = glob("framework/lang/*.php");
-$languages = str_replace(".inc.php", "", $files);
+$languages = str_replace(".php", "", $files);
 $lang = detectLanguage($lang, $languages);
-require_once("$lang.inc.php");
-if (file_exists("framework/conf/$lang.inc.php")) {
-    require_once("framework/conf/$lang.inc.php");
+require_once("$lang.php");
+if (file_exists("framework/conf/$lang.php")) {
+    require_once("framework/conf/$lang.php");
 }
 
 #==============================================================================
