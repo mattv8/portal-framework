@@ -57,6 +57,7 @@ $smarty->assign('datatables_page_length_choices', $datatables_page_length_choice
 $smarty->assign('datatables_page_length_default', $datatables_page_length_default);
 $smarty->assign('datatables_auto_print', $datatables_auto_print);
 $smarty->assign('version',$version);
+
 $smarty->assign('display_footer',$display_footer);
 $smarty->assign('logout_link',$logout_link);
 
@@ -91,16 +92,20 @@ $smarty->assign('displayname',$_SESSION["displayname"]);
 #==============================================================================
 $page = "login";// Default route to login page
 
-if ( $authenticated ) { $page = $default_page; }// If authenticated, route to default page
+if ( $authenticated ) { $page = isset($default_page)?$default_page:'error'; }// If authenticated, route to default page
 if ( isset($_GET["page"]) and $_GET["page"] and !$authenticated) { $page = "login"; }// If not authenticated, route to login
 if ( isset($_GET["page"])  and $_GET["page"] and $_GET["page"] != "login" and $authenticated) { $page = $_GET["page"]; }
-if ( file_exists("framework/".$page.".php") ) { require_once("framework/".$page.".php"); }
 if ( file_exists($page.".php") ) { require_once($page.".php"); }
+else if ( file_exists("framework/".$page.".php") ) { require_once("framework/".$page.".php"); }
 $smarty->assign('page',$page);
 
-if ($error) {
+if ($page === "error") {
+    $smarty->assign('error',$messages['pagenotfound']);
+}
+else if ($error) {
     $smarty->assign('error',$messages[$error]);
-} else {
+} 
+else {
     $smarty->assign('error',"");
 }
 

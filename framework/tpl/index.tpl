@@ -19,7 +19,7 @@
 </div>
 {/if}
 
-{if $error}
+{if $error or $page eq 'error'}
 <div class="alert alert-danger">
     <i class="fa fa-fw fa-exclamation-circle"></i> {$error}
 </div>
