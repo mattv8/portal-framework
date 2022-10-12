@@ -29,8 +29,8 @@ $debug = true;
 $smarty_debug = true;
 
 # Cache directory
-$smarty_compile_dir = "templates_c";
-$smarty_cache_dir = "cache";
+$smarty_compile_dir = "cache";
+$smarty_cache_dir = "cache/smarty";
 
 # Authentication
 // Specify whether you'd like to secure the portal with authentication.

@@ -29,12 +29,12 @@ if (file_exists("framework/conf/$lang.inc.php")) {
 #==============================================================================
 require_once(SMARTY);
 
-$compile_dir = $smarty_compile_dir ? $smarty_compile_dir : "templates_c/";
-$cache_dir = $smarty_cache_dir ? $smarty_cache_dir : "cache/";
+$compile_dir = $smarty_compile_dir ? $smarty_compile_dir : "cache";
+$cache_dir = $smarty_cache_dir ? $smarty_cache_dir : "cache/smarty";
 
 $smarty = new Smarty();
 $smarty->escape_html = true;
-$smarty->setTemplateDir('templates/');
+$smarty->setTemplateDir('/');
 $smarty->setCompileDir($compile_dir);
 $smarty->setCacheDir($cache_dir);
 $smarty->debugging = $smarty_debug;
@@ -105,8 +105,8 @@ if ($error) {
 }
 
 # Display
-if ( file_exists("templates/index.tpl") ) {// Allow override with local index.tpl
-    $smarty->display('templates/index.tpl');
+if ( file_exists("index.tpl") ) {// Allow override with local index.tpl
+    $smarty->display('index.tpl');
 } else {
     $smarty->display('framework/tpl/index.tpl');
 }
