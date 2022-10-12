@@ -1,3 +1,8 @@
+################################################################
+#
+# Use this file to ignore files/directories during rsync process
+#
+
 # This file
 _exclusions.txt
 
@@ -9,11 +14,11 @@ _exclusions.txt
 README.md
 
 # Smarty Cache
-templates_c
+cache
 
 # User config
 config.inc.local.php
 
 # Framework Placeholders
-/templates/examplepage.tpl
+examplepage.tpl
 examplepage.php
