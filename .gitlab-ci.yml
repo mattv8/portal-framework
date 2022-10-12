@@ -41,16 +41,17 @@ update-fairyland-dev-portal-framework:
         when: manual #Runner will only run with manual intervention
         script:
             - if [ -z "$fairyland_portal_root" ]; then echo "Need to set webroot as GitLab CI/CD variable" && exit 1; fi
-            - sudo rsync -rv ./ $fairyland_portal_root/ --exclude-from=./_exclusions.txt
+            - sudo rsync -rv ./framework/ $fairyland_portal_root/framework --delete --exclude-from=./_exclusions.txt #Sync and overwrite framework directory
+            - sudo rsync -rv ./ $fairyland_portal_root --exclude-from=./_exclusions.txt #Sync root directory without overwrite
             - sudo chown fairyland:fairyland $fairyland_portal_root -R
 
 #### FAIRYLAND PRODUCTION ####
 update-fairyland-production-portal-framework:
         environment:
-            name: alta-lodge-production
+            name: fairyland-production
         stage: production
         tags:
-            - alta-lodge-production #Only runner with this tag will run this pipeline
+            - fairyland-production #Only runner with this tag will run this pipeline
         only: 
             refs:
                 - branches #Changes to branches trigger pipeline
@@ -62,6 +63,7 @@ update-fairyland-production-portal-framework:
                 - _exclusings.txt
                 - .* #Ignore dot files
         script:
-            - if [ -z "$altalodge_production_webroot" ]; then echo "Need to set webroot as GitLab CI/CD variable" && exit 1; fi
-            - sudo rsync -rv ./ $altalodge_production_webroot/ --exclude-from=./_exclusions.txt
-            - sudo chown apache:nobody $altalodge_production_webroot -R
+            - if [ -z "$fairyland_prod_portal_root" ]; then echo "Need to set webroot as GitLab CI/CD variable" && exit 1; fi
+            - sudo rsync -rv ./framework/ $fairyland_prod_portal_root/framework --delete --exclude-from=./_exclusions.txt #Sync and overwrite framework directory
+            - sudo rsync -rv ./ $fairyland_prod_portal_root --exclude-from=./_exclusions.txt #Sync root directory without overwrite
+            - sudo chown fairyland:fairyland $fairyland_prod_portal_root -R
