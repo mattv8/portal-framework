@@ -26,14 +26,6 @@ $smarty->setCompileDir($compile_dir);
 $smarty->setCacheDir($cache_dir);
 
 #==============================================================================
-# Local PHP Overrides
-#==============================================================================
-$files = glob('*.local.php');
-foreach($files as $file) {// Allow to override by including *.local.php files
-    if ($file != 'index.local.php') { include $file; }// Ignore special case for index.local.php
-}
-
-#==============================================================================
 # Logging
 #==============================================================================
 error_reporting(0);
@@ -132,13 +124,21 @@ else {
     $smarty->assign('error',"");
 }
 
-# Display
+#==============================================================================
+# Local PHP Overrides
+#==============================================================================
+$files = glob('*.local.php');
+foreach($files as $file) {// Allow to override by including *.local.php files
+    if ($file != 'config.local.php') { include $file; }// Ignore special case for config.local.php which is loaded above
+}
+
+#==============================================================================
+# Render Page
+#==============================================================================
 if ( file_exists("index.tpl") ) {// Allow override with local index.tpl
     $smarty->display('index.tpl');
 } else {
     $smarty->display('framework/tpl/index.tpl');
 }
-
-if ( file_exists("index.local.php") ) { include 'index.local.php'; }// Load index.local.php last, if it exists.
 
 ?>
