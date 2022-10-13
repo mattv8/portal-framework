@@ -1,7 +1,7 @@
 </div>
 
 {if $display_footer}
-<div id="footer">LDAP Tool Box Service Desk - version {$version}</div>
+<div id="footer">Webguy Portal Framework - version {$version}</div>
 {/if}
 
 <script src="framework/vendor/jquery/js/jquery-1.10.2.min.js"></script>
