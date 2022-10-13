@@ -49,10 +49,6 @@ require_once("$lang.php");
 if (file_exists("framework/conf/$lang.php")) {
     require_once("framework/conf/$lang.php");
 }
-# Allow to override/append language file with individual custom messages
-if (isset($custom_messages)) {
-    $messages = array_merge($messages, $custom_messages);
-}
 
 #==============================================================================
 # Misc Configurations
@@ -74,12 +70,6 @@ $smarty->assign('version',$version);
 $smarty->assign('display_footer',$display_footer);
 $smarty->assign('logout_link',$logout_link);
 $smarty->assign('default_page',$default_page);
-
-# Assign messages
-$smarty->assign('lang',$lang);
-foreach ($messages as $key => $message) {
-    $smarty->assign('msg_'.$key,$message);
-}
 
 #==============================================================================
 # Authentication
@@ -114,6 +104,26 @@ if ( file_exists($page.".php") ) { require_once($page.".php"); }
 else if ( file_exists("framework/".$page.".php") ) { require_once("framework/".$page.".php"); }
 $smarty->assign('page',$page);
 
+#==============================================================================
+# Local PHP Overrides
+#==============================================================================
+$files = glob('*.local.php');
+foreach($files as $file) {// Allow to override by including *.local.php files
+    if ($file != 'config.local.php') { include $file; }// Ignore special case for config.local.php which is loaded above
+}
+# Allow to override/append language file with individual custom messages
+if (isset($custom_messages)) {
+    $messages = array_merge($messages, $custom_messages);
+}
+# Assign messages
+$smarty->assign('lang',$lang);
+foreach ($messages as $key => $message) {
+    $smarty->assign('msg_'.$key,$message);
+}
+
+#==============================================================================
+# Render Page
+#==============================================================================
 if ($page === "error") {
     $smarty->assign('error',$messages['pagenotfound']);
 }
@@ -124,17 +134,6 @@ else {
     $smarty->assign('error',"");
 }
 
-#==============================================================================
-# Local PHP Overrides
-#==============================================================================
-$files = glob('*.local.php');
-foreach($files as $file) {// Allow to override by including *.local.php files
-    if ($file != 'config.local.php') { include $file; }// Ignore special case for config.local.php which is loaded above
-}
-
-#==============================================================================
-# Render Page
-#==============================================================================
 if ( file_exists("index.tpl") ) {// Allow override with local index.tpl
     $smarty->display('index.tpl');
 } else {
