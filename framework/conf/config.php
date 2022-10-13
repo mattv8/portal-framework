@@ -23,6 +23,7 @@ $background_image = "framework/images/unsplash-space.jpeg";
 $custom_css = "";
 $display_footer = true;
 #$logout_link = "http://auth.example.com/logout";
+$page_bg_color_class = 'bg-light';// See https://getbootstrap.com/docs/5.0/utilities/background/ for examples of valid classes
 
 # Debug mode
 $debug = false;

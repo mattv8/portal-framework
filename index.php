@@ -51,6 +51,7 @@ $smarty->assign('debug',$debug);
 $smarty->assign('ldap_params',array('ldap_url' => $ldap_url, 'ldap_starttls' => $ldap_starttls, 'ldap_binddn' => $ldap_binddn, 'ldap_bindpw' => $ldap_bindpw, 'ldap_user_base' => $ldap_user_base, 'ldap_user_filter' => $ldap_user_filter));
 $smarty->assign('logo',$logo);
 $smarty->assign('background_image',$background_image);
+$smarty->assign('page_bg_color_class',$page_bg_color_class);
 $smarty->assign('custom_css',$custom_css);
 $smarty->assign('date_specifiers',$date_specifiers);
 if (is_array($datatables_page_length_choices)) $datatables_page_length_choices = implode(', ', $datatables_page_length_choices);
