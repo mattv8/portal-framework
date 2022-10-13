@@ -13,8 +13,8 @@ _exclusions.txt
 .vscode
 README.md
 
-# User config
-config.local.php
+# User local configs
+*.local.php
 
 # Framework Placeholders
 examplepage.tpl
