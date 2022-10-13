@@ -60,8 +60,10 @@
       </div>
     </div>
 </div>
-{if $auth_type neq "none" and $authenticated and $page eq "display"}
-<div class="alert alert-success"><i class="fa fa-fw fa-info-circle"></i> Welcome, {$displayname}.
-{if $isadmin}<span style="float: right;"> You have admin privileges.</span>{/if}
-</div>
+
+{* Welcome Banner *}
+{if ($auth_type neq "none" or $authenticated) and $page eq $default_page}
+  <div class="alert alert-success"><i class="fa fa-fw fa-info-circle"></i> Welcome, {$displayname}.
+  {if $isadmin}<span style="float: right;"> You have admin privileges.</span>{/if}
+  </div>
 {/if}
