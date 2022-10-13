@@ -63,9 +63,10 @@ $ldap_allowed_admin_ous = array("OU=Managers,DC=example,DC=com");// Organization
 $ldap_allowed_admin_groups = array("CN=Administrators,OU=Groups,DC=example,DC=com");// Security Group(s) of users who are allowed to login and edit all accounts.
 $ldap_disallowed_ous = array("OU=Guests,DC=example,DC=com");// Organizational Units of users who are NOT allowed to log in at all.
 
-# Allow to override current settings with local configuration
-if (file_exists ('config.local.php')) {
-    include 'config.local.php';
+# Allow to override by including *.local.php files
+$files = glob('*.local.php');
+foreach($files as $file) {
+    include $file;
 }
 
 # Smarty

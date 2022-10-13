@@ -15,13 +15,17 @@ require_once("framework/conf/config.php");
 # Language
 #==============================================================================
 require_once("framework/lib/detectbrowserlanguage.php");
-# Available languages
+# Load available languages
 $files = glob("framework/lang/*.php");
 $languages = str_replace(".php", "", $files);
 $lang = detectLanguage($lang, $languages);
 require_once("$lang.php");
 if (file_exists("framework/conf/$lang.php")) {
     require_once("framework/conf/$lang.php");
+}
+# Allow to override/append language file with individual custom messages
+if (isset($custom_messages)) {
+    $messages = array_merge($messages, $custom_messages);
 }
 
 #==============================================================================

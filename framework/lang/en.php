@@ -9,7 +9,7 @@ $displayname = $_SESSION["displayname"];
 #==============================================================================
 
 $messages['title'] = "Portal Framework 2.0";
-$messages['welcome'] = "Welcome to the Webguy Internet Portal Framework v2";
+$messages['welcome'] = "This text can be overridden by setting \$custom_messages['welcome'] in a *.local.php file";
 
 $messages['pagenotfound'] = "The requested page was not found.";
 $messages['example1'] = "Example item 1";
