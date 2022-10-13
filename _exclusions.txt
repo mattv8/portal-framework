@@ -17,7 +17,7 @@ README.md
 cache
 
 # User config
-config.inc.local.php
+config.local.php
 
 # Framework Placeholders
 examplepage.tpl
