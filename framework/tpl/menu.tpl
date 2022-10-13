@@ -3,9 +3,9 @@
 
     <div class="container-fluid">
       {if $logo}
-        <a class="navbar-brand" href="#"><img src="{$logo}" alt="Logo" class="menu-logo img-responsive" /></a>
+        <a class="navbar-brand" href="index.php"><img src="{$logo}" alt="Logo" class="menu-logo img-responsive" /></a>
       {else}
-        <a class="navbar-brand" href="#">{$msg_title}</a>
+        <a class="navbar-brand" href="index.php">{$msg_title}</a>
       {/if}
       
       {* Navbar Collapse Button *}
