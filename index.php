@@ -12,6 +12,40 @@ $error = "";// Clear any error messages
 require_once("framework/conf/config.php");
 
 #==============================================================================
+# Smarty Environment
+#==============================================================================
+require_once(SMARTY);
+
+$compile_dir = $smarty_compile_dir ? $smarty_compile_dir : "cache";
+$cache_dir = $smarty_cache_dir ? $smarty_cache_dir : "cache/smarty";
+
+$smarty = new Smarty();
+$smarty->escape_html = true;
+$smarty->setTemplateDir('/');
+$smarty->setCompileDir($compile_dir);
+$smarty->setCacheDir($cache_dir);
+
+#==============================================================================
+# Local PHP Overrides
+#==============================================================================
+$files = glob('*.local.php');
+foreach($files as $file) {// Allow to override by including *.local.php files
+    if ($file != 'index.local.php') { include $file; }// Ignore special case for index.local.php
+}
+
+#==============================================================================
+# Logging
+#==============================================================================
+error_reporting(0);
+if ($debug) {
+    error_reporting(E_ALL);
+    # Set debug for LDAP
+    ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
+}
+$smarty->assign('debug',$debug);
+$smarty->debugging = $smarty_debug;
+
+#==============================================================================
 # Language
 #==============================================================================
 require_once("framework/lib/detectbrowserlanguage.php");
@@ -29,27 +63,8 @@ if (isset($custom_messages)) {
 }
 
 #==============================================================================
-# Smarty
+# Misc Configurations
 #==============================================================================
-require_once(SMARTY);
-
-$compile_dir = $smarty_compile_dir ? $smarty_compile_dir : "cache";
-$cache_dir = $smarty_cache_dir ? $smarty_cache_dir : "cache/smarty";
-
-$smarty = new Smarty();
-$smarty->escape_html = true;
-$smarty->setTemplateDir('/');
-$smarty->setCompileDir($compile_dir);
-$smarty->setCacheDir($cache_dir);
-$smarty->debugging = $smarty_debug;
-
-error_reporting(0);
-if ($debug) {
-    error_reporting(E_ALL);
-    # Set debug for LDAP
-    ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
-}
-$smarty->assign('debug',$debug);
 
 # Assign configuration variables
 $smarty->assign('ldap_params',array('ldap_url' => $ldap_url, 'ldap_starttls' => $ldap_starttls, 'ldap_binddn' => $ldap_binddn, 'ldap_bindpw' => $ldap_bindpw, 'ldap_user_base' => $ldap_user_base, 'ldap_user_filter' => $ldap_user_filter));
@@ -72,14 +87,6 @@ $smarty->assign('default_page',$default_page);
 $smarty->assign('lang',$lang);
 foreach ($messages as $key => $message) {
     $smarty->assign('msg_'.$key,$message);
-}
-
-#==============================================================================
-# Local PHP Overrides
-#==============================================================================
-$files = glob('*.local.php');
-foreach($files as $file) {
-    include $file;// Allow to override by including *.local.php files
 }
 
 #==============================================================================
@@ -131,5 +138,7 @@ if ( file_exists("index.tpl") ) {// Allow override with local index.tpl
 } else {
     $smarty->display('framework/tpl/index.tpl');
 }
+
+if ( file_exists("index.local.php") ) { include 'index.local.php'; }// Load index.local.php last, if it exists.
 
 ?>
