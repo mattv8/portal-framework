@@ -13,9 +13,6 @@ _exclusions.txt
 .vscode
 README.md
 
-# Smarty Cache
-cache
-
 # User config
 config.local.php
 
