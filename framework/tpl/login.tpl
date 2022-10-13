@@ -1,4 +1,4 @@
-<div class="card ">
+<div class="card {$page_bg_color_class}">
     <div class="card-header text-center">
         <i class="fa fa-fw fa-check-circle"></i>{$msg_login}
     </div>
