@@ -42,7 +42,7 @@ update-fairyland-dev-portal-framework:
         script:
             - if [ -z "$fairyland_portal_root" ]; then echo "Need to set webroot as GitLab CI/CD variable" && exit 1; fi
             - sudo rsync -rv ./framework/ $fairyland_portal_root/framework --delete --exclude-from=./_exclusions.txt #Sync and overwrite framework directory
-            - sudo rsync -rv ./ $fairyland_portal_root --exclude-from=./_exclusions.txt #Sync root directory without overwrite
+            - sudo rsync -rv ./ $fairyland_portal_root --exclude 'framework' --exclude-from=./_exclusions.txt #Sync root directory without overwrite
             - sudo chown fairyland:fairyland $fairyland_portal_root -R
 
 #### FAIRYLAND PRODUCTION ####
@@ -65,5 +65,5 @@ update-fairyland-production-portal-framework:
         script:
             - if [ -z "$fairyland_prod_portal_root" ]; then echo "Need to set webroot as GitLab CI/CD variable" && exit 1; fi
             - sudo rsync -rv ./framework/ $fairyland_prod_portal_root/framework --delete --exclude-from=./_exclusions.txt #Sync and overwrite framework directory
-            - sudo rsync -rv ./ $fairyland_prod_portal_root --exclude-from=./_exclusions.txt #Sync root directory without overwrite
+            - sudo rsync -rv ./ $fairyland_prod_portal_root --exclude 'framework' --exclude-from=./_exclusions.txt #Sync root directory without overwrite
             - sudo chown fairyland:fairyland $fairyland_prod_portal_root -R
