@@ -25,8 +25,8 @@ $display_footer = true;
 #$logout_link = "http://auth.example.com/logout";
 
 # Debug mode
-$debug = true;
-$smarty_debug = true;
+$debug = false;
+$smarty_debug = false;
 
 # Cache directory
 $smarty_compile_dir = "cache";
