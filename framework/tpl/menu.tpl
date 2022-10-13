@@ -14,6 +14,7 @@
       </button>
       
       {* Collapsable Menu Items *}
+      {if ($auth_type neq "none" and $authenticated)}
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -42,6 +43,7 @@
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success me-2" type="submit">Search</button>
         </form>
+      {/if}
 
         {* Logout/Login Button*}
         {if $auth_type neq "none" and isset($authenticated)}
