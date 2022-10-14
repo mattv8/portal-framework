@@ -63,6 +63,7 @@
     </script>
 {/literal}
 
+{* Custom Footers *}
 {if file_exists("templates/footer.tpl")}
   {include file="templates/footer.tpl"}
 {/if}
