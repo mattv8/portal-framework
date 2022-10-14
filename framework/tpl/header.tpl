@@ -6,15 +6,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="author" content="LDAP Tool Box" />
+    
+    {* Stylesheets *}
     <link rel="stylesheet" type="text/css" href="framework/vendor/bootstrap5/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="framework/vendor/font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="framework/vendor/datatables/datatables.min.css" />
     <link rel="stylesheet" type="text/css" href="framework/css/portal.css" />
+
+    {* Javascript *}
+    <script src="framework/vendor/jquery/js/jquery-3.6.1.min.js"></script>
+    <script src="framework/vendor/bootstrap5/js/bootstrap.bundle.min.js"></script>
+    <script src="framework/vendor/datatables/datatables.min.js"></script>
+    <script src="framework/js/functions.js"></script>
+  
 {if $custom_css}
     <link rel="stylesheet" type="text/css" href="{$custom_css}" />
 {/if}
-    <link href="framework/images/favicon.ico" rel="icon" type="image/x-icon" />
-    <link href="framework/images/favicon.ico" rel="shortcut icon" />
+      <link href="framework/images/favicon.ico" rel="icon" type="image/x-icon" />
+      <link href="framework/images/favicon.ico" rel="shortcut icon" />
 {if $background_image}
      <style>
        html, body {

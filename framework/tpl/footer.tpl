@@ -4,12 +4,6 @@
 <div id="footer">Webguy Portal Framework - version {$version}</div>
 {/if}
 
-<script src="framework/vendor/jquery/js/jquery-3.6.1.min.js"></script>
-<script src="framework/vendor/bootstrap5/js/bootstrap.bundle.min.js"></script>
-<script src="framework/vendor/datatables/datatables.min.js"></script>
-<script src="framework/js/functions.js"></script>
-
-
 {literal}
     <script type="text/javascript">
       $(document).ready( function() {
