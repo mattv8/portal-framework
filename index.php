@@ -21,7 +21,7 @@ $cache_dir = $smarty_cache_dir ? $smarty_cache_dir : "cache/smarty";
 
 $smarty = new Smarty();
 $smarty->escape_html = true;
-$smarty->setTemplateDir('/');
+$smarty->setTemplateDir('/templates');
 $smarty->setCompileDir($compile_dir);
 $smarty->setCacheDir($cache_dir);
 
@@ -134,8 +134,8 @@ else {
     $smarty->assign('error',"");
 }
 
-if ( file_exists("index.tpl") ) {// Allow override with local index.tpl
-    $smarty->display('index.tpl');
+if ( file_exists("templates/index.tpl") ) {// Allow override with local index.tpl
+    $smarty->display('templates/index.tpl');
 } else {
     $smarty->display('framework/tpl/index.tpl');
 }
