@@ -1,4 +1,3 @@
-################################################################
-#
-# Load additional CSS and Javascript files here.
-#
+{*
+  Load additional CSS and Javascript files here.
+*}
