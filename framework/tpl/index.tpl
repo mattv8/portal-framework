@@ -1,7 +1,4 @@
 {include file="framework/tpl/header.tpl"}
-{if file_exists("templates/header.tpl")}
-    {include file="templates/header.tpl"}
-{/if}
 
 <div class="panel panel-success {$page_bg_color_class}">
 
@@ -36,6 +33,3 @@
 </div>
 
 {include file="framework/tpl/footer.tpl"}
-{if file_exists("templates/footer.tpl")}
-    {include file="templates/footer.tpl"}
-{/if}

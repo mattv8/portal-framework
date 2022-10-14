@@ -18,6 +18,10 @@
     <script src="framework/vendor/bootstrap5/js/bootstrap.bundle.min.js"></script>
     <script src="framework/vendor/datatables/datatables.min.js"></script>
     <script src="framework/js/functions.js"></script>
+
+{if file_exists("templates/header.tpl")}
+    {include file="templates/header.tpl"}
+{/if}
   
 {if $custom_css}
     <link rel="stylesheet" type="text/css" href="{$custom_css}" />

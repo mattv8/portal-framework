@@ -63,5 +63,9 @@
     </script>
 {/literal}
 
+{if file_exists("templates/footer.tpl")}
+  {include file="templates/footer.tpl"}
+{/if}
+
 </body>
 </html>
