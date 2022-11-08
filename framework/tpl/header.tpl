@@ -9,7 +9,7 @@
   
   {* Stylesheets *}
   <link rel="stylesheet" type="text/css" href="framework/vendor/bootstrap5/css/bootstrap.min.css" />
-  <link rel="stylesheet" type="text/css" href="framework/vendor/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" type="text/css" href="framework/vendor/font-awesome/css/all.min.css" />
   <link rel="stylesheet" type="text/css" href="framework/css/portal.css" />
 
   {* Javascript *}
