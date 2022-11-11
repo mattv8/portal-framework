@@ -1,4 +1,3 @@
-
 {include file="framework/tpl/header.tpl"}
 
 <body>
@@ -35,7 +34,6 @@
         {/if}
 
         </div>
-
     </div>
 
 </body>
