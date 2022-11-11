@@ -37,6 +37,3 @@
 {/if}
 
 </head>
-<body>
-
-<div class="container">

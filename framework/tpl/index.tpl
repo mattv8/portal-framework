@@ -1,3 +1,7 @@
+<body>
+
+<div class="container">
+
 {include file="framework/tpl/header.tpl"}
 
 <div class="panel panel-success {$page_bg_color_class}">
@@ -31,5 +35,6 @@
 {/if}
 
 </div>
+</body>
 
 {include file="framework/tpl/footer.tpl"}

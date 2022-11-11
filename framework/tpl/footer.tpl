@@ -9,5 +9,4 @@
   {include file="templates/footer.tpl"}
 {/if}
 
-</body>
 </html>
