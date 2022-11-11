@@ -1,4 +1,3 @@
-</div>
 
 {if $display_footer}
 <div id="footer">Webguy Portal Framework - version {$version}</div>
