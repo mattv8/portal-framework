@@ -12,6 +12,11 @@
   <link rel="stylesheet" type="text/css" href="framework/vendor/font-awesome/css/all.min.css" />
   <link rel="stylesheet" type="text/css" href="framework/css/portal.css" />
 
+  {* Load Javascript Config Object *}
+  <script>
+    var js_config_obj = {$js_config_obj|json_encode nofilter};
+  </script>
+
   {* Javascript *}
   <script src="framework/vendor/jquery/js/jquery-3.6.1.min.js"></script>
   <script src="framework/vendor/bootstrap5/js/bootstrap.bundle.min.js"></script>
