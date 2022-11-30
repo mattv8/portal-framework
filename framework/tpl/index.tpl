@@ -2,7 +2,7 @@
 
 <body>
 
-    <div class="container">
+    <div class="container pb-5">
         <div class="panel panel-success {$page_bg_color_class}">
 
         {if file_exists("templates/menu.tpl")}
