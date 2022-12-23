@@ -3,7 +3,6 @@
     Custom PHP Functions
 */
 require_once($_SERVER['DOCUMENT_ROOT'].'/framework/conf/config.php');
-if(file_exists($_SERVER['DOCUMENT_ROOT'].'/functions.php')){ include($_SERVER['DOCUMENT_ROOT'].'/functions.php'); }
 
 # Fetches array from subarrays by key. Only works on uniform multidimensional arrays, i.e.
 # $entries_map = array(
