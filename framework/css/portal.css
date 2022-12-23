@@ -27,13 +27,16 @@ a, a:hover {
   background-color:rgba(255,255,255,0.8);
 }
 
-img.logo {
-  margin-bottom: 20px;
+img.menu-logo {
+  height: 50px;
+  width: auto;
+  display: block;
 }
 
-img.menu-logo {
-  display: inline;
-  height: 40px;
+.centered {
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
 }
 
 .display img {
