@@ -9,7 +9,7 @@ function getSites() {
     var callback = '';
     $.ajax({
         type: 'GET',
-        url: 'reservations.php',
+        url: 'framework/lib/ajax.php',
         data: { request: 'getSites' },
         dataType: 'json',
         async: false,

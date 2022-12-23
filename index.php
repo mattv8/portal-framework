@@ -9,8 +9,8 @@ $error = "";// Clear any error messages
 #==============================================================================
 # Configuration
 #==============================================================================
-require_once("framework/conf/config.php");
-require_once("framework/lib/functions.php");
+require_once($_SERVER['DOCUMENT_ROOT'].'/framework/conf/config.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/framework/lib/functions.php');
 
 #==============================================================================
 # Smarty Environment

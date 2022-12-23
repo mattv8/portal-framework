@@ -31,7 +31,6 @@
   <script src="framework/vendor/moment/moment.min.js"></script>
   <script src="framework/vendor/datepicker-lightpick/js/lightpick.js"></script>
   <script src="framework/vendor/select2/js/select2.full.min.js"></script>
-
   <script src="framework/js/functions.js"></script>
 
   {* Load Custom Headers *}
