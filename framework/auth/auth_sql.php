@@ -28,7 +28,8 @@ function auth_sql($username, $password) {
                 $hashed_password = $rows['password'];// Hashed password from database
                 $isadmin = $rows['isadmin'];// Admin status
                 $active = $rows['active'];// User active status
-                $displayname = $rows['displayname'];// Define a display name
+                $firstName = $rows['first'];
+                $lastName = $rows['last'];
 
                 // Check POSTed password against database
                 if(password_verify($password, $hashed_password) and $active) {
@@ -36,7 +37,7 @@ function auth_sql($username, $password) {
 
                     $_SESSION["username"] = $username;
                     $_SESSION["isadmin"] = $isadmin;
-                    $_SESSION["displayname"] = (isset($displayname) and !empty($displayname))?$displayname:$username;
+                    $_SESSION["displayname"] = (!empty($firstName) || !empty($lastName))?$firstName." ".$lastName:$username;
 
                 } 
                 elseif (!password_verify($password, $hashed_password)) {
