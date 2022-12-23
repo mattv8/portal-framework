@@ -41,10 +41,11 @@
 
 {* Welcome Banner *}
 {if ($auth_type neq "none" and $authenticated) and $page eq $default_page}
-  <div class="alert alert-success" role="alert">
-    <i class="fa fa-fw fa-info-circle"></i> Welcome, {$displayname}.
-    <span style="float: right;">{if $isadmin} You have admin privileges.{/if}
-      <button  class="fa fad fa-remove inline-icon" onclick="this.closest('div').remove()"></button></span>
-    </span>
-  </div>
+  <form class="container">
+    <div class="row alert alert-success" role="alert">
+      <div class="col-auto me-auto my-1"><i class="fa fa-fw fa-info-circle"></i> Welcome, {$displayname}.</div>
+      <div class="col-auto ms-auto my-1"><p class="text-right mb-0">{if $isadmin} You have admin privileges.{/if}</p></div>
+      <div class="col-auto my-1"><button class="fa fa-fw fa-remove inline-icon" onclick="this.closest('form').remove()"></button></div>
+    </div>
+  </form>
 {/if}
