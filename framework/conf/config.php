@@ -17,6 +17,24 @@ $date_specifiers = "%Y-%m-%d %H:%M:%S (%Z)";
 # Default page
 $default_page = "examplepage";// First page to show upon authentication
 
+# How to display the nav-menu buttons
+$nav_buttons = array(
+    'users' => array( 'title' => 'User Management', 'modalId' => 'UserMgmtModal', 'faclass' => 'users', 'btn_color' => 'secondary', 'modalclass' => 'modal-xl',),
+);
+
+# How to display the user management table header row (maps DB fields to table columns)
+#   NOTE: If DB key is not in array below it will not be shown in table.
+$user_attr_map = array(
+    'Username' => array( 'key' => 'username', 'inputType' => 'text'),
+    'Password' => array( 'key' => 'password', 'inputType' => 'password'),
+    'First Name' => array( 'key' => 'first', 'inputType' => 'text'),
+    'Last Name' => array( 'key' => 'last', 'inputType' => 'text'),
+    'Email Address' => array( 'key' => 'email', 'inputType' => 'text'),
+    'Access' => array( 'key' => 'siteMemberships', 'inputType' => 'select-multiple'),
+    'Is Admin?' => array( 'key' => 'isadmin', 'inputType' => 'checkbox'),
+    'Active?' => array( 'key' => 'active', 'inputType' => 'checkbox'),
+);
+
 # Graphics
 $logo = "framework/images/logo.png";
 $background_image = "framework/images/unsplash-space.jpeg";
@@ -27,7 +45,7 @@ $page_bg_color_class = 'bg-light';// See https://getbootstrap.com/docs/5.0/utili
 
 # Debug mode
 $debug = false;
-$smarty_debug = false;
+$smarty_debug = true;
 
 # Cache directory
 $smarty_compile_dir = "cache";
@@ -69,8 +87,8 @@ $ldap_disallowed_ous = array("OU=Guests,DC=example,DC=com");// Organizational Un
 $js_config_obj = array('');
 
 # Allow to override current settings with local configuration
-if (file_exists ('config.local.php')) {
-    include 'config.local.php';
+if (file_exists ($_SERVER['DOCUMENT_ROOT'].'/config.local.php')) {
+    include ($_SERVER['DOCUMENT_ROOT'].'/config.local.php');
 }
 
 # Smarty

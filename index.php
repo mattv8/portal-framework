@@ -10,6 +10,7 @@ $error = "";// Clear any error messages
 # Configuration
 #==============================================================================
 require_once("framework/conf/config.php");
+require_once("framework/lib/functions.php");
 
 #==============================================================================
 # Smarty Environment
@@ -70,6 +71,8 @@ $smarty->assign('js_config_obj',$js_config_obj);// Javascript Config Object
 $smarty->assign('display_footer',$display_footer);
 $smarty->assign('logout_link',$logout_link);
 $smarty->assign('default_page',$default_page);
+$smarty->assign('currentUser',$_SESSION['username']);
+$smarty->assign('nav_buttons',$nav_buttons);
 
 #==============================================================================
 # Authentication
@@ -87,10 +90,47 @@ switch ($auth_type) {
         $authenticated = $_SESSION["authenticated"];
 }
 
+if ( !strcmp($auth_type,'sql') ) {
+    // Test database connection
+    if(isset($db_servername) and isset($db_username) and isset($db_password) and isset($db_name)) {// DB configuration check
+
+        $db_conn = mysqli_connect($db_servername, $db_username, $db_password, $db_name);// Establish connection
+
+        if ($db_conn) {// DB connection check
+
+            // Query Site table for list of site names and ID's.
+            $sites = ($authenticated)?getSites($db_conn):null;
+            $smarty->assign('sites',$sites);
+            
+            // Query user table for POSTed username's Site Memberships
+            // That is, what Fairyland Sites do they have access to
+            $siteMemberships = ($authenticated)?getSiteMemberships($_SESSION["username"], $db_conn):null;
+            $smarty->assign('siteMemberships',$siteMemberships);
+
+            // Query user table for ALL user information, save it in the session (only need to do this for admins)
+            if ($isadmin and $authenticated) {
+                $AllUserDataQuery = mysqli_query($db_conn, "SELECT * FROM users;");
+                $AllUserData = array();// Preallocate
+                if((mysqli_num_rows($AllUserDataQuery)) > 0) {
+                    $i = 0;
+                    while ($row = $AllUserDataQuery->fetch_assoc()) {
+                        foreach ( $row as $key => $value ) {
+                            if($key != "password"){ $AllUserData[$i][$key] = $value; };// Store groups into array
+                        }
+                        $i++;
+                    }
+                }
+            }
+            $smarty->assign('AllUserData',($AllUserData)?$AllUserData:null);
+
+        }
+    }
+}
 $smarty->assign('authenticated',$authenticated);
 $smarty->assign('isadmin',$isadmin);
 $smarty->assign('auth_type',$auth_type);
 $smarty->assign('displayname',$_SESSION["displayname"]);
+$smarty->assign('user_attr_map',$user_attr_map);
 
 #==============================================================================
 # Route to page

@@ -11,15 +11,27 @@
   <link rel="stylesheet" type="text/css" href="framework/vendor/bootstrap5/css/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" href="framework/vendor/font-awesome/css/all.min.css" />
   <link rel="stylesheet" type="text/css" href="framework/css/portal.css" />
+  <link rel="stylesheet" type="text/css" href="framework/vendor/datatables/dataTables.bootstrap5.min.css" />
+  <link rel="stylesheet" type="text/css" href="framework/vendor/datepicker-lightpick/css/lightpick.css" />
+  <link rel="stylesheet" type="text/css" href="framework/vendor/select2/css/select2.min.css" />
 
   {* Load Javascript Config Object *}
   <script>
     var js_config_obj = {$js_config_obj|json_encode nofilter};
+    js_config_obj.sites = {$sites|json_encode nofilter};
+    js_config_obj.siteMemberships = {$siteMemberships|json_encode nofilter};
+    js_config_obj.currentUser = {$currentUser|json_encode nofilter};
   </script>
 
   {* Javascript *}
   <script src="framework/vendor/jquery/js/jquery-3.6.1.min.js"></script>
   <script src="framework/vendor/bootstrap5/js/bootstrap.bundle.min.js"></script>
+  <script src="framework/vendor/datatables/datatables.min.js"></script>
+  <script src="framework/vendor/datatables/dataTables.bootstrap5.min.js"></script>
+  <script src="framework/vendor/moment/moment.min.js"></script>
+  <script src="framework/vendor/datepicker-lightpick/js/lightpick.js"></script>
+  <script src="framework/vendor/select2/js/select2.full.min.js"></script>
+
   <script src="framework/js/functions.js"></script>
 
   {* Load Custom Headers *}
