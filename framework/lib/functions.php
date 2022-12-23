@@ -44,4 +44,20 @@ function getSiteMemberships(String $username, mysqli $db_conn) {
     return $siteMemberships;
 }
 
+# Query User Table for list of users
+function getAllUserData($db_conn){
+    $AllUserDataQuery = mysqli_query($db_conn, "SELECT * FROM users;");
+    $AllUserData = array();// Preallocate
+    if((mysqli_num_rows($AllUserDataQuery)) > 0) {
+        $i = 0;
+        while ($row = $AllUserDataQuery->fetch_assoc()) {
+            foreach ( $row as $key => $value ) {
+                if($key != "password"){ $AllUserData[$i][$key] = $value; };// Store groups into array
+            }
+            $i++;
+        }
+    }
+    return $AllUserData;
+}
+
 ?>
