@@ -30,7 +30,7 @@ $user_attr_map = array(
     'First Name' => array( 'key' => 'first', 'inputType' => 'text'),
     'Last Name' => array( 'key' => 'last', 'inputType' => 'text'),
     'Email Address' => array( 'key' => 'email', 'inputType' => 'text'),
-    'Access' => array( 'key' => 'siteMemberships', 'inputType' => 'select-multiple'),
+    'Groups' => array( 'key' => 'siteMemberships', 'inputType' => 'select-multiple'),
     'Is Admin?' => array( 'key' => 'isadmin', 'inputType' => 'checkbox'),
     'Active?' => array( 'key' => 'active', 'inputType' => 'checkbox'),
 );
