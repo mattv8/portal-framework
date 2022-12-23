@@ -13,6 +13,8 @@
                     <div class="modal-body">
                     {if file_exists("framework/tpl/modals/modal.$btn_name.tpl")}
                         {include file="framework/tpl/modals/modal.$btn_name.tpl"}
+                    {else if file_exists("templates/modal.$btn_name.tpl")}
+                        {include file="templates/modal.$btn_name.tpl"}
                     {else}
                         <div class="alert alert-danger">
                             <i class="fa fa-fw fa-exclamation-circle"></i> {$msg_{'pagenotfound'}} ($page=modal.{$btn_name}.tpl)
