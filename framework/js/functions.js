@@ -24,6 +24,20 @@ function getSites() {
     }
 }
 
+
+/////////////////
+// Loggoff user
+function logoff() {
+    $.ajax({
+        type: 'POST',
+        url: 'framework/auth/login.php',
+        data: { logoff: '1' },
+        success: function(data) { 
+            window.location.href= "/" // Redirect to webroot.
+        },
+    });
+}
+
 /////////////////
 // Open Nav Buttons as Modals
 // This function is called from the menu button
@@ -131,9 +145,10 @@ function isElement(o){
 
 /////////////////
 // Refresh the page when modal is closed
-function refreshOnModalClose(modalId) {
+function refreshOnModalClose(modalId,logOff) {
     var modal = document.getElementById(modalId)
     modal.addEventListener('hidden.bs.modal', function (event) {
+        if(logOff) { logoff(); }// Trigger logoff
         location.reload();// Do the refresh
     });
 }

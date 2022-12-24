@@ -6,7 +6,6 @@
 // Declare volatile variables
 $autherror = "";
 $displayname = "";
-$dn = "";
 $password = "";
 $username = "";
 
@@ -60,7 +59,7 @@ if(isset($_POST["logoff"]) and $_POST["logoff"]){
 }
 
 
-
+// Logoff function: destroys the session and redirects to login page.
 function logoff() {
 	// Unset all of the session variables.
 	$_SESSION = array();
@@ -74,7 +73,7 @@ function logoff() {
 			$params["secure"], $params["httponly"]
 		);
 	}
-	session_destroy();
+	session_destroy();// Destroy the session
 
 }// End logoff()
 
