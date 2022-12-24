@@ -77,7 +77,7 @@ function editAttr(selector,inputType,user,key) {
     td.appendChild(cancelButton);// Append cancelButton to td2
     selector.replaceWith(td);// Replace DOM element
     if ( key === 'siteMemberships' ) { select2_sites(user); }// Replace input with Select2
-    if ( user === js_config_obj.currentUser ) { refreshOnModalClose('UserMgmtModal'); }// Trigger refresh on modal close
+    if ( user === js_config_obj.currentUser ) { refreshOnModalClose('UserMgmtModal',(inputType === 'password')); }// Trigger refresh on modal close
 
 }
 
