@@ -1,5 +1,5 @@
+{* Nav Button Admin Modals *}
 {if $isadmin}
-    {* MODAL: Menu Nav Button Modals *}
     {foreach from=$nav_buttons item=button key=btn_name}
         <div class="modal fade" id="{$button.modalId}" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered {$button.modalclass}" role="document">
@@ -11,6 +11,7 @@
                         </div>
                     </div>
                     <div class="modal-body">
+                    {* Nav button modal-bodies --  overrideable with local files *}
                     {if file_exists("framework/tpl/modals/modal.$btn_name.tpl")}
                         {include file="framework/tpl/modals/modal.$btn_name.tpl"}
                     {else if file_exists("templates/modals/modal.$btn_name.tpl")}
