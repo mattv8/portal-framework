@@ -10,12 +10,12 @@
   {* Stylesheets *}
   <link rel="stylesheet" type="text/css" href="framework/vendor/bootstrap5/css/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" href="framework/vendor/font-awesome/css/all.min.css" />
-  <link rel="stylesheet" type="text/css" href="framework/css/portal.css" />
   <link rel="stylesheet" type="text/css" href="framework/vendor/datatables/dataTables.bootstrap5.min.css" />
   <link rel="stylesheet" type="text/css" href="framework/vendor/datepicker-lightpick/css/lightpick.css" />
   <link rel="stylesheet" type="text/css" href="framework/vendor/select2/css/select2.min.css" />
+  <link rel="stylesheet" type="text/css" href="framework/css/portal.css" />
 
-  {* Load Javascript Config Object *}
+  {* Header Script *}
   <script>
     "use strict";
     window.GLOBAL = {}; // GLOBAL Object namespace
@@ -42,17 +42,19 @@
   <script src="framework/vendor/datatables/datatables.min.js"></script>
   <script src="framework/vendor/datatables/dataTables.bootstrap5.min.js"></script>
   <script src="framework/vendor/moment/moment.min.js"></script>
+  <script src="framework/vendor/select2/js/select2.full.min.js"></script>
+  
+  {* NOTE: The following JS files get minified by CI/CD and are only referenced here for development *}
   {if file_exists('framework/vendor/datepicker-lightpick/js/lightpick.min.js')}
-  <script src="framework/vendor/datepicker-lightpick/js/lightpick.min.js"></script>
+  <script src="framework/vendor/datepicker-lightpick/js/lightpick.min.js"></script>{* This file gets minified by CI/CD *}
   {else}
   <script src="framework/vendor/datepicker-lightpick/js/lightpick.js"></script>
   {/if}
-  <script src="framework/vendor/select2/js/select2.full.min.js"></script>
   {if file_exists('framework/js/all.min.js')}
   <script src="framework/js/all.min.js"></script>
   {else}
-  <script src="framework/js/functions.js"></script>
-  <script src="framework/js/modal.users.js"></script>
+  <script src="framework/js/functions.js"></script>{* This file gets minified by CI/CD *}
+  <script src="framework/js/modal.users.js"></script>{* This file gets minified by CI/CD *}
   {/if}
 
   {* Load Custom Headers *}
@@ -60,18 +62,21 @@
       {include file="templates/header.tpl"}
   {/if}
   
-{if $custom_css}
+  {* Load Custom CSS *}
+  {if $custom_css}
   <link rel="stylesheet" type="text/css" href="{$custom_css}" />
-{/if}
+  {/if}
     <link href="framework/images/favicon.ico" rel="icon" type="image/x-icon" />
     <link href="framework/images/favicon.ico" rel="shortcut icon" />
-{if $background_image}
+  
+  {* Load Background Image *}
+  {if $background_image}
   <style>
     html, body {
       background: url({$background_image}) no-repeat center fixed;
       background-size: cover;
     }
   </style>
-{/if}
+  {/if}
 
 </head>
