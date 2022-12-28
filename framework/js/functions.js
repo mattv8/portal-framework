@@ -61,7 +61,7 @@ function openModal(modalId,navButton) {
 /////////////////
 // Simple function to get Site Name from Site ID
 function getSiteNameFromId(siteId) {
-    js_config_obj.sites.forEach(site => {
+    GLOBAL.config.sites.forEach(site => {
         if(site.siteId === siteId.toString()) { return out = site.siteName; }
     })
     return (out)?out:null;// Fallback
@@ -70,7 +70,7 @@ function getSiteNameFromId(siteId) {
 /////////////////
 // Simple function to get Site ID from Site HTML Name
 function getSiteIdFromHTMLName(siteHTMLName) {
-    js_config_obj.sites.forEach(site => {
+    GLOBAL.config.sites.forEach(site => {
         if(site.siteHTMLName === siteHTMLName) { return out = site.siteId; }
     })
     return (out)?out:null;// Fallback
@@ -79,7 +79,7 @@ function getSiteIdFromHTMLName(siteHTMLName) {
 /////////////////
 // Simple function to get Site HTML Name from Site ID.
 function getSiteHTMLNameFromId(siteId) {
-    js_config_obj.sites.forEach(site => {
+    GLOBAL.config.sites.forEach(site => {
         if(site.siteId === siteId) { return out = site.siteHTMLName; }
     })
     return (out)?out:null;// Fallback
@@ -88,7 +88,7 @@ function getSiteHTMLNameFromId(siteId) {
 /////////////////
 // Simple function to get Site HTML Name from Site ID.
 function getSiteIdFromName(siteName) {
-    js_config_obj.sites.forEach(site => {
+    GLOBAL.config.sites.forEach(site => {
         if(site.siteName === siteName) { return out = site.siteId; }
     })
     return (out)?out:null;// Fallback

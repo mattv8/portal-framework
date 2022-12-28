@@ -82,9 +82,9 @@ $ldap_allowed_admin_groups = array("CN=Administrators,OU=Groups,DC=example,DC=co
 $ldap_disallowed_ous = array("OU=Guests,DC=example,DC=com");// Organizational Units of users who are NOT allowed to log in at all.
 
 # If desired, specify an associative array to be JSON encoded and passed to Javascript (loaded in header.tpl)
-#   Example: $js_config_obj = array('foo1'=>'bar1', 'foo2'=>'bar2');
-#   Load from any Javascript file like 'js_config_obj.autofill_attributes'
-$js_config_obj = array('');
+#   Example: $js_config = array('foo1'=>'bar1', 'foo2'=>'bar2');
+#   Load from any Javascript file like 'GLOBAL.config.foo1'.
+$js_config = array('');
 
 # Allow to override current settings with local configuration
 if (file_exists ($_SERVER['DOCUMENT_ROOT'].'/config.local.php')) {

@@ -67,7 +67,7 @@ $smarty->assign('datatables_page_length_choices', $datatables_page_length_choice
 $smarty->assign('datatables_page_length_default', $datatables_page_length_default);
 $smarty->assign('datatables_auto_print', $datatables_auto_print);
 $smarty->assign('version',$version);
-$smarty->assign('js_config_obj',$js_config_obj);// Javascript Config Object
+$smarty->assign('js_config',$js_config);// Javascript Config Object
 $smarty->assign('display_footer',$display_footer);
 $smarty->assign('logout_link',$logout_link);
 $smarty->assign('default_page',$default_page);

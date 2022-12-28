@@ -17,10 +17,12 @@
 
   {* Load Javascript Config Object *}
   <script>
-    var js_config_obj = {$js_config_obj|json_encode nofilter};
-    js_config_obj.sites = {$sites|json_encode nofilter};
-    js_config_obj.siteMemberships = {$siteMemberships|json_encode nofilter};
-    js_config_obj.currentUser = {$currentUser|json_encode nofilter};
+    "use strict";
+    window.GLOBAL = {}; // GLOBAL Object namespace
+    GLOBAL.config = {$js_config|json_encode nofilter};
+    GLOBAL.config.sites = {$sites|json_encode nofilter};
+    GLOBAL.config.siteMemberships = {$siteMemberships|json_encode nofilter};
+    GLOBAL.config.currentUser = {$currentUser|json_encode nofilter};
   </script>
 
   {* Javascript *}

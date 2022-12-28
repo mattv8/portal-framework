@@ -77,7 +77,7 @@ function editAttr(selector,inputType,user,key) {
     td.appendChild(cancelButton);// Append cancelButton to td2
     selector.replaceWith(td);// Replace DOM element
     if ( key === 'siteMemberships' ) { select2_sites(user); }// Replace input with Select2
-    if ( user === js_config_obj.currentUser ) { refreshOnModalClose('UserMgmtModal',(inputType === 'password')); }// Trigger refresh on modal close
+    if ( user === GLOBAL.config.currentUser ) { refreshOnModalClose('UserMgmtModal',(inputType === 'password')); }// Trigger refresh on modal close
 
 }
 
@@ -123,7 +123,7 @@ function deleteUser(td,user) {
         if (callback.success) {// Do the delete to the database on successful callback
             tdNew.closest('tr').remove();// Delete the table row
             document.getElementById('user-mgmt-table').classList.add("fade-green");// Add fade-green class for nice animation
-            if ( user === js_config_obj.currentUser ) { refreshOnModalClose('UserMgmtModal'); }// Trigger refresh on modal close
+            if ( user === GLOBAL.config.currentUser ) { refreshOnModalClose('UserMgmtModal'); }// Trigger refresh on modal close
         } else {
             alert(callback.msg);
         }
@@ -222,7 +222,7 @@ function createMultiSelectInput(user) {
 function select2_sites(user) {
     
     // STEP 1: Initialize the Select2 object with all available sites
-    const siteNames = js_config_obj.sites.map(value => value.siteName);// Create array from the siteName key in js_config_obj.sites
+    const siteNames = GLOBAL.config.sites.map(value => value.siteName);// Create array from the siteName key in GLOBAL.config.sites
     var siteSelect = $('.select2-'+user).select2({
         dropdownParent: $('.select2-'+user).closest('table'),
         placeholder: 'Add or remove sites',
