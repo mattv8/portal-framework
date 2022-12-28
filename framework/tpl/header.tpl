@@ -24,7 +24,7 @@
     GLOBAL.config.siteMemberships = {$siteMemberships|json_encode nofilter};
     GLOBAL.config.currentUser = {$currentUser|json_encode nofilter};
 
-    {if $debug eq 'false' }{literal}
+    {if !isset($debug) or !$debug }{literal}
       const msg = 'The console has been disabled for security purposes. Set $debug = true; in config.php to re-enable.';
       const console = {
         log : function(){ return msg; },
