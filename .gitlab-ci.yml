@@ -19,7 +19,7 @@ deploy-to-development-server:
                 - branches #Changes to branches trigger pipeline
         except:
             changes: #Ignore changes to the following files
-                - _exclusings.txt
+                - "_exclusings.txt"
                 - .* #Ignore dot files
                 - "*.md" #Ignore .md files
         script:
@@ -37,7 +37,7 @@ update-fairyland-dev-portal-framework:
                 - branches #Changes to branches trigger pipeline
         except:
             changes: #Ignore changes to the following files
-                - _exclusings.txt
+                - "_exclusings.txt"
                 - .* #Ignore dot files
                 - "*.md" #Ignore .md files
         when: manual #Runner will only run with manual intervention
@@ -61,7 +61,7 @@ update-fairyland-production-portal-framework:
       - penny-webserver #Only runner with this tag will run this pipeline
   except:
       changes: #Ignore changes to the following files
-        - _exclusings.txt
+        - "_exclusings.txt"
         - .* #Ignore dot files
         - "*.md" #Ignore .md files
   only:
