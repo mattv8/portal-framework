@@ -42,9 +42,18 @@
   <script src="framework/vendor/datatables/datatables.min.js"></script>
   <script src="framework/vendor/datatables/dataTables.bootstrap5.min.js"></script>
   <script src="framework/vendor/moment/moment.min.js"></script>
+  {if file_exists('framework/vendor/datepicker-lightpick/js/lightpick.min.js')}
+  <script src="framework/vendor/datepicker-lightpick/js/lightpick.min.js"></script>
+  {else}
   <script src="framework/vendor/datepicker-lightpick/js/lightpick.js"></script>
+  {/if}
   <script src="framework/vendor/select2/js/select2.full.min.js"></script>
+  {if file_exists('framework/js/all.min.js')}
+  <script src="framework/js/all.min.js"></script>
+  {else}
   <script src="framework/js/functions.js"></script>
+  <script src="framework/js/modal.users.js"></script>
+  {/if}
 
   {* Load Custom Headers *}
   {if file_exists("templates/header.tpl")}

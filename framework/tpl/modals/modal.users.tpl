@@ -1,6 +1,3 @@
-{* Modal Specific JS *}
-<script src="framework/js/modal.users.js"></script>
-
 {* Manage existing users *}
 <div class="card mb-2">
     <div class="card-body">
