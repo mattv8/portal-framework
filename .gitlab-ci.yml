@@ -75,6 +75,6 @@ update-fairyland-production-portal-framework:
     - uglifyjs-folder ./framework/vendor/datepicker-lightpick/js -o ./framework/vendor/datepicker-lightpick/js/lightpick.min.js -p "**/*.js" #Minify custom lightpick JS
     - find ./framework/js -type f -name "*.js" -not -name "all.min.js" -delete #Remove the unminified JS
     - if [ -z "$fairyland_admin_production_webroot" ]; then echo "Need to set webroot" && exit 1; fi #Verify webroot env var is set
-    - sudo rsync -rv ./framework/ $fairyland_admin_dev_webroot/framework --delete --exclude-from=./_exclusions.txt #Sync and overwrite framework directory
-    - sudo rsync -rv ./ $fairyland_admin_dev_webroot --exclude 'framework' --exclude-from=./_exclusions.txt #Sync root directory without overwrite
+    - sudo rsync -rv ./framework/ $fairyland_admin_production_webroot/framework --delete --exclude-from=./_exclusions.txt #Sync and overwrite framework directory
+    - sudo rsync -rv ./ $fairyland_admin_production_webroot --exclude 'framework' --exclude-from=./_exclusions.txt #Sync root directory without overwrite
     - sudo chown 1004:users $fairyland_admin_production_webroot -R #Change ownerships
