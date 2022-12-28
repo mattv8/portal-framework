@@ -45,7 +45,7 @@ $page_bg_color_class = 'bg-light';// See https://getbootstrap.com/docs/5.0/utili
 
 # Debug mode
 $debug = false;
-$smarty_debug = true;
+$smarty_debug = false;
 
 # Cache directory
 $smarty_compile_dir = "cache";
