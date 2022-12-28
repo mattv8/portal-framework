@@ -1,7 +1,7 @@
 /*
  * Custom Javascript Functions
  */
-
+ 
 
 /////////////////
 // Pull a list of sites from the database
