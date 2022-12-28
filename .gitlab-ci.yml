@@ -43,7 +43,7 @@ update-fairyland-dev-portal-framework:
         when: manual #Runner will only run with manual intervention
         image: node:latest
         script:
-            - sudo npm install uglifyjs-folder -g #Install uglifyjs-folder if not already installed
+            - npm install uglifyjs-folder -g #Install uglifyjs-folder if not already installed. No need for sudo, npm is installed under gitlab-runner
             - uglifyjs-folder ./framework/js -o ./framework/js/all.min.js -p "**/*.js" --comments #Minify all JS in the folder
             - uglifyjs-folder ./framework/vendor/datepicker-lightpick/js -o ./framework/vendor/datepicker-lightpick/js/lightpick.min.js -p "**/*.js" #Minify custom lightpick JS
             - find ./framework/js -type f -name "*.js" -not -name "all.min.js" -delete #Remove the unminified JS
