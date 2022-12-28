@@ -23,6 +23,18 @@
     GLOBAL.config.sites = {$sites|json_encode nofilter};
     GLOBAL.config.siteMemberships = {$siteMemberships|json_encode nofilter};
     GLOBAL.config.currentUser = {$currentUser|json_encode nofilter};
+
+    {if !$debug }{literal}
+      "use strict";
+      const msg = "The console has been disabled for security purposes.";
+      const console = {
+        log : function(){ return msg; },
+        warn : function(){ return msg; },
+        error : function(){ return msg; },
+        time : function(){ return msg; },
+        timeEnd : function(){ return msg; },
+      };
+    {/literal}{/if}
   </script>
 
   {* Javascript *}
