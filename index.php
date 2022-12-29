@@ -32,8 +32,7 @@ $smarty->setCacheDir($cache_dir);
 error_reporting(0);
 if ($debug) {
     error_reporting(E_ALL);
-    # Set debug for LDAP
-    ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
+    if ($auth_type == 'ldap') { ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7); }// Set debug for LDAP
 }
 $smarty->assign('debug',$debug);
 $smarty->debugging = $smarty_debug;
@@ -56,7 +55,9 @@ if (file_exists("framework/conf/$lang.php")) {
 #==============================================================================
 
 # Assign configuration variables
-$smarty->assign('ldap_params',array('ldap_url' => $ldap_url, 'ldap_starttls' => $ldap_starttls, 'ldap_binddn' => $ldap_binddn, 'ldap_bindpw' => $ldap_bindpw, 'ldap_user_base' => $ldap_user_base, 'ldap_user_filter' => $ldap_user_filter));
+if ($auth_type == 'ldap') {
+    $smarty->assign('ldap_params',array('ldap_url' => $ldap_url, 'ldap_starttls' => $ldap_starttls, 'ldap_binddn' => $ldap_binddn, 'ldap_bindpw' => $ldap_bindpw, 'ldap_user_base' => $ldap_user_base, 'ldap_user_filter' => $ldap_user_filter));
+}
 $smarty->assign('logo',$logo);
 $smarty->assign('background_image',$background_image);
 $smarty->assign('page_bg_color_class',$page_bg_color_class);
