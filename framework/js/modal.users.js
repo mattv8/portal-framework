@@ -31,7 +31,7 @@ function editAttr(selector,inputType,user,key) {
     switch (inputType) {
         case 'text': input = createTextInput(selector,'text'); break;
         case 'select-multiple': input = createMultiSelectInput(user); break;
-        case 'checkbox': console.log(inputType); break;
+        case 'checkbox': input = createCheckboxInput(selector); break;
         case 'password': input = createTextInput(selector,'password'); break;
         default: console.log(inputType);
     }
@@ -41,14 +41,21 @@ function editAttr(selector,inputType,user,key) {
     saveButton.className = "fa fa-fw fa-save inline-icon hover-green ml-1";
     saveButton.onclick = function(event){
         let edits;
+        let innerHTML;
         switch (inputType) {
             case 'text':
             case 'password':
-                edits = input.value; break;
+                edits = input.value; 
+                innerHTML = edits;
+                break;
             case 'select-multiple':
-                edits = $('.select2-'+user).select2('data').map(value => value.id); break;// Gets selected id's as array, then stringify
-            case 'checkbox': console.log(inputType); break;
-            case 'password': console.log(inputType); break;
+                edits = $('.select2-'+user).select2('data').map(value => value.id);// Gets selected id's as array, then stringify
+                innerHTML = edits.join(', ');
+                break;
+            case 'checkbox': 
+                edits = (input.firstChild.checked) ? '1' : '0';
+                innerHTML = (input.firstChild.checked) ? '<i class="fa fa-fw fa-check green inline-icon ml-1"></i>' : '<i class="fa fa-fw fa-ban red inline-icon ml-1"></i>';
+                break;
             default: console.log(inputType);
         }
 
@@ -56,7 +63,7 @@ function editAttr(selector,inputType,user,key) {
         var callback = submitEdits(key,user,(typeof(edits)=='object')?JSON.stringify(edits):edits);
         if ( callback.success ) {// Save the edits back to the database
             td.replaceWith(selector);// Swap back to original
-            selector.innerText = (typeof(edits)=='object')?edits.join(', '):edits;// Replace innterText with comma-separated string from array
+            selector.innerHTML = innerHTML;// Replace innterText with values set above
             selector.appendChild(editButton);// Add edit button back
             $(selector).css("background-color", 'lightgreen').animate({ backgroundColor: "white"}, 1000);// Add fade-green class for nice animation
         } else {
@@ -216,6 +223,25 @@ function createMultiSelectInput(user) {
     input.className = "form-control populate select2-"+user;
     input.style = "width:100%; height:30px;";
     return input;
+}
+
+// <div class="form-check form-switch">
+//   <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+// </div>
+function createCheckboxInput(selector) {
+    var icon = selector.firstChild;// Grab the FontAwesome icon
+    var isChecked = icon.classList.contains('fa-check') ? true : false;// Determine if checked initially
+
+    var container = document.createElement('div');// Create text input field <button></button>
+    container.className = "form-check form-switch";
+
+    var input = document.createElement('input');
+    input.className = "form-check-input med-checkbox";
+    input.type = "checkbox";
+    input.checked = isChecked;
+    
+    container.appendChild(input);
+    return container;
 }
 
 

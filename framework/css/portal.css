@@ -231,3 +231,8 @@ to     {background-color:inherit;}
   height: 30px;
   width: 60px !important;
 }
+
+.med-checkbox {
+  height: 20px;
+  width: 50px !important;
+}
