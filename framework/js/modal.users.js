@@ -44,9 +44,12 @@ function editAttr(selector,inputType,user,key) {
         let innerHTML;
         switch (inputType) {
             case 'text':
-            case 'password':
                 edits = input.value; 
                 innerHTML = edits;
+                break;
+            case 'password':
+                edits = input.value;
+                innerHTML = '••••••••';
                 break;
             case 'select-multiple':
                 edits = $('.select2-'+user).select2('data').map(value => value.id);// Gets selected id's as array, then stringify
