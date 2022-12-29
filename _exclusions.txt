@@ -10,6 +10,7 @@ _exclusions.txt
 .git
 .gitignore
 .gitlab-ci.yml
+.nfs*
 .vscode
 README.md
 
