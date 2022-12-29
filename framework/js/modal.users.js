@@ -32,7 +32,7 @@ function editAttr(selector,inputType,user,key) {
         case 'text': input = createTextInput(selector,'text'); break;
         case 'select-multiple': input = createMultiSelectInput(user); break;
         case 'checkbox': input = createCheckboxInput(selector); break;
-        case 'password': input = createTextInput(selector,'password'); break;
+        case 'password': input = createTextInput(selector,(GLOBAL.config.revealPassword)?'text':'password'); break;
         default: console.log(inputType);
     }
 

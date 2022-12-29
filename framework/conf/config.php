@@ -35,6 +35,9 @@ $user_attr_map = array(
     'Active?' => array( 'key' => 'active', 'inputType' => 'checkbox'),
 );
 
+# If true, the password will be shown in plaintext then managing users.
+$revealPassword = true;
+
 # Graphics
 $logo = "framework/images/logo.png";
 $background_image = "framework/images/unsplash-space.jpeg";
@@ -84,7 +87,7 @@ $ldap_disallowed_ous = array("OU=Guests,DC=example,DC=com");// Organizational Un
 # If desired, specify an associative array to be JSON encoded and passed to Javascript (loaded in header.tpl)
 #   Example: $js_config = array('foo1'=>'bar1', 'foo2'=>'bar2');
 #   Load from any Javascript file like 'GLOBAL.config.foo1'.
-$js_config = array('');
+$js_config = array('revealPassword' => $revealPassword);
 
 # Allow to override current settings with local configuration
 if (file_exists ($_SERVER['DOCUMENT_ROOT'].'/config.local.php')) {
