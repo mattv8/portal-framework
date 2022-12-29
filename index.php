@@ -91,7 +91,7 @@ switch ($auth_type) {
         $authenticated = $_SESSION["authenticated"];
 }
 
-if( !strcmp($auth_type,'sql') and isset($db_servername) and isset($db_username) and isset($db_password) and isset($db_name)) {// DB configuration check
+if( $auth_type == 'sql' and isset($db_servername) and isset($db_username) and isset($db_password) and isset($db_name)) {// DB configuration check
     $db_conn = mysqli_connect($db_servername, $db_username, $db_password, $db_name);// Establish connection
     if ($db_conn) {// DB connection check
 
