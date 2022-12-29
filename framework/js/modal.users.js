@@ -32,7 +32,7 @@ function editAttr(selector,inputType,user,key) {
         case 'text': input = createTextInput(selector,'text'); break;
         case 'select-multiple': input = createMultiSelectInput(user); break;
         case 'checkbox': input = createCheckboxInput(selector); break;
-        case 'password': input = createTextInput(selector,(GLOBAL.config.revealPassword)?'text':'password'); break;
+        case 'password': input = createTextInput(selector,'password'); break;
         default: console.log(inputType);
     }
 
@@ -216,7 +216,7 @@ function createTextInput(selector, type) {
     input.style = "height:100%;";
     input.value = ( type == 'password' ) ? "" : selector.innerText;
     input.placeholder = ( type == 'password' ) ? "" : selector.innerText;
-    input.type = type;
+    input.type = (type == 'password' && !GLOBAL.config.revealPassword )?'text':type;
     return input;
 }
 
