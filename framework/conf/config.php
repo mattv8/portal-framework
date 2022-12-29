@@ -87,6 +87,11 @@ $ldap_disallowed_ous = array("OU=Guests,DC=example,DC=com");// Organizational Un
 # If desired, specify an associative array to be JSON encoded and passed to Javascript (loaded in header.tpl)
 #   Example: $js_config = array('foo1'=>'bar1', 'foo2'=>'bar2');
 #   Load from any Javascript file like 'GLOBAL.config.foo1'.
+#
+# This should be changed to $js_config += array() in config.local.php as well so variables are pushed to the aray
+# rather than overriding the variable. Objects written to the $js_config() can be overridden in a config.local.php
+# by redefining the key and/or variable. For example:
+#   $js_config['revealPassword'] = false;
 $js_config = array('revealPassword' => $revealPassword);
 
 # Allow to override current settings with local configuration
