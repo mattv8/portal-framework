@@ -27,7 +27,7 @@
       {/if}
       
       {* Logout/Login Button*}
-      {if $auth_type neq "none" and isset($authenticated)}
+      {if $auth_type neq "none" and isset($authenticated) and $authenticated}
       <div class="col d-grid gap-2 d-md-flex justify-content-xl-end">
         <button type="submit" class="btn btn-success my-1" onclick="logoff()" title="Log off"><i class="fa fa-fw fa-sign-out"></i> {$msg_logout}</button>
       </div>
