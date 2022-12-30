@@ -63,10 +63,6 @@ $smarty->assign('background_image',$background_image);
 $smarty->assign('page_bg_color_class',$page_bg_color_class);
 $smarty->assign('custom_css',$custom_css);
 $smarty->assign('date_specifiers',$date_specifiers);
-if (is_array($datatables_page_length_choices)) $datatables_page_length_choices = implode(', ', $datatables_page_length_choices);
-$smarty->assign('datatables_page_length_choices', $datatables_page_length_choices);
-$smarty->assign('datatables_page_length_default', $datatables_page_length_default);
-$smarty->assign('datatables_auto_print', $datatables_auto_print);
 $smarty->assign('version',$version);
 $smarty->assign('js_config',$js_config);// Javascript Config Object
 $smarty->assign('display_footer',$display_footer);
