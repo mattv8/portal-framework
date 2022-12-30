@@ -44,9 +44,9 @@ update-fairyland-dev-portal-framework:
         image: node:latest
         script:
             - npm install uglifyjs-folder -g #Install uglifyjs-folder if not already installed. No need for sudo, npm is installed under gitlab-runner
-            - uglifyjs-folder ./framework/js -o ./framework/js/all.min.js -p "**/*.js" --comments #Minify all JS in the folder
-            - uglifyjs-folder ./framework/vendor/datepicker-lightpick/js -o ./framework/vendor/datepicker-lightpick/js/lightpick.min.js -p "**/*.js" #Minify custom lightpick JS
-            - find ./framework/js -type f -name "*.js" -not -name "all.min.js" -delete #Remove the unminified JS
+            - uglifyjs-folder ./framework/js -eo ./framework/js/ -p "**/*.js" #Minify all JS in the folder with separate files
+            - uglifyjs-folder ./framework/vendor/datepicker-lightpick/js -eo ./framework/vendor/datepicker-lightpick/js/ -p "**/*.js" #Minify custom lightpick JS
+            - find ./framework/js ./framework/vendor/datepicker-lightpick/js -type f -name "*.js" -not -name "*.min.js" -delete #Remove the unminified JS
             - if [ -z "$fairyland_admin_dev_webroot" ]; then echo "Need to set webroot as GitLab CI/CD variable" && exit 1; fi #Verify env var is set
             - sudo rsync -rv ./framework/ $fairyland_admin_dev_webroot/framework --delete --exclude-from=./_exclusions.txt #Sync and overwrite framework directory
             - sudo rsync -rv ./ $fairyland_admin_dev_webroot --exclude 'framework' --exclude-from=./_exclusions.txt #Sync root directory without overwrite
@@ -70,10 +70,10 @@ update-fairyland-production-portal-framework:
   when: manual #Runner will only run with manual intervention
   image: node:latest
   script:
-    - sudo npm install uglifyjs-folder -g #Install uglifyjs-folder if not already installed
-    - uglifyjs-folder ./framework/js -o ./framework/js/all.min.js -p "**/*.js" --comments #Minify all JS in the folder
-    - uglifyjs-folder ./framework/vendor/datepicker-lightpick/js -o ./framework/vendor/datepicker-lightpick/js/lightpick.min.js -p "**/*.js" #Minify custom lightpick JS
-    - find ./framework/js -type f -name "*.js" -not -name "all.min.js" -delete #Remove the unminified JS
+    - npm install uglifyjs-folder -g #Install uglifyjs-folder if not already installed. No need for sudo, npm is installed under gitlab-runner
+    - uglifyjs-folder ./framework/js -eo ./framework/js/ -p "**/*.js" #Minify all JS in the folder with separate files
+    - uglifyjs-folder ./framework/vendor/datepicker-lightpick/js -eo ./framework/vendor/datepicker-lightpick/js/ -p "**/*.js" #Minify custom lightpick JS
+    - find ./framework/js ./framework/vendor/datepicker-lightpick/js -type f -name "*.js" -not -name "*.min.js" -delete #Remove the unminified JS
     - if [ -z "$fairyland_admin_production_webroot" ]; then echo "Need to set webroot" && exit 1; fi #Verify webroot env var is set
     - sudo rsync -rv ./framework/ $fairyland_admin_production_webroot/framework --delete --exclude-from=./_exclusions.txt #Sync and overwrite framework directory
     - sudo rsync -rv ./ $fairyland_admin_production_webroot --exclude 'framework' --exclude-from=./_exclusions.txt #Sync root directory without overwrite
