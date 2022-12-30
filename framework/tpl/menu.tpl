@@ -45,8 +45,8 @@
     <div class="row alert alert-success" role="alert">
       <div class="col-auto me-auto my-1"><i class="fa fa-fw fa-info-circle"></i> Welcome, {$displayname}.</div>
       <div class="col-auto ms-auto my-1"><p class="text-right mb-0">{if $isadmin} You have admin privileges.{/if}</p></div>
-      <div class="col-auto my-1"><button class="fa fa-fw fa-remove inline-icon" onclick="fadeOutAfter(document.getElementById('welcome-banner'),0,this)"></button></div>
+      <div class="col-auto my-1"><button class="fa fa-fw fa-remove inline-icon" id="banner-dismiss" onclick="fadeOutAfter(document.getElementById('welcome-banner'),0,false,this)"></button></div>
     </div>
   </div>
-  <script>fadeOutAfter(document.getElementById('welcome-banner'),10000)</script>{* fade banner out after 10 seconds *}
+  <script>fadeOutAfter(document.getElementById('welcome-banner'),10000,false,document.getElementById('banner-dismiss'))</script>{* fade banner out after 10 seconds *}
 {/if}
