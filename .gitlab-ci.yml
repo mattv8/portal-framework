@@ -40,7 +40,7 @@ update-fairyland-dev-portal-framework:
             - "_exclusings.txt"
             - .* #Ignore dot files
             - "*.md" #Ignore .md files
-    when: manual #Runner will only run with manual intervention
+    # when: manual #Runner will only run with manual intervention
     image: node:latest
     script:
         - npm install uglifyjs-folder -g #Install uglifyjs-folder if not already installed. No need for sudo, npm is installed under gitlab-runner
