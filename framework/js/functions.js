@@ -193,6 +193,19 @@ function findElementWithInnerText(innerText) {
   }
 
 
+  function fadeOutAfter(selector,fadeTime,button) {
+    if (event) { event.preventDefault(); }// If this is in a form, disable the default form action.
+    setTimeout(function() {
+        let opacity = (selector.style.opacity)?selector.style.opacity:1;
+        if(button) { button.disabled = true; }
+        let interval = setInterval(function() {
+            if (opacity <= 0) { clearInterval(interval); }
+            selector.style.opacity = opacity;
+            opacity -= 0.1;
+        }, 100);
+    }, fadeTime);
+}
+
 /*  Little function to return a subobject by subkey and value
     Example:
         obj = {
