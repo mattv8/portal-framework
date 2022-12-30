@@ -1,3 +1,10 @@
+{* Load page-specific JS *}
+{if file_exists('framework/js/modal.users.min.js')}
+<script src="framework/js/modal.users.min.js"></script>
+{else}
+<script src="framework/js/modal.users.js"></script>{* This file gets minified by CI/CD *}
+{/if}
+
 {* Manage existing users *}
 <div class="card mb-2">
     <div class="card-body">

@@ -9,7 +9,9 @@
 {/if}
 
 {* Load Nav Button Modals *}
-{include file="framework/tpl/modals/modal.navbuttons.tpl"}
+{if $auth_type neq "none" and isset($authenticated) and $authenticated}
+  {include file="framework/tpl/modals/modal.navbuttons.tpl"}
+{/if}
 
 {* Load Page-specific Modals *}
 {if file_exists("templates/modals/modal.$page.tpl")}

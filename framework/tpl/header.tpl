@@ -50,11 +50,10 @@
   {else}
   <script src="framework/vendor/datepicker-lightpick/js/lightpick.js"></script>
   {/if}
-  {if file_exists('framework/js/all.min.js')}
-  <script src="framework/js/all.min.js"></script>
+  {if file_exists('framework/js/functions.min.js')}
+  <script src="framework/js/functions.min.js"></script>
   {else}
   <script src="framework/js/functions.js"></script>{* This file gets minified by CI/CD *}
-  <script src="framework/js/modal.users.js"></script>{* This file gets minified by CI/CD *}
   {/if}
 
   {* Load Custom Headers *}
