@@ -20,7 +20,7 @@
         
         {* Nav Buttons *}
         {foreach from=$nav_buttons item=button key=btn_name}
-        <button class="btn btn-{$button.btn_color} {if !$button@index}my-1{else}mb-1{/if}" id="{$btn_name}Button" onclick="openModal({$button.modalId},this)"><i class="fa fa-fw fa-{$button.faclass} me-1"></i>{$button.title|@ucfirst}</button>
+        <button class="btn btn-{$button.btn_color} mb-1" id="{$btn_name}Button" onclick="openModal({$button.modalId},this)"><i class="fa fa-fw fa-{$button.faclass} me-1"></i>{$button.title|@ucfirst}</button>
         {/foreach}
 
       </div>
@@ -28,7 +28,7 @@
       
       {* Logout/Login Button*}
       {if $auth_type neq "none" and isset($authenticated) and $authenticated}
-      <div class="col d-grid gap-2 d-md-flex my-1 justify-content-xl-end">
+      <div class="col d-grid gap-2 d-md-flex my-2 justify-content-xl-end">
         <button type="submit" class="btn btn-success" onclick="logoff()" title="Log off"><i class="fa fa-fw fa-sign-out"></i> {$msg_logout}</button>
       </div>
       {/if}
