@@ -1094,17 +1094,17 @@
 
             if (!dateISO.isValid() && !dateOptFormat.isValid()) {
                 this._opts.startDate = null;
-                this._opts.field.value = '';
+                this._opts.field.value = this._opts.field.innerText = '';
                 return;
             }
 
             this._opts.startDate = moment(dateISO.isValid() ? dateISO : dateOptFormat);
 
             if (this._opts.singleDate || this._opts.secondField) {
-                this._opts.field.value = this._opts.startDate.format(this._opts.format);
+                this._opts.field.value = this._opts.field.innerText = this._opts.startDate.format(this._opts.format);
             }
             else {
-                this._opts.field.value = this._opts.startDate.format(this._opts.format) + this._opts.separator + '...'
+                this._opts.field.value = this._opts.field.innerText = this._opts.startDate.format(this._opts.format) + this._opts.separator + '...'
             }
 
             if (!preventOnSelect && typeof this._opts.onSelect === 'function') {
@@ -1121,10 +1121,10 @@
                 this._opts.endDate = null;
 
                 if (this._opts.secondField) {
-                    this._opts.secondField.value = '';
+                    this._opts.secondField.value = this._opts.secondField.innerText =  '';
                 }
                 else if (!this._opts.singleDate && this._opts.startDate) {
-                    this._opts.field.value = this._opts.startDate.format(this._opts.format) + this._opts.separator + '...'
+                    this._opts.field.value = this._opts.field.innerText = this._opts.startDate.format(this._opts.format) + this._opts.separator + '...'
                 }
                 return;
             }
@@ -1132,11 +1132,11 @@
             this._opts.endDate = moment(dateISO.isValid() ? dateISO : dateOptFormat);
 
             if (this._opts.secondField) {
-                this._opts.field.value = this._opts.startDate.format(this._opts.format);
-                this._opts.secondField.value = this._opts.endDate.format(this._opts.format);
+                this._opts.field.value = this._opts.field.innerText = this._opts.startDate.format(this._opts.format);
+                this._opts.secondField.value = this._opts.secondField.innerText =  this._opts.endDate.format(this._opts.format);
             }
             else {
-                this._opts.field.value = this._opts.startDate.format(this._opts.format) + this._opts.separator + this._opts.endDate.format(this._opts.format);
+                this._opts.field.value = this._opts.field.innerText = this._opts.startDate.format(this._opts.format) + this._opts.separator + this._opts.endDate.format(this._opts.format);
             }
 
             if (!preventOnSelect && typeof this._opts.onSelect === 'function') {
