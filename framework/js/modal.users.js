@@ -68,7 +68,7 @@ function editAttr(selector,inputType,user,key) {
             td.replaceWith(selector);// Swap back to original
             selector.innerHTML = innerHTML;// Replace innterText with values set above
             selector.appendChild(editButton);// Add edit button back
-            $(selector).css("background-color", 'lightgreen').animate({ backgroundColor: "white"}, 1000);// Add fade-green class for nice animation
+            animateBackgroundColor(selector,500,'lightgreen');// Animate BG color
         } else {
             alert(callback.msg);
         }
@@ -176,7 +176,7 @@ function createUser(form) {
     // Final actions
     if (callback.success) {// Do the INSERT to the database on successful callback
         $("#user-mgmt-table").load(location.href + " #user-mgmt-table");// Refresh just the user management table
-        $("#user-mgmt-table").css("background-color", 'lightgreen').animate({ backgroundColor: "white"}, 1000);// Animate green
+        animateBackgroundColor('#user-mgmt-table', 1000, 'lightgreen')// Animate green
         $('#select2-siteMemberships').val(null).trigger('change');// Reset the Select2 selector
         form.reset();// Reset the form
     } else {
