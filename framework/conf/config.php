@@ -55,7 +55,7 @@ $revealPassword = true;
 
 # Graphics
 $logo = "framework/images/logo.png";
-$background_image = "framework/images/unsplash-space.jpeg";
+$background_image = "framework/images/marek-piwnicki-s_fgw1df-_I-unsplash.jpg";
 $custom_css = "";
 $display_footer = true;
 #$logout_link = "http://auth.example.com/logout";
