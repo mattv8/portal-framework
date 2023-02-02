@@ -1,5 +1,19 @@
 <div class="text-center">
-    <a href="index.php"><img src="{$logo}" alt="{$msg_title}" class="logo img-fluid"/></a>
+  <a href="index.php">
+    <marquee behavior="alternate" scrollamount="5" direction="right">
+        <img src="framework/images/dont-panic.jpg" alt="Portal Framework 2.0" class="img-fluid py-5">
+        <img src="framework/images/flame.gif" alt="Portal Framework 2.0" class="img-fluid py-5">
+        <img src="framework/images/dont-panic.jpg" alt="Portal Framework 2.0" class="img-fluid py-5">
+    </marquee>
+  </a>
+  <br><br>
+  <div class="text-center" style="background-color: yellow; width: 50%; height: 10px; margin: 0 auto; animation: flash 1s linear infinite;">
+  </div>
 </div>
-
-<div class="alert alert-success text-center">{$msg_welcome}</div>
+<style>
+    @keyframes flash {
+        0% { opacity: 0; }
+        50% { opacity: 1; }
+        100% { opacity: 0; }
+    }
+</style>

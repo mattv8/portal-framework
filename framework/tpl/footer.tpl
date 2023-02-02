@@ -3,6 +3,19 @@
 <div id="footer">Webguy Portal Framework - version {$version}</div>
 {/if}
 
+{* Framework Footer Scripts *}
+{literal} 
+  <script type="text/javascript">
+  
+    // Back button functionality
+    $(window).on('popstate', function(event) {
+      var page = event.originalEvent.state;// get the page from the state of the event
+      goToPage(page);// make an AJAX request to update the page
+    });
+  
+  </script>
+{/literal}
+
 {* Custom Footers *}
 {if file_exists("templates/footer.tpl")}
   {include file="templates/footer.tpl"}

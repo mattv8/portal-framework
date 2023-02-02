@@ -1,7 +1,8 @@
 {* Nav Button Admin Modals *}
 {foreach from=$nav_buttons item=button key=btn_name}
+    {if $button.btn_type == 'modal'}
     <div class="modal fade" id="{$button.modalId}" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered {$button.modalclass}" role="document">
+        <div class="modal-dialog modal-dialog-centered {if isset($button.modalclass)}{$button.modalclass}{else}modal-lg{/if}" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="modal-title" id="{$button.modalId}Title">{$button.title}</h2>
@@ -24,4 +25,5 @@
             </div>
         </div>
     </div>
+    {/if}
 {/foreach}

@@ -15,11 +15,26 @@ $lang ="en";
 $date_specifiers = "%Y-%m-%d %H:%M:%S (%Z)";
 
 # Default page
-$default_page = "examplepage";// First page to show upon authentication
+$default_page = "landingpage";// First page to show upon authentication
 
 # How to display the nav-menu buttons
 $nav_buttons = array(
-    'users' => array( 'title' => 'User Management', 'modalId' => 'UserMgmtModal', 'faclass' => 'users', 'btn_color' => 'secondary', 'modalclass' => 'modal-xl',),
+    'users' =>
+        array(
+            'title' => 'User Management',
+            'faclass' => 'users',
+            'btn_color' => 'secondary',
+            'btn_type' => 'modal',
+            'modalId' => 'UserMgmtModal',
+            'modalclass' => 'modal-xl',
+        ),
+    'examplepage' =>
+        array(
+            'title' => 'Example Linked Page',
+            'faclass' => 'hand-spock',
+            'btn_color' => 'secondary',
+            'btn_type' => 'page',
+        ),
 );
 
 # How to display the user management table header row (maps DB fields to table columns)
