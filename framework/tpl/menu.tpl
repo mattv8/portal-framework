@@ -23,7 +23,7 @@
         {if $button.btn_type == 'modal'}
         <button class="btn btn-{$button.btn_color} mb-1" id="{$btn_name}Button" onclick="openModal({$button.modalId},this)"><i class="fa fa-fw fa-{$button.faclass} me-1"></i>{$button.title|@ucfirst}</button>
         {else if $button.btn_type == 'page'}
-        <button class="btn btn-{$button.btn_color} mb-1" id="{$btn_name}Button" onclick="goToPage('{$btn_name}',this)"><i class="fa fa-fw fa-{$button.faclass} me-1"></i>{$button.title|@ucfirst}</button>
+        <button class="btn btn-{$button.btn_color} mb-1" id="{$btn_name}Button" onclick="goToPage('{$btn_name}','page-content')"><i class="fa fa-fw fa-{$button.faclass} me-1"></i>{$button.title|@ucfirst}</button>
         {/if}
         {/foreach}
 
