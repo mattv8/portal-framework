@@ -1,3 +1,6 @@
+{* Page specific JS can be specified here and will run when goToPage() is called *}
+<script src="framework/js/examplepage.js"></script>
+
 <div class="text-center">
   <a href="index.php">
     <marquee behavior="alternate" scrollamount="5" direction="right">
