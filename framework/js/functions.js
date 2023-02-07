@@ -31,7 +31,7 @@ function goToPage(page,replaceSelector) {
                 document.body.style.transition = 'opacity 500ms';
                 document.body.style.opacity = 0;
             }
-            setTimeout(function() {
+            setTimeout( async function() {
                 if (replaceSelector) {
                     var parser = new DOMParser();
                     var newDoc = parser.parseFromString(response, 'text/html');
@@ -42,7 +42,8 @@ function goToPage(page,replaceSelector) {
                     for (var i = 0; i < scripts.length; i++) {
                         var script = document.createElement('script');
                         script.type = 'text/javascript';
-                        script.src = scripts[i].src;
+                        let anonymousFunction = await anonymousFromScriptSrc(scripts[i].src);
+                        script.text = anonymousFunction;
                         selector.appendChild(script);
                     }
             
@@ -58,18 +59,37 @@ function goToPage(page,replaceSelector) {
                     for (var i = 0; i < scripts.length; i++) {
                         var script = document.createElement('script');
                         script.type = 'text/javascript';
-                        script.src = scripts[i].src;
+                        let anonymousFunction = await anonymousFromScriptSrc(scripts[i].src);
+                        script.text = anonymousFunction;
                         document.body.appendChild(script);
                     }
             
                     document.body.style.transition = 'opacity 500ms';
                     document.body.style.opacity = 1;
                 }
-
+        
             }, 500);
             
             history.pushState(page, null, '/?page=' + page);// add the page to the browser's history
         },
+        
+    });
+}
+
+/* This function returns a Promise that resolves to the contents of a script file 
+    wrapped in an anonymous function. The contents are fetched using an XMLHttpRequest GET request.
+*/
+async function anonymousFromScriptSrc(scriptFile) {
+    return new Promise(function(resolve, reject) {
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", scriptFile, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                let scriptContents = xhr.responseText;
+                resolve("(function() {" + scriptContents + "})();");// wrap the contents in an anonymous function
+            }
+        };
+        xhr.send();
     });
 }
 
