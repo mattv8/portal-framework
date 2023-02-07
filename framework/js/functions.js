@@ -37,35 +37,37 @@ function goToPage(page,replaceSelector) {
                     var newDoc = parser.parseFromString(response, 'text/html');
                     var container = newDoc.getElementById(replaceSelector);
                     selector.innerHTML = container.innerHTML;
-            
+                    selector.style.transition = 'opacity 500ms';
+                    selector.style.opacity = 1;
+
+                    // Now load (or reload) any javascript
                     var scripts = container.getElementsByTagName('script');
                     for (var i = 0; i < scripts.length; i++) {
                         var script = document.createElement('script');
                         script.type = 'text/javascript';
-                        let anonymousFunction = await anonymousFromScriptSrc(scripts[i].src);
-                        script.text = anonymousFunction;
+                        let scriptContent = await anonymousFromScriptSrc(scripts[i].src);
+                        script.text = scriptContent;
                         selector.appendChild(script);
                     }
             
-                    selector.style.transition = 'opacity 500ms';
-                    selector.style.opacity = 1;
                 } else {
                     var parser = new DOMParser();
                     var newDoc = parser.parseFromString(response, 'text/html');
                     document.head.innerHTML = newDoc.head.innerHTML;
                     document.body.innerHTML = newDoc.body.innerHTML;
-            
+                    document.body.style.transition = 'opacity 500ms';
+                    document.body.style.opacity = 1;            
+                    
+                    // Now load (or reload) any javascript
                     var scripts = newDoc.getElementsByTagName('script');
                     for (var i = 0; i < scripts.length; i++) {
                         var script = document.createElement('script');
                         script.type = 'text/javascript';
-                        let anonymousFunction = await anonymousFromScriptSrc(scripts[i].src);
-                        script.text = anonymousFunction;
+                        let scriptContent = await anonymousFromScriptSrc(scripts[i].src);
+                        script.text = scriptContent;
                         document.body.appendChild(script);
                     }
             
-                    document.body.style.transition = 'opacity 500ms';
-                    document.body.style.opacity = 1;
                 }
         
             }, 500);
@@ -78,6 +80,8 @@ function goToPage(page,replaceSelector) {
 
 /* This function returns a Promise that resolves to the contents of a script file 
     wrapped in an anonymous function. The contents are fetched using an XMLHttpRequest GET request.
+    The purpose of the anonymous function wrapping is so the goToPage() function can be called multiple
+    times without having collisions with variables declared as `const`.
 */
 async function anonymousFromScriptSrc(scriptFile) {
     return new Promise(function(resolve, reject) {
