@@ -37,37 +37,33 @@ function goToPage(page,replaceSelector) {
                     var newDoc = parser.parseFromString(response, 'text/html');
                     var container = newDoc.getElementById(replaceSelector);
                     selector.innerHTML = container.innerHTML;
-                    selector.style.transition = 'opacity 500ms';
-                    selector.style.opacity = 1;
-
-                    // Now load (or reload) any javascript
+            
                     var scripts = container.getElementsByTagName('script');
                     for (var i = 0; i < scripts.length; i++) {
                         var script = document.createElement('script');
                         script.type = 'text/javascript';
-                        let scriptContent = await anonymousFromScriptSrc(scripts[i].src);
-                        script.text = scriptContent;
+                        script.src = scripts[i].src;
                         selector.appendChild(script);
                     }
             
+                    selector.style.transition = 'opacity 500ms';
+                    selector.style.opacity = 1;
                 } else {
                     var parser = new DOMParser();
                     var newDoc = parser.parseFromString(response, 'text/html');
                     document.head.innerHTML = newDoc.head.innerHTML;
                     document.body.innerHTML = newDoc.body.innerHTML;
-                    document.body.style.transition = 'opacity 500ms';
-                    document.body.style.opacity = 1;            
-                    
-                    // Now load (or reload) any javascript
+            
                     var scripts = newDoc.getElementsByTagName('script');
                     for (var i = 0; i < scripts.length; i++) {
                         var script = document.createElement('script');
                         script.type = 'text/javascript';
-                        let scriptContent = await anonymousFromScriptSrc(scripts[i].src);
-                        script.text = scriptContent;
+                        script.src = scripts[i].src;
                         document.body.appendChild(script);
                     }
             
+                    document.body.style.transition = 'opacity 500ms';
+                    document.body.style.opacity = 1;
                 }
         
             }, 500);
