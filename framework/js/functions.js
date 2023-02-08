@@ -5,7 +5,7 @@
 
 /////////////////
 // Pull a list of sites from the database
-function goToPage(page,replaceSelector) {
+function goToPage(page,replaceSelector,forceReloadJS) {
   
     // Redirect to root if page is null
     if(page == null){ window.location.href = '/'; return; }
@@ -45,8 +45,12 @@ function goToPage(page,replaceSelector) {
                     for (var i = 0; i < scripts.length; i++) {
                         var script = document.createElement('script');
                         script.type = 'text/javascript';
-                        let scriptContent = await anonymousFromScriptSrc(scripts[i].src);
-                        script.text = scriptContent;
+                        if(forceReloadJS) {
+                            let scriptContent = await anonymousFromScriptSrc(scripts[i].src);
+                            script.text = scriptContent;
+                        } else {
+                            script.src = scripts[i].src;
+                        }
                         selector.appendChild(script);
                     }
             
@@ -63,8 +67,12 @@ function goToPage(page,replaceSelector) {
                     for (var i = 0; i < scripts.length; i++) {
                         var script = document.createElement('script');
                         script.type = 'text/javascript';
-                        let scriptContent = await anonymousFromScriptSrc(scripts[i].src);
-                        script.text = scriptContent;
+                        if(forceReloadJS) {
+                            let scriptContent = await anonymousFromScriptSrc(scripts[i].src);
+                            script.text = scriptContent;
+                        } else {
+                            script.src = scripts[i].src;
+                        }
                         document.body.appendChild(script);
                     }
             
