@@ -19,6 +19,13 @@ $default_page = "landingpage";// First page to show upon authentication
 
 # How to display the nav-menu buttons
 $nav_buttons = array(
+    'landingpage' =>
+        array( 
+            'title' => 'Home',
+            'faclass' => 'home',
+            'btn_color' => 'outline-info',
+            'btn_type' => 'page',
+        ),
     'users' =>
         array(
             'title' => 'User Management',
@@ -33,7 +40,7 @@ $nav_buttons = array(
             'title' => 'Example Linked Page',
             'faclass' => 'hand-spock',
             'btn_color' => 'secondary',
-            'btn_type' => 'page',
+            'btn_type' => 'pageSmooth',
         ),
 );
 
