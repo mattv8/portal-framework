@@ -1,8 +1,3 @@
-
-{if $display_footer}
-<div id="footer">Webguy Portal Framework - version {$version}</div>
-{/if}
-
 {* Framework Footer Scripts *}
 {literal} 
   <script type="text/javascript">

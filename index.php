@@ -65,7 +65,6 @@ $smarty->assign('custom_css',$custom_css);
 $smarty->assign('date_specifiers',$date_specifiers);
 $smarty->assign('version',$version);
 $smarty->assign('js_config',$js_config);// Javascript Config Object
-$smarty->assign('display_footer',$display_footer);
 $smarty->assign('logout_link',$logout_link);
 $smarty->assign('default_page',$default_page);
 $smarty->assign('currentUser',$_SESSION['username']);

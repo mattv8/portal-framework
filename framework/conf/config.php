@@ -57,7 +57,6 @@ $revealPassword = true;
 $logo = "framework/images/logo.png";
 $background_image = "framework/images/marek-piwnicki-s_fgw1df-_I-unsplash.jpg";
 $custom_css = "";
-$display_footer = true;
 #$logout_link = "http://auth.example.com/logout";
 $page_bg_color_class = 'bg-light';// See https://getbootstrap.com/docs/5.0/utilities/background/ for examples of valid classes
 
