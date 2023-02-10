@@ -13,7 +13,7 @@
     </button>
     
     {* Collapsable Menu Items *}
-    <div class="container collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="container-fluid px-2 collapse navbar-collapse" id="navbarSupportedContent">
 
       {if ($auth_type neq "none" and $authenticated) and $isadmin}
       <div class="col d-grid gap-2 d-md-flex">
