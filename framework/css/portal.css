@@ -21,6 +21,36 @@ a, a:hover {
   padding: 2rem;
 }
 
+.inset-3 {
+  padding: 3rem;
+}
+
+.inset-4 {
+  padding: 4rem;
+}
+
+.inset-5 {
+  padding: 5rem;
+}
+
+@media (max-width: 720px) {
+  .inset-2 {
+    padding: .5rem;
+  }
+  
+  .inset-3 {
+    padding: .5rem;
+  }
+  
+  .inset-4 {
+    padding: .5rem;
+  }
+  
+  .inset-5 {
+    padding: .5rem;
+  }
+}
+
 .panel {
   background-color:#fff;
   background-color:rgba(255,255,255,0.8);

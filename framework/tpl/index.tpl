@@ -2,7 +2,7 @@
 
 <body>
 
-    <div class="container-fluid px-5 py-5">
+    <div class="container-fluid inset-3">
         <div class="panel panel-success {$page_bg_color_class}">
 
         {if file_exists("templates/menu.tpl")}
