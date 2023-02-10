@@ -378,3 +378,29 @@ function animateBackgroundColor(selector, transitionTime, color) {
         element.style.backgroundColor = '';
     }, dwellTime);
 }
+
+/**
+    showErrorModal - Displays an error modal with information about the XHR status and relevant PHP errors.
+    @param {object} xhr - The XHR object that contains the response and status information.
+    @param {string} GETurl - The URL used for the GET request.
+*/
+function showErrorModal(xhr,GETurl) {
+    //Selectors of interest, from templates/modals/modal.reservations.tpl
+    var modalTitle = document.getElementById('ErrorModalTitle');
+    var modalBody = document.getElementById('ErrorModalBody');
+    var modalLongText = document.getElementById('ErrorModalLongText');
+    
+    // Build some error messages
+    modalTitle.innerHTML = "There was an error building the PDF. The XHR status is:\
+    <b style='color:red'>"+xhr.status+" ("+xhr.statusText+") </b>";
+    modalBody.innerHTML = "You can click the following link to try again:<br><a href="+GETurl+">"+GETurl+"<a>";
+    
+    // Because response is of type "blob" we have to open it with the FileReader object.
+    var reader = new FileReader();
+    reader.onload = function() {
+        modalLongText.innerHTML ="<b>Relevant PHP errors (if any):</b><br>"+reader.result;
+    }
+    reader.readAsText(xhr.response);
+
+    $('#ErrorModal').modal('toggle');// Show the modal
+}

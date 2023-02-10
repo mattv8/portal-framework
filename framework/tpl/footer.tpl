@@ -21,9 +21,10 @@
   {include file="templates/footer.tpl"}
 {/if}
 
-{* Load Nav Button Modals *}
+{* Load Universal Modals *}
 {if $auth_type neq "none" and isset($authenticated) and $authenticated}
-  {include file="framework/tpl/modals/modal.navbuttons.tpl"}
+  {include file="framework/tpl/modals/modal.navbuttons.tpl"}{* Load Nav Button Modals *}
+  {include file="framework/tpl/modals/modal.errors.tpl"}{* Load Error Handling Modals *}
 {/if}
 
 {* Load Page-specific Modals *}
