@@ -2,7 +2,6 @@
 
 html, body {
   background: #eee;
-  padding-top: 20px;
   font-size: 12pt;
 }
 
@@ -42,16 +41,6 @@ img.menu-logo {
 .display img {
   margin-bottom: 20px;
 }
-
-
-.inset-1 {
-  padding: 1rem;
-}
-
-.inset-2 {
-  padding: 2rem;
-}
-
 
 .bg-blurred {
   background-color: rgba(255, 255, 255, 0.75);/* Lighten background */

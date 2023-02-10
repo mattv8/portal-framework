@@ -2,7 +2,7 @@
 
 <body>
 
-    <div class="container pb-5">
+    <div class="container-fluid px-5 py-5">
         <div class="panel panel-success {$page_bg_color_class}">
 
         {if file_exists("templates/menu.tpl")}
@@ -11,7 +11,7 @@
             {include file="framework/tpl/menu.tpl"}
         {/if}
 
-        <div class="container" id="page-content">
+        <div class="container-fluid px-0" id="page-content">
             {if $page_title}
             <div class="alert alert-info">
                 <p class="lead text-center">{$msg_{$page_title}}</p>
