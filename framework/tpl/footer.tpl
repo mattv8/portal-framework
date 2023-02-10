@@ -1,15 +1,31 @@
 {* Framework Footer Scripts *}
-{literal} 
-  <script type="text/javascript">
-  
-    // Back button functionality
-    $(window).on('popstate', function(event) {
-      var page = event.originalEvent.state;// get the page from the state of the event
-      goToPage(page);// make an AJAX request to update the page
-    });
-  
-  </script>
-{/literal}
+<script type="text/javascript">
+
+  // Back button functionality
+  $(window).on('popstate', function(event) {
+    var page = event.originalEvent.state;// get the page from the state of the event
+    goToPage(page);// make an AJAX request to update the page
+  });
+
+  {literal}
+  // Save the previous button color class
+  GLOBAL.btnClasses = {};
+  $('#navbarSupportedContent button').each(function(b, i) {
+      let button = $(this);
+      let id = button.attr('id');
+      let classes = button.attr('class').split(' ');
+      let btnClass = '';
+      classes.forEach(function(c) {
+          if (c.startsWith('btn-') && btnClass === '') {
+              btnClass = c;
+          }
+      });
+      GLOBAL.btnClasses[id] = btnClass;
+  });
+  {/literal}
+  navButtonShowOpen('{$page}');
+
+</script>
 
 {* Custom Footers *}
 {if file_exists("templates/footer.tpl")}

@@ -31,6 +31,9 @@ function goToPage(page,replaceSelector) {
                 document.body.style.transition = 'opacity 500ms';
                 document.body.style.opacity = 0;
             }
+
+            navButtonShowOpen(page);
+
             setTimeout( async function() {
                 if (replaceSelector) {
                     var parser = new DOMParser();
@@ -403,4 +406,33 @@ function showErrorModal(xhr,GETurl) {
     reader.readAsText(xhr.response);
 
     $('#ErrorModal').modal('toggle');// Show the modal
+}
+
+/**
+ * This function sets the class of a navigation button based on the current page. The function takes
+ *  a page argument and sets the class of the button corresponding to the given page to "btn-primary".
+ * If no page argument is provided, the function gets the current page from the URL query parameters.
+ * The function then returns the original color class for all other buttons. The button classes are 
+ * stored in a global object named GLOBAL.btnClasses, initialized in footer.tpl.
+ * @param {string} page - a string indicating the page title, as specified by $nav_buttons @key
+ */
+function navButtonShowOpen(page){
+    const urlParams = new URLSearchParams(window.location.search);
+    const _page = (page) ? page : urlParams.get('page');
+
+    // Set the nav button class for the current page to btn-primary
+    var navButton = $('#'+_page+'Button');
+    if (navButton) {
+        $(navButton).removeClass(GLOBAL.btnClasses[_page+'Button']).addClass('btn-primary', true);
+    }
+
+    // Return the original button color class
+    $('#navbarSupportedContent button').not('#' + _page + 'Button').each(function(b, i) {
+        let button = $(this);
+        let id = button.attr('id');
+        if (GLOBAL.btnClasses.hasOwnProperty(id)) {
+            button.addClass(GLOBAL.btnClasses[id]).removeClass('btn-primary');
+        }
+    });
+    
 }
