@@ -47,7 +47,7 @@
 
 {* Welcome Banner *}
 {if ($auth_type neq "none" and $authenticated) and $page eq $default_page}
-  <div class="container" id="welcome-banner">
+  <div class="container-fluid inset-1" id="welcome-banner">
     <div class="row alert alert-success" role="alert">
       <div class="col-auto me-auto my-1"><i class="fa fa-fw fa-info-circle"></i> Welcome, {$displayname}.</div>
       <div class="col-auto ms-auto my-1"><p class="text-right mb-0">{if $isadmin} You have admin privileges.{/if}</p></div>
