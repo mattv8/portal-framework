@@ -1,5 +1,6 @@
 {* Framework Footer Scripts *}
 <script type="text/javascript">
+  {literal}
 
   // Back button functionality
   $(window).on('popstate', function(event) {
@@ -7,7 +8,6 @@
     goToPage(page);// make an AJAX request to update the page
   });
 
-  {literal}
   // Save the previous button color class
   GLOBAL.btnClasses = {};
   $('#navbarSupportedContent button').each(function(b, i) {
@@ -22,6 +22,7 @@
       });
       GLOBAL.btnClasses[id] = btnClass;
   });
+  
   {/literal}
   navButtonShowOpen('{$page}');
 
@@ -32,10 +33,14 @@
   {include file="templates/footer.tpl"}
 {/if}
 
+{* Load Admin Navbar Modals *}
+{if ($auth_type neq "none" and $authenticated) and $isadmin}
+  {include file="framework/tpl/modals/modal.navbuttons.tpl"}{* Load Nav Button Modals *}
+{/if}
+
 {* Load Universal Modals *}
 {if $auth_type neq "none" and isset($authenticated) and $authenticated}
-  {include file="framework/tpl/modals/modal.navbuttons.tpl"}{* Load Nav Button Modals *}
-  {include file="framework/tpl/modals/modal.errors.tpl"}{* Load Error Handling Modals *}
+    {include file="framework/tpl/modals/modal.errors.tpl"}{* Load Error Handling Modals *}
 {/if}
 
 {* Load Page-specific Modals *}
