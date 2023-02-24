@@ -92,7 +92,7 @@ if( $auth_type == 'sql' and isset($db_servername) and isset($db_username) and is
 
         // Query `site` table for list of site names and ID's.
         $sites = ($authenticated)?getSites($db_conn):null;
-        
+
         // Query `user` table for current logged in username's group memberships
         $siteMemberships = ($authenticated)?getSiteMemberships($_SESSION["username"], $db_conn):null;
 
@@ -147,11 +147,10 @@ if ($page === "error") {
 }
 else if ($error) {
     $smarty->assign('error',$messages[$error]);
-} 
+}
 else {
     $smarty->assign('error',"");
 }
-
 if (!isset($_GET["request"])){// If we're here for an ajax request, don't display TPL
     if ( file_exists("templates/index.tpl") ) {// Allow override with local index.tpl
         $smarty->display('templates/index.tpl');
@@ -159,5 +158,3 @@ if (!isset($_GET["request"])){// If we're here for an ajax request, don't displa
         $smarty->display('framework/tpl/index.tpl');
     }
 }
-
-?>
