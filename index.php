@@ -151,7 +151,10 @@ else if ($error) {
 else {
     $smarty->assign('error',"");
 }
-if (!isset($_GET["request"])){// If we're here for an ajax request, don't display TPL
+if (isset($_GET["request"]) and $authenticated) {// If we're here for an independent request, don't display TPL
+    $smarty->assign('independentRequest',true);
+}
+else {// Otherwise display as normal
     if ( file_exists("templates/index.tpl") ) {// Allow override with local index.tpl
         $smarty->display('templates/index.tpl');
     } else {
