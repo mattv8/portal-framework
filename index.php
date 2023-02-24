@@ -113,8 +113,8 @@ $smarty->assign('user_attr_map',$user_attr_map);
 #==============================================================================
 # Route to page
 #==============================================================================
-if (isset($_GET["request"]) and $_GET["request"] and $authenticated) {// If we're here for an independent request
-    $smarty->assign('independentRequest',true);
+if (isset($_GET["request"]) and isset($_GET["debug"]) and $_GET["debug"] and $authenticated) {// If we're here for an independent request
+    $smarty->assign('debugView',true);
 }
 
 $page = "login";// Default route to login page
