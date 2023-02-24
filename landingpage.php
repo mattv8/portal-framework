@@ -24,6 +24,7 @@ if (isset($_GET["request"]) and $_GET["request"] and $authenticated) {
 if ( strcmp('testRequest',$request) == 0 ) {
 
     echo "Made it here";
+    $smarty->display('framework/tpl/examplepage.tpl');
 
 }
 

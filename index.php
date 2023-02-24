@@ -113,6 +113,10 @@ $smarty->assign('user_attr_map',$user_attr_map);
 #==============================================================================
 # Route to page
 #==============================================================================
+if (isset($_GET["request"]) and $_GET["request"] and $authenticated) {// If we're here for an independent request
+    $smarty->assign('independentRequest',true);
+}
+
 $page = "login";// Default route to login page
 
 if ( $authenticated ) { $page = isset($default_page)?$default_page:'error'; }// If authenticated, route to default page
@@ -151,10 +155,8 @@ else if ($error) {
 else {
     $smarty->assign('error',"");
 }
-if (isset($_GET["request"]) and $authenticated) {// If we're here for an independent request, don't display TPL
-    $smarty->assign('independentRequest',true);
-}
-else {// Otherwise display as normal
+
+if (!isset($_GET["request"])) {
     if ( file_exists("templates/index.tpl") ) {// Allow override with local index.tpl
         $smarty->display('templates/index.tpl');
     } else {
