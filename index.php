@@ -152,10 +152,12 @@ else {
     $smarty->assign('error',"");
 }
 
-if ( file_exists("templates/index.tpl") ) {// Allow override with local index.tpl
-    $smarty->display('templates/index.tpl');
-} else {
-    $smarty->display('framework/tpl/index.tpl');
+if (!isset($_GET["request"])){// If we're here for an ajax request, don't display TPL
+    if ( file_exists("templates/index.tpl") ) {// Allow override with local index.tpl
+        $smarty->display('templates/index.tpl');
+    } else {
+        $smarty->display('framework/tpl/index.tpl');
+    }
 }
 
 ?>
