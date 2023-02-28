@@ -267,6 +267,7 @@ function getInputs(selector) {
             case 'select-one':
                 inputObj[element.name] = $('#' + element.id).val(); break;
             case 'submit':
+            case 'hidden':
             case 'text':
                 inputObj[element.name] = element.value.replace(/'/g, "\\'"); break;
             case 'password':
