@@ -1,15 +1,15 @@
 /*
  * Custom Javascript Functions
  */
-    
+
 
 /////////////////
 // Pull a list of sites from the database
-function goToPage(page,replaceSelector) {
-  
+function goToPage(page, replaceSelector) {
+
     // Redirect to root if page is null
-    if(page == null){ window.location.href = '/'; return; }
-  
+    if (page == null) { window.location.href = '/'; return; }
+
     // Else route to specified page asynchronously
     $.ajax({
         url: 'index.php',
@@ -21,9 +21,9 @@ function goToPage(page,replaceSelector) {
         // complete: function() {// Stop loading animation
         //     document.getElementById('loading-animation').style.display = 'none';// Hide the loading animation
         // },
-        success: function(response) {
+        success: function (response) {
             let selector;
-            if (replaceSelector) { 
+            if (replaceSelector) {
                 selector = document.getElementById(replaceSelector);
                 selector.style.transition = 'opacity 500ms';
                 selector.style.opacity = 0;
@@ -34,13 +34,13 @@ function goToPage(page,replaceSelector) {
 
             navButtonShowOpen(page);
 
-            setTimeout( async function() {
+            setTimeout(async function () {
                 if (replaceSelector) {
                     var parser = new DOMParser();
                     var newDoc = parser.parseFromString(response, 'text/html');
                     var container = newDoc.getElementById(replaceSelector);
                     selector.innerHTML = container.innerHTML;
-            
+
                     var scripts = container.getElementsByTagName('script');
                     for (var i = 0; i < scripts.length; i++) {
                         var script = document.createElement('script');
@@ -48,7 +48,7 @@ function goToPage(page,replaceSelector) {
                         script.src = scripts[i].src;
                         selector.appendChild(script);
                     }
-            
+
                     selector.style.transition = 'opacity 500ms';
                     selector.style.opacity = 1;
                 } else {
@@ -56,7 +56,7 @@ function goToPage(page,replaceSelector) {
                     var newDoc = parser.parseFromString(response, 'text/html');
                     document.head.innerHTML = newDoc.head.innerHTML;
                     document.body.innerHTML = newDoc.body.innerHTML;
-            
+
                     var scripts = newDoc.getElementsByTagName('script');
                     for (var i = 0; i < scripts.length; i++) {
                         var script = document.createElement('script');
@@ -64,29 +64,29 @@ function goToPage(page,replaceSelector) {
                         script.src = scripts[i].src;
                         document.body.appendChild(script);
                     }
-            
+
                     document.body.style.transition = 'opacity 500ms';
                     document.body.style.opacity = 1;
                 }
-        
+
             }, 500);
-            
+
             history.pushState(page, null, '/?page=' + page);// add the page to the browser's history
         },
-        
+
     });
 }
 
-/* This function returns a Promise that resolves to the contents of a script file 
+/* This function returns a Promise that resolves to the contents of a script file
     wrapped in an anonymous function. The contents are fetched using an XMLHttpRequest GET request.
     The purpose of the anonymous function wrapping is so the goToPage() function can be called multiple
     times without having collisions with variables declared as `const`.
 */
 async function anonymousFromScriptSrc(scriptFile) {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         let xhr = new XMLHttpRequest();
         xhr.open("GET", scriptFile, true);
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 let scriptContents = xhr.responseText;
                 resolve("(function() {" + scriptContents + "})();");// wrap the contents in an anonymous function
@@ -107,7 +107,7 @@ function getSites() {
         data: { request: 'getSites' },
         dataType: 'json',
         async: false,
-        success: function(data) {
+        success: function (data) {
             callback = data;
         }
     });
@@ -126,8 +126,8 @@ function logoff() {
         type: 'POST',
         url: 'framework/auth/login.php',
         data: { logoff: '1' },
-        success: function(data) { 
-            window.location.href= "/" // Redirect to webroot.
+        success: function (data) {
+            window.location.href = "/" // Redirect to webroot.
         },
     });
 }
@@ -135,7 +135,7 @@ function logoff() {
 /////////////////
 // Open Nav Buttons as Modals
 // This function is called from the menu button
-function openModal(modalId,navButton) {
+function openModal(modalId, navButton) {
 
     ////////////////
     // Add event listener for modal close/dismiss
@@ -143,7 +143,7 @@ function openModal(modalId,navButton) {
         $(navButton).addClass('btn-secondary');
         $(navButton).removeClass('btn-primary');
     })
-    
+
     ////////////////
     // Initialize the modal
     $(modalId).modal('toggle');
@@ -156,36 +156,36 @@ function openModal(modalId,navButton) {
 // Simple function to get Site Name from Site ID
 function getSiteNameFromId(siteId) {
     GLOBAL.config.sites.forEach(site => {
-        if(site.siteId === siteId.toString()) { return out = site.siteName; }
+        if (site.siteId === siteId.toString()) { return out = site.siteName; }
     })
-    return (out)?out:null;// Fallback
+    return (out) ? out : null;// Fallback
 }
 
 /////////////////
 // Simple function to get Site ID from Site HTML Name
 function getSiteIdFromHTMLName(siteHTMLName) {
     GLOBAL.config.sites.forEach(site => {
-        if(site.siteHTMLName === siteHTMLName) { return out = site.siteId; }
+        if (site.siteHTMLName === siteHTMLName) { return out = site.siteId; }
     })
-    return (out)?out:null;// Fallback
+    return (out) ? out : null;// Fallback
 }
 
 /////////////////
 // Simple function to get Site HTML Name from Site ID.
 function getSiteHTMLNameFromId(siteId) {
     GLOBAL.config.sites.forEach(site => {
-        if(site.siteId === siteId) { return out = site.siteHTMLName; }
+        if (site.siteId === siteId) { return out = site.siteHTMLName; }
     })
-    return (out)?out:null;// Fallback
+    return (out) ? out : null;// Fallback
 }
 
 /////////////////
 // Simple function to get Site HTML Name from Site ID.
 function getSiteIdFromName(siteName) {
     GLOBAL.config.sites.forEach(site => {
-        if(site.siteName === siteName) { return out = site.siteId; }
+        if (site.siteName === siteName) { return out = site.siteId; }
     })
-    return (out)?out:null;// Fallback
+    return (out) ? out : null;// Fallback
 }
 
 /////////////////
@@ -196,15 +196,14 @@ function getSiteIdFromName(siteName) {
 //  null
 //  []
 //  ""
-function isEmpty(value){
+function isEmpty(value) {
     return (value == null || value.length === 0);
 }
 
 /////////////////
 // Simple function to save a file using ajax.
 // Thanks: https://stackoverflow.com/questions/33664398/how-to-download-file-using-javascript-only
-function saveData(blob, fileName)
-{
+function saveData(blob, fileName) {
     var a = document.createElement("a");
     document.body.appendChild(a);
     a.style = "display: none";
@@ -220,29 +219,29 @@ function saveData(blob, fileName)
 /////////////////
 // Returns true if it is a DOM node
 // Thanks: https://stackoverflow.com/questions/384286/how-do-you-check-if-a-javascript-object-is-a-dom-object
-function isNode(o){
+function isNode(o) {
     return (
-        typeof Node === "object" ? o instanceof Node : 
-        o && typeof o === "object" && typeof o.nodeType === "number" && typeof o.nodeName==="string"
+        typeof Node === "object" ? o instanceof Node :
+            o && typeof o === "object" && typeof o.nodeType === "number" && typeof o.nodeName === "string"
     );
 }
 
 /////////////////
 // Returns true if it is a DOM element
 // Thanks: https://stackoverflow.com/questions/384286/how-do-you-check-if-a-javascript-object-is-a-dom-object
-function isElement(o){
+function isElement(o) {
     return (
         typeof HTMLElement === "object" ? o instanceof HTMLElement : //DOM2
-        o && typeof o === "object" && o !== null && o.nodeType === 1 && typeof o.nodeName==="string"
+            o && typeof o === "object" && o !== null && o.nodeType === 1 && typeof o.nodeName === "string"
     );
 }
 
 /////////////////
 // Refresh the page when modal is closed
-function refreshOnModalClose(modalId,logOff) {
+function refreshOnModalClose(modalId, logOff) {
     var modal = document.getElementById(modalId)
     modal.addEventListener('hidden.bs.modal', function (event) {
-        if(logOff) { logoff(); }// Trigger logoff
+        if (logOff) { logoff(); }// Trigger logoff
         location.reload();// Do the refresh
     });
 }
@@ -257,16 +256,16 @@ function getInputs(selector) {
     const inputObj = Object();
     const formElements = Array.from(selector.elements);
     const nonEmptyElements = formElements.filter(element => element.name.trim() !== '');
-    nonEmptyElements.forEach( function(element,i) {
+    nonEmptyElements.forEach(function (element, i) {
         // console.log("type: "+element.type+", idx: "+i+", name: "+element.name);
         switch (element.type) {
-            default: console.warn("Some inputs not included (input type: "+element.type+", name: "+element.name+", id: "+element.id+")"); break;// Show warning
+            default: console.warn("Some inputs not included (input type: " + element.type + ", name: " + element.name + ", id: " + element.id + ")"); break;// Show warning
             case 'checkbox':
-                inputObj[element.name] = (element.checked)?1:0; break;
+                inputObj[element.name] = (element.checked) ? 1 : 0; break;
             case 'select-multiple':
-                inputObj[element.name] = JSON.stringify($('#'+element.id).val()); break;
+                inputObj[element.name] = JSON.stringify($('#' + element.id).val()); break;
             case 'select-one':
-                inputObj[element.name] = $('#'+element.id).val(); break;
+                inputObj[element.name] = $('#' + element.id).val(); break;
             case 'submit':
             case 'text':
                 inputObj[element.name] = element.value.replace(/'/g, "\\'"); break;
@@ -280,30 +279,30 @@ function getInputs(selector) {
 
 function findElementWithInnerText(innerText) {
     // Find all elements in the document with the specified inner text
-    const elements = document.evaluate(`"td[contains(.,${innerText})]"`, document, null, XPathResult.ANY_TYPE, null );
+    const elements = document.evaluate(`"td[contains(.,${innerText})]"`, document, null, XPathResult.ANY_TYPE, null);
     console.log(elements);
-  
+
     // Return the first element that was found, or null if no elements were found
     return elements.length > 0 ? elements[0] : null;
-  }
+}
 
 
-  function fadeOutAfter(selector,fadeTime,noShift,button) {
+function fadeOutAfter(selector, fadeTime, noShift, button) {
     if (event) { event.preventDefault(); }// If this is in a form, disable the default form action.
-    if(noShift) {// Fade the element out without shifting the page
-        setTimeout(function() {
-            let opacity = (selector.style.opacity)?selector.style.opacity:1;
-            if(button) { button.disabled = true; }
-            let interval = setInterval(function() {
+    if (noShift) {// Fade the element out without shifting the page
+        setTimeout(function () {
+            let opacity = (selector.style.opacity) ? selector.style.opacity : 1;
+            if (button) { button.disabled = true; }
+            let interval = setInterval(function () {
                 if (opacity <= 0) { clearInterval(interval); }
                 selector.style.opacity = opacity;
                 opacity -= 0.1;
             }, 100);
         }, fadeTime);
     } else {
-        setTimeout(function() {
+        setTimeout(function () {
             $(selector).fadeOut(1000);
-          }, fadeTime);
+        }, fadeTime);
     }
 }
 
@@ -364,15 +363,15 @@ function htmlToElement(html) {
  * or a string indicating an ID or class, like '#EventDate_Open' or '.EventDate_Open'.
 */
 function animateBackgroundColor(selector, transitionTime, color) {
-    
+
     var element;
     if (typeof selector === "string") {
         element = document.querySelector(selector);
     } else {
         element = selector;
     }
-    element.style.backgroundColor = (color)?color:'lightblue';// Defaults to 'lightblue'
-    element.addEventListener("transitionend", function(event) {
+    element.style.backgroundColor = (color) ? color : 'lightblue';// Defaults to 'lightblue'
+    element.addEventListener("transitionend", function (event) {
         this.style.removeProperty("transition");
     }, false);
 
@@ -388,21 +387,21 @@ function animateBackgroundColor(selector, transitionTime, color) {
     @param {object} xhr - The XHR object that contains the response and status information.
     @param {string} GETurl - The URL used for the GET request.
 */
-function showErrorModal(xhr,GETurl) {
+function showErrorModal(xhr, GETurl) {
     //Selectors of interest, from templates/modals/modal.reservations.tpl
     var modalTitle = document.getElementById('ErrorModalTitle');
     var modalBody = document.getElementById('ErrorModalBody');
     var modalLongText = document.getElementById('ErrorModalLongText');
-    
+
     // Build some error messages
     modalTitle.innerHTML = "There was an error building the PDF. The XHR status is:\
-    <b style='color:red'>"+xhr.status+" ("+xhr.statusText+") </b>";
-    modalBody.innerHTML = "You can click the following link to try again:<br><a href="+GETurl+">"+GETurl+"<a>";
-    
+    <b style='color:red'>"+ xhr.status + " (" + xhr.statusText + ") </b>";
+    modalBody.innerHTML = "You can click the following link to try again:<br><a href=" + GETurl + ">" + GETurl + "<a>";
+
     // Because response is of type "blob" we have to open it with the FileReader object.
     var reader = new FileReader();
-    reader.onload = function() {
-        modalLongText.innerHTML ="<b>Relevant PHP errors (if any):</b><br>"+reader.result;
+    reader.onload = function () {
+        modalLongText.innerHTML = "<b>Relevant PHP errors (if any):</b><br>" + reader.result;
     }
     reader.readAsText(xhr.response);
 
@@ -413,27 +412,27 @@ function showErrorModal(xhr,GETurl) {
  * This function sets the class of a navigation button based on the current page. The function takes
  *  a page argument and sets the class of the button corresponding to the given page to "btn-primary".
  * If no page argument is provided, the function gets the current page from the URL query parameters.
- * The function then returns the original color class for all other buttons. The button classes are 
+ * The function then returns the original color class for all other buttons. The button classes are
  * stored in a global object named GLOBAL.btnClasses, initialized in footer.tpl.
  * @param {string} page - a string indicating the page title, as specified by $nav_buttons @key
  */
-function navButtonShowOpen(page){
+function navButtonShowOpen(page) {
     const urlParams = new URLSearchParams(window.location.search);
     const _page = (page) ? page : urlParams.get('page');
 
     // Set the nav button class for the current page to btn-primary
-    var navButton = $('#'+_page+'Button');
+    var navButton = $('#' + _page + 'Button');
     if (navButton) {
-        $(navButton).removeClass(GLOBAL.btnClasses[_page+'Button']).addClass('btn-primary', true);
+        $(navButton).removeClass(GLOBAL.btnClasses[_page + 'Button']).addClass('btn-primary', true);
     }
 
     // Return the original button color class
-    $('#navbarSupportedContent button').not('#' + _page + 'Button').each(function(b, i) {
+    $('#navbarSupportedContent button').not('#' + _page + 'Button').each(function (b, i) {
         let button = $(this);
         let id = button.attr('id');
         if (GLOBAL.btnClasses.hasOwnProperty(id)) {
             button.addClass(GLOBAL.btnClasses[id]).removeClass('btn-primary');
         }
     });
-    
+
 }
