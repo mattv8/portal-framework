@@ -256,17 +256,18 @@ function refreshOnModalClose(modalId,logOff) {
 function getInputs(selector) {
     const inputObj = Object();
     const formElements = Array.from(selector.elements);
-    formElements.forEach( function(element,i) {
+    const nonEmptyElements = formElements.filter(element => element.name.trim() !== '');
+    nonEmptyElements.forEach( function(element,i) {
         // console.log("type: "+element.type+", idx: "+i+", name: "+element.name);
         switch (element.type) {
             default: console.warn("Some inputs not included (input type: "+element.type+", name: "+element.name+", id: "+element.id+")"); break;// Show warning
-            case 'submit': break;// Ignore submit inputs
             case 'checkbox':
                 inputObj[element.name] = (element.checked)?1:0; break;
             case 'select-multiple':
                 inputObj[element.name] = JSON.stringify($('#'+element.id).val()); break;
             case 'select-one':
                 inputObj[element.name] = $('#'+element.id).val(); break;
+            case 'submit':
             case 'text':
                 inputObj[element.name] = element.value.replace(/'/g, "\\'"); break;
             case 'password':
