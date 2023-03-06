@@ -119,14 +119,14 @@ if (isset($_GET["request"]) and $authenticated) {// If we're here for an indepen
         $smarty->assign('debugView',true);
     }
 
-    if (strcmp('saveSessionVar', $request) == 0) {// Handle AJAX requests to save a session
+    if (strcmp('saveSessionVar', $_GET["request"]) == 0) {// Handle AJAX requests to save a session
         $key = $_GET['key'];
         $value = $_GET['value'];
         $_SESSION[$key] = $value;// Assigns the current $_GET parameter value to the $_SESSION superglobal with the same key
         echo json_encode(array('success' => true, 'key' => $key, 'value' => $value));
     }
 
-    if (strcmp('getSessionVar', $request) == 0) {// Handle AJAX requests to get a session
+    if (strcmp('getSessionVar', $_GET["request"]) == 0) {// Handle AJAX requests to get a session
         $key = $_GET['key'];
         $value = $_SESSION[$key];
         echo json_encode(array('success' => true, 'key' => $key, 'value' => $value));
