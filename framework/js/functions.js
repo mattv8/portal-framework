@@ -96,6 +96,53 @@ async function anonymousFromScriptSrc(scriptFile) {
     });
 }
 
+/**
+    getSessionVar - retrieves the value of a session variable identified by a given key
+        @param {string} key - the key of the session variable to retrieve
+        @returns {any} - the value of the session variable associated with the provided key
+    This function sends an asynchronous HTTP GET request to the server, requesting the value of a session variable
+    identified by the given key. Upon receiving the response, it parses the data and returns the value of the
+    session variable. This function is synchronous, which means it will block the UI until it receives the response.
+    Therefore, use this function judiciously.
+*/
+function getSessionVar(key) {
+    var req = {
+        request: 'getSessionVar',
+        key: key
+    };
+    var response = $.ajax({
+        url: "index.php?" + $.param(req),
+        async: false,
+        success: function (data) {
+            var _data = JSON.parse(data);
+            return _data.value;
+        }
+    }).responseText;
+    return JSON.parse(response).value;
+}
+
+/**
+    saveSessionVar - saves the value of a session variable identified by a given key
+        @param {string} key - the key of the session variable to save
+        @param {any} value - the value to save for the session variable associated with the provided key
+    This function sends an asynchronous HTTP GET request to the server, requesting to save the provided value
+    for the session variable identified by the given key. This function does not return anything, as it is
+    asynchronous and therefore the response is handled via a callback function.
+    Use this function to save data to the session variable without blocking the UI thread.
+*/
+function saveSessionVar(key, value) {
+    // AJAX request to save session data
+    var req = {
+        request: 'saveSessionVar',
+        key: key,
+        value: value,
+    };
+    $.get("index.php?" + $.param(req), function (data) {
+        var _data = JSON.parse(data)
+        return _data.success;// Extract JSON response
+    });
+}
+
 
 /////////////////
 // Pull a list of sites from the database

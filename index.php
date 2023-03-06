@@ -11,6 +11,7 @@ $error = "";// Clear any error messages
 #==============================================================================
 require_once($_SERVER['DOCUMENT_ROOT'].'/framework/conf/config.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/framework/lib/functions.php');
+session_start();// Continue session variables
 
 #==============================================================================
 # Smarty Environment
@@ -113,8 +114,24 @@ $smarty->assign('user_attr_map',$user_attr_map);
 #==============================================================================
 # Route to page
 #==============================================================================
-if (isset($_GET["request"]) and isset($_GET["debug"]) and $_GET["debug"] and $authenticated) {// If we're here for an independent request
-    $smarty->assign('debugView',true);
+if (isset($_GET["request"]) and $authenticated) {// If we're here for an independent request
+    if (isset($_GET["debug"]) and $_GET["debug"]){// Set debug parameter
+        $smarty->assign('debugView',true);
+    }
+
+    if (strcmp('saveSessionVar', $request) == 0) {// Handle AJAX requests to save a session
+        $key = $_GET['key'];
+        $value = $_GET['value'];
+        $_SESSION[$key] = $value;// Assigns the current $_GET parameter value to the $_SESSION superglobal with the same key
+        echo json_encode(array('success' => true, 'key' => $key, 'value' => $value));
+    }
+
+    if (strcmp('getSessionVar', $request) == 0) {// Handle AJAX requests to get a session
+        $key = $_GET['key'];
+        $value = $_SESSION[$key];
+        echo json_encode(array('success' => true, 'key' => $key, 'value' => $value));
+    }
+
 }
 
 $page = "login";// Default route to login page
