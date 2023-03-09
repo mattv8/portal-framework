@@ -103,8 +103,6 @@ function getUserIP()
  * $otherColumns parameter.
  *
  * @param object $db_conn A database connection object, created using the PDO class.
- * @param string $currentUser The username of the user who performed the action.
- * @param int $action The action code for the action being performed.
  * @param array|null $otherColumns An optional array of additional columns and values to insert into the `audit` table.
  *                                 If null or empty, no additional columns will be inserted.
  * @return bool Returns true if the insert was successful, false otherwise.
