@@ -70,12 +70,18 @@ if (isset($db_servername) and isset($db_username) and isset($db_password) and is
         }
 
 
-        # Handle AJAX requests to query form submissions
         if (strcmp('submitEdits', $request) == 0) {
 
             $username = $_GET["user"];
+            $currentUser = $_GET["currentUser"];
             $key = $_GET["key"];
             $edits = $_GET["edits"];
+
+            // Query the previous value from the database
+            $previousValueQuery = "SELECT " . $key . " FROM users WHERE username = '" . $username . "';";
+            $result = $db_conn->query($previousValueQuery);
+            $row = $result->fetch_assoc();
+            $previousValue = $row[$key];
 
             if (strcmp($key, 'password') == 0) {
                 $edits = password_hash($edits, PASSWORD_DEFAULT);
@@ -85,7 +91,9 @@ if (isset($db_servername) and isset($db_username) and isset($db_password) and is
 
                 $editQuery = "UPDATE users SET " . $key . " = '" . $edits . "' WHERE username = '" . $username . "';";
                 if ($db_conn->query($editQuery) === TRUE) {
-                    echo json_encode(array('success' => true, 'msg' => null));
+                    $auditFields = array('action'=>$request,'field'=>$key,'target'=>$username,'from'=>$previousValue,'to'=>$edits);
+                    $auditLogged = auditLog($db_conn,$auditFields);// Add row to the audit log
+                    echo json_encode(array('success' => $auditLogged, 'msg' => "Error logging to the audit log"));
                 } else {
                     echo json_encode(array('sucesss' => false, 'msg' => "Error updating record: " . $db_conn->error));
                 }
@@ -100,12 +108,13 @@ if (isset($db_servername) and isset($db_username) and isset($db_password) and is
 
             // INSERT INTO `users` (`username`, `password`, `isadmin`, `active`, `siteMemberships`, `email`) VALUES
             // ('test', '$2y$10$TfU.F8XzWbvMGbiHMaiKz.MMbtALcQFRIYXlRmyJjoDO8IFl.YXEm', 1, 0, '[\"Alta Summer Camp\"]', 'test@example.com');
-
             $username = $_GET["user"];
 
             $deleteQuery = "DELETE FROM users WHERE username = '" . $username . "';";
             if ($db_conn->query($deleteQuery) === TRUE) {
-                echo json_encode(array('success' => true, 'msg' => null));
+                $auditFields = array('action'=>$request,'target'=>$username,'field'=>'username');
+                $auditLogged = auditLog($db_conn,$auditFields);// Add row to the audit log
+                echo json_encode(array('success' => $auditLogged, 'msg' => "Error logging to the audit log"));
             } else {
                 echo json_encode(array('sucesss' => false, 'msg' => "Error updating record: " . $conn->error));
             }
@@ -117,14 +126,15 @@ if (isset($db_servername) and isset($db_username) and isset($db_password) and is
 
             // INSERT INTO `users` (`username`, `password`, `isadmin`, `active`, `siteMemberships`, `email`) VALUES
             // ('test', '$2y$10$TfU.F8XzWbvMGbiHMaiKz.MMbtALcQFRIYXlRmyJjoDO8IFl.YXEm', 1, 0, '[\"Alta Summer Camp\"]', 'test@example.com');
-
             $submission = json_decode($_GET["values"], true);
             $submission['password'] = password_hash($submission['password'], PASSWORD_DEFAULT); // Hash password
 
             $createQuery = "INSERT INTO users (" . implode(', ', array_keys($submission)) . ") VALUES ('" . implode('\', \'', array_values($submission)) . "');";
 
             if ($db_conn->query($createQuery) === TRUE) {
-                echo json_encode(array('success' => true, 'msg' => 'success'));
+                $auditFields = array('action'=>$request,'target'=>$submission['username'],'field'=>'username');
+                $auditLogged = auditLog($db_conn,$auditFields);// Add row to the audit log
+                echo json_encode(array('success' => $auditLogged, 'msg' => "Error logging to the audit log"));
             } else {
                 echo json_encode(array('sucesss' => false, 'msg' => "Error updating record: " . $db_conn->error));
             }

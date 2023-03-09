@@ -94,9 +94,10 @@ function editAttr(selector,inputType,key) {
 
 /////////////////
 // Delete User
-function deleteUser(td,user) {
+function deleteUser(td) {
 
     var tdNew = document.createElement('td');// Create <td></td>
+    const user = td.closest('tr').querySelector('.username').innerText;// Live capture username
 
     // Convert delete button to cancel button
     var cancelButton = document.createElement('button');// Create text input field <button></button>

@@ -31,7 +31,7 @@
                             {if $item.key eq 'siteMemberships'}{$value = $value|replace:['[',']','&quot;',',']:['','','',', ']}{/if} {* Pretty print JSON *}
                             <td class="hover-editable {$item.key}">{$value nofilter}<button class="fa fa-fw fa-edit inline-icon ml-1 hover-edit" onclick="editAttr(this.closest('td'),'{$item.inputType}','{$item.key}')"></button></td>
                         {/foreach}
-                            <td class="pl-1"><button class="fa fa-fw fa-trash inline-icon hover-red" onclick="deleteUser(this.closest('td'),'{$user.username}')"></button></td>
+                            <td class="pl-1"><button class="fa fa-fw fa-trash inline-icon hover-red" onclick="deleteUser(this.closest('td'))"></button></td>
                     </tr>
                     {{/foreach}}
                 </tbody>
