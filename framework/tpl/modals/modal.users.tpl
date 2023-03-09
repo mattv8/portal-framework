@@ -13,7 +13,7 @@
             <table class="table table-striped table-hover" id="user-mgmt-table">
                 <thead>
                     <tr style="white-space: nowrap;">
-                        <th scope="col pl-1">#</th>    
+                        <th scope="col pl-1">#</th>
                         {foreach from=$user_attr_map item=map key=attr}
                         <th scope="col">{$attr}</th>
                         {/foreach}
@@ -29,7 +29,7 @@
                             {if $item.key eq 'active' or $item.key eq 'isadmin'}{$value = ($value) ? '<i class="fa fa-fw fa-check green inline-icon ml-1"></i>' : '<i class="fa fa-fw fa-ban red inline-icon ml-1"></i>' }{/if} {* Booleans to strings *}
                             {if $item.key eq 'password'}{$value = '••••••••'}{/if} {* Simulate password obfuscation *}
                             {if $item.key eq 'siteMemberships'}{$value = $value|replace:['[',']','&quot;',',']:['','','',', ']}{/if} {* Pretty print JSON *}
-                            <td class="hover-editable">{$value nofilter}<button class="fa fa-fw fa-edit inline-icon ml-1 hover-edit" onclick="editAttr(this.closest('td'),'{$item.inputType}','{$user.username}','{$item.key}')"></button></td>
+                            <td class="hover-editable {$item.key}">{$value nofilter}<button class="fa fa-fw fa-edit inline-icon ml-1 hover-edit" onclick="editAttr(this.closest('td'),'{$item.inputType}','{$item.key}')"></button></td>
                         {/foreach}
                             <td class="pl-1"><button class="fa fa-fw fa-trash inline-icon hover-red" onclick="deleteUser(this.closest('td'),'{$user.username}')"></button></td>
                     </tr>

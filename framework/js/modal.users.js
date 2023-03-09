@@ -17,9 +17,10 @@ $(document).ready(function() {
 
 /////////////////
 // Edit user details
-function editAttr(selector,inputType,user,key) {
+function editAttr(selector,inputType,key) {
 
     const editButton = selector.querySelector('button');// Save button for later
+    const user = selector.closest('tr').querySelector('.username').innerText;// Live capture username
 
     // Building attribute user text input field
     var td = document.createElement('td');// Create <td></td>
