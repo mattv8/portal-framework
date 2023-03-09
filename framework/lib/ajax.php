@@ -15,147 +15,114 @@
         })
  */
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/framework/conf/config.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/framework/lib/functions.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/framework/conf/config.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/framework/lib/functions.php');
 
 
 # Store GET request as variable to control which PHP is executed in this script.
 if (isset($_GET["request"]) and $_GET["request"]) {
 
     $request = $_GET["request"];
-
 }
 
+if (isset($db_servername) and isset($db_username) and isset($db_password) and isset($db_name)) { // DB configuration check
 
-# Handle AJAX requests to query form submissions
-if ( strcmp('getSites',$request) == 0 ) {
-    // Test database connection
-    if (isset($db_servername) and isset($db_username) and isset($db_password) and isset($db_name)) {// DB configuration check
+    $db_conn = mysqli_connect($db_servername, $db_username, $db_password, $db_name); // Establish connection
 
-        $db_conn = mysqli_connect($db_servername, $db_username, $db_password, $db_name);// Establish connection
+    if ($db_conn) { // DB connection check
 
-        if ($db_conn) {// DB connection check
-        
+        # Handle AJAX requests to query form submissions
+        if (strcmp('getSites', $request) == 0) {
+
             $sites = getSites($db_conn);
 
             if (sizeof($sites) > 0) {
-                echo json_encode( array('success' => true, 'msg' => null, 'data' => $sites) );
+                echo json_encode(array('success' => true, 'msg' => null, 'data' => $sites));
             } else {
-                echo json_encode( array('sucesss' => false, 'msg' => "Error fetching site data.") );
+                echo json_encode(array('sucesss' => false, 'msg' => "Error fetching site data."));
             }
-
         }
-    }
-}
 
 
-# Handle AJAX requests to query form submissions
-if ( strcmp('site-memberships',$request) == 0 ) {
+        # Handle AJAX requests to query form submissions
+        if (strcmp('site-memberships', $request) == 0) {
 
-    // Test database connection
-    if (isset($db_servername) and isset($db_username) and isset($db_password) and isset($db_name)) {// DB configuration check
-
-        $db_conn = mysqli_connect($db_servername, $db_username, $db_password, $db_name);// Establish connection
-        $username = $_GET["user"];
-
-        if ($db_conn) {// DB connection check
             $siteMemberships = getSiteMemberships($username, $db_conn);
-                
+
             # Create return variable in Select2 JSON data format (https://select2.org/data-sources/formats)
             $sub_options = array();
-            for ($i=0; $i < sizeof($siteMemberships); $i++) {// For each site membership
+            for ($i = 0; $i < sizeof($siteMemberships); $i++) { // For each site membership
                 $sub_options[$i]['id'] = $siteMemberships[$i];
                 $sub_options[$i]['text'] = $siteMemberships[$i];
             }
             $results = array_values($sub_options);
-            echo json_encode($results);// Pass the results to javascript
+            echo json_encode($results); // Pass the results to javascript
+
         }
-    }
-
-}
 
 
-# Handle AJAX requests to query form submissions
-if ( strcmp('submitEdits',$request) == 0 ) {
+        # Handle AJAX requests to query form submissions
+        if (strcmp('submitEdits', $request) == 0) {
 
-    // Test database connection
-    if (isset($db_servername) and isset($db_username) and isset($db_password) and isset($db_name)) {// DB configuration check
+            $username = $_GET["user"];
+            $key = $_GET["key"];
+            $edits = $_GET["edits"];
 
-        $db_conn = mysqli_connect($db_servername, $db_username, $db_password, $db_name);// Establish connection
-        $username = $_GET["user"];
-        $key = $_GET["key"];
-        $edits = $_GET["edits"];
+            if (strcmp($key, 'password') == 0) {
+                $edits = password_hash($edits, PASSWORD_DEFAULT);
+            } // Hash password
 
-        if (strcmp($key,'password')==0) { $edits = password_hash($edits, PASSWORD_DEFAULT); }// Hash password
+            if ($db_conn) { // DB connection check
 
-        if ($db_conn) {// DB connection check
-           
-            $editQuery = "UPDATE users SET ".$key." = '".$edits."' WHERE username = '".$username."';";
-            if ($db_conn->query($editQuery) === TRUE) {
-                echo json_encode( array('success' => true, 'msg' => null) );
+                $editQuery = "UPDATE users SET " . $key . " = '" . $edits . "' WHERE username = '" . $username . "';";
+                if ($db_conn->query($editQuery) === TRUE) {
+                    echo json_encode(array('success' => true, 'msg' => null));
+                } else {
+                    echo json_encode(array('sucesss' => false, 'msg' => "Error updating record: " . $db_conn->error));
+                }
             } else {
-                echo json_encode( array('sucesss' => false, 'msg' => "Error updating record: " . $db_conn->error) );
+                echo json_encode(array('sucesss' => false, 'msg' => "Error updating record: " . mysqli_connect_error($db_conn)));
             }
-
-        } else {
-            echo json_encode( array('sucesss' => false, 'msg' => "Error updating record: " .mysqli_connect_error($db_conn)) );
         }
-    }
-
-}
 
 
-# Handle AJAX requests to query form submissions
-if ( strcmp('deleteUser',$request) == 0 ) {
+        # Handle AJAX requests to query form submissions
+        if (strcmp('deleteUser', $request) == 0) {
 
-    // INSERT INTO `users` (`username`, `password`, `isadmin`, `active`, `siteMemberships`, `email`) VALUES
-    // ('test', '$2y$10$TfU.F8XzWbvMGbiHMaiKz.MMbtALcQFRIYXlRmyJjoDO8IFl.YXEm', 1, 0, '[\"Alta Summer Camp\"]', 'test@example.com');
+            // INSERT INTO `users` (`username`, `password`, `isadmin`, `active`, `siteMemberships`, `email`) VALUES
+            // ('test', '$2y$10$TfU.F8XzWbvMGbiHMaiKz.MMbtALcQFRIYXlRmyJjoDO8IFl.YXEm', 1, 0, '[\"Alta Summer Camp\"]', 'test@example.com');
 
-    // Test database connection
-    if (isset($db_servername) and isset($db_username) and isset($db_password) and isset($db_name)) {// DB configuration check
+            $username = $_GET["user"];
 
-        $db_conn = mysqli_connect($db_servername, $db_username, $db_password, $db_name);// Establish connection
-        $username = $_GET["user"];
-
-        if ($db_conn) {// DB connection check
-           
-            $deleteQuery = "DELETE FROM users WHERE username = '".$username."';";
+            $deleteQuery = "DELETE FROM users WHERE username = '" . $username . "';";
             if ($db_conn->query($deleteQuery) === TRUE) {
-                echo json_encode( array('success' => true, 'msg' => null) );
+                echo json_encode(array('success' => true, 'msg' => null));
             } else {
-                echo json_encode( array('sucesss' => false, 'msg' => "Error updating record: " . $conn->error) );
+                echo json_encode(array('sucesss' => false, 'msg' => "Error updating record: " . $conn->error));
             }
-
         }
-    }
-
-}
 
 
-# Handle AJAX requests to query form submissions
-if ( strcmp('createUser',$request) == 0 ) {
+        # Handle AJAX requests to query form submissions
+        if (strcmp('createUser', $request) == 0) {
 
-    // INSERT INTO `users` (`username`, `password`, `isadmin`, `active`, `siteMemberships`, `email`) VALUES
-    // ('test', '$2y$10$TfU.F8XzWbvMGbiHMaiKz.MMbtALcQFRIYXlRmyJjoDO8IFl.YXEm', 1, 0, '[\"Alta Summer Camp\"]', 'test@example.com');
+            // INSERT INTO `users` (`username`, `password`, `isadmin`, `active`, `siteMemberships`, `email`) VALUES
+            // ('test', '$2y$10$TfU.F8XzWbvMGbiHMaiKz.MMbtALcQFRIYXlRmyJjoDO8IFl.YXEm', 1, 0, '[\"Alta Summer Camp\"]', 'test@example.com');
 
-    // Test database connection
-    if (isset($db_servername) and isset($db_username) and isset($db_password) and isset($db_name)) {// DB configuration check
+            $submission = json_decode($_GET["values"], true);
+            $submission['password'] = password_hash($submission['password'], PASSWORD_DEFAULT); // Hash password
 
-        $db_conn = mysqli_connect($db_servername, $db_username, $db_password, $db_name);// Establish connection
-        $submission = json_decode($_GET["values"],true);
-        $submission['password'] = password_hash($submission['password'], PASSWORD_DEFAULT);// Hash password
-
-        if ($db_conn) {// DB connection check
-           
-            $createQuery = "INSERT INTO users (".implode(', ',array_keys($submission)).") VALUES ('".implode('\', \'',array_values($submission))."');";
+            $createQuery = "INSERT INTO users (" . implode(', ', array_keys($submission)) . ") VALUES ('" . implode('\', \'', array_values($submission)) . "');";
 
             if ($db_conn->query($createQuery) === TRUE) {
-                echo json_encode( array('success' => true, 'msg' => 'success') );
+                echo json_encode(array('success' => true, 'msg' => 'success'));
             } else {
-                echo json_encode( array('sucesss' => false, 'msg' => "Error updating record: " . $db_conn->error) );
+                echo json_encode(array('sucesss' => false, 'msg' => "Error updating record: " . $db_conn->error));
             }
-
         }
-    }
-
+    } else {
+        echo array('sucesss' => false, 'msg' => "Error establishing database connection: " . $db_conn->error);
+    } // END if ($db_conn)
+} else {
+    echo array('sucesss' => false, 'msg' => "Failed to connect to the MySQL database. Please check the database configuration settings and ensure that they are correct. If you are unsure what to do, please contact your system administrator for assistance.");
 }
