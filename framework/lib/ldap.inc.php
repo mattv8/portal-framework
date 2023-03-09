@@ -1,5 +1,5 @@
 <?php
-# LDAP Functions 
+# LDAP Functions
 
 function wp_ldap_connect($ldap_url, $ldap_starttls, $ldap_binddn, $ldap_bindpw) {
 
@@ -58,4 +58,3 @@ function wp_ldap_get_list($ldap, $ldap_base, $ldap_filter, $key, $value) {
 
     return $return;
 }
-?>

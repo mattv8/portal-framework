@@ -20,7 +20,7 @@
 #==============================================================================
 require_once($_SERVER['DOCUMENT_ROOT'] . '/framework/conf/config.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/framework/lib/functions.php');
-session_start();// Continue the session
+session_start(); // Continue the session
 
 #==============================================================================
 # Request
@@ -91,8 +91,8 @@ if (isset($db_servername) and isset($db_username) and isset($db_password) and is
 
                 $editQuery = "UPDATE users SET " . $key . " = '" . $edits . "' WHERE username = '" . $username . "';";
                 if ($db_conn->query($editQuery) === TRUE) {
-                    $auditFields = array('action'=>$request,'field'=>$key,'target'=>$username,'from'=>$previousValue,'to'=>$edits);
-                    $auditLogged = auditLog($db_conn,$auditFields);// Add row to the audit log
+                    $auditFields = array('action' => $request, 'field' => $key, 'target' => $username, 'from' => $previousValue, 'to' => $edits);
+                    $auditLogged = auditLog($db_conn, $auditFields); // Add row to the audit log
                     echo json_encode(array('success' => $auditLogged, 'msg' => "Error logging to the audit log"));
                 } else {
                     echo json_encode(array('sucesss' => false, 'msg' => "Error updating record: " . $db_conn->error));
@@ -112,8 +112,8 @@ if (isset($db_servername) and isset($db_username) and isset($db_password) and is
 
             $deleteQuery = "DELETE FROM users WHERE username = '" . $username . "';";
             if ($db_conn->query($deleteQuery) === TRUE) {
-                $auditFields = array('action'=>$request,'target'=>$username,'field'=>'username');
-                $auditLogged = auditLog($db_conn,$auditFields);// Add row to the audit log
+                $auditFields = array('action' => $request, 'target' => $username, 'field' => 'username');
+                $auditLogged = auditLog($db_conn, $auditFields); // Add row to the audit log
                 echo json_encode(array('success' => $auditLogged, 'msg' => "Error logging to the audit log"));
             } else {
                 echo json_encode(array('sucesss' => false, 'msg' => "Error updating record: " . $conn->error));
@@ -132,15 +132,13 @@ if (isset($db_servername) and isset($db_username) and isset($db_password) and is
             $createQuery = "INSERT INTO users (" . implode(', ', array_keys($submission)) . ") VALUES ('" . implode('\', \'', array_values($submission)) . "');";
 
             if ($db_conn->query($createQuery) === TRUE) {
-                $auditFields = array('action'=>$request,'target'=>$submission['username'],'field'=>'username');
-                $auditLogged = auditLog($db_conn,$auditFields);// Add row to the audit log
+                $auditFields = array('action' => $request, 'target' => $submission['username'], 'field' => 'username');
+                $auditLogged = auditLog($db_conn, $auditFields); // Add row to the audit log
                 echo json_encode(array('success' => $auditLogged, 'msg' => "Error logging to the audit log"));
             } else {
                 echo json_encode(array('sucesss' => false, 'msg' => "Error updating record: " . $db_conn->error));
             }
         }
-
-
     } else {
         echo json_encode(array('sucesss' => false, 'msg' => "Failed to connect to the MySQL database. Please check the database configuration settings and ensure that they are correct. If you are unsure what to do, please contact your system administrator for assistance."));
     } // END if ($db_conn)
