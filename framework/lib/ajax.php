@@ -131,8 +131,9 @@ if (isset($db_servername) and isset($db_username) and isset($db_password) and is
 
 
     } else {
-        echo array('sucesss' => false, 'msg' => "Error establishing database connection: " . $db_conn->error);
+        echo json_encode(array('sucesss' => false, 'msg' => "Failed to connect to the MySQL database. Please check the database configuration settings and ensure that they are correct. If you are unsure what to do, please contact your system administrator for assistance."));
     } // END if ($db_conn)
+
 } else {
-    echo array('sucesss' => false, 'msg' => "Failed to connect to the MySQL database. Please check the database configuration settings and ensure that they are correct. If you are unsure what to do, please contact your system administrator for assistance.");
+    echo json_encode(array('sucesss' => false, 'msg' => "Failed to connect to the MySQL database. The database has not been configured. Please see `config.php` for more info."));
 }

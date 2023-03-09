@@ -189,7 +189,7 @@ function createUser(form) {
     Supporting functions for editUserAttr() function
 */
 function submitEdits(key, user, edits) {
-    var response = '';
+    var callback = '';
     var req = {
         request: 'submitEdits',
         key: key,
@@ -199,14 +199,20 @@ function submitEdits(key, user, edits) {
     $.ajax({
         type: 'GET',
         url: 'framework/lib/ajax.php',
+        dataType: 'json',
         data: req,
         async: false,
         success: function(data) {
-            response = data;
+            callback = data;
             // console.log(data);
         }
     });
-    return response ? JSON.parse(response) : null;// Return null if response is empty
+    // Final actions
+    if (callback.success) {// Do the UPDATE to the database on successful callback
+        return callback;
+    } else {
+        alert(callback.msg);
+    }
 }
 
 
