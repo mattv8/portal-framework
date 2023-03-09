@@ -15,6 +15,9 @@
         })
  */
 
+#==============================================================================
+# Configuration
+#==============================================================================
 require_once($_SERVER['DOCUMENT_ROOT'] . '/framework/conf/config.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/framework/lib/functions.php');
 
@@ -22,14 +25,21 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/framework/lib/functions.php');
 # Store GET request as variable to control which PHP is executed in this script.
 if (isset($_GET["request"]) and $_GET["request"]) {
 
+#==============================================================================
+# Request
+#==============================================================================
     $request = $_GET["request"];
 }
 
+#==============================================================================
+# Request Handlers
+#==============================================================================
 if (isset($db_servername) and isset($db_username) and isset($db_password) and isset($db_name)) { // DB configuration check
 
     $db_conn = mysqli_connect($db_servername, $db_username, $db_password, $db_name); // Establish connection
 
     if ($db_conn) { // DB connection check
+
 
         # Handle AJAX requests to query form submissions
         if (strcmp('getSites', $request) == 0) {
@@ -120,6 +130,8 @@ if (isset($db_servername) and isset($db_username) and isset($db_password) and is
                 echo json_encode(array('sucesss' => false, 'msg' => "Error updating record: " . $db_conn->error));
             }
         }
+
+
     } else {
         echo array('sucesss' => false, 'msg' => "Error establishing database connection: " . $db_conn->error);
     } // END if ($db_conn)

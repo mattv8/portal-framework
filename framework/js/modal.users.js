@@ -20,12 +20,12 @@ $(document).ready(function() {
 function editAttr(selector,inputType,user,key) {
 
     const editButton = selector.querySelector('button');// Save button for later
-    
+
     // Building attribute user text input field
     var td = document.createElement('td');// Create <td></td>
     td.style = "padding:4px;"
 
-    // Building input field. This is special because it depends on the type, whether that be a 
+    // Building input field. This is special because it depends on the type, whether that be a
     // multi-select, boolean, password field, etc.
     let input;
     switch (inputType) {
@@ -44,7 +44,7 @@ function editAttr(selector,inputType,user,key) {
         let innerHTML;
         switch (inputType) {
             case 'text':
-                edits = input.value; 
+                edits = input.value;
                 innerHTML = edits;
                 break;
             case 'password':
@@ -55,7 +55,7 @@ function editAttr(selector,inputType,user,key) {
                 edits = $('.select2-'+user).select2('data').map(value => value.id);// Gets selected id's as array, then stringify
                 innerHTML = edits.join(', ');
                 break;
-            case 'checkbox': 
+            case 'checkbox':
                 edits = (input.firstChild.checked) ? '1' : '0';
                 innerHTML = (input.firstChild.checked) ? '<i class="fa fa-fw fa-check green inline-icon ml-1"></i>' : '<i class="fa fa-fw fa-ban red inline-icon ml-1"></i>';
                 break;
@@ -94,7 +94,7 @@ function editAttr(selector,inputType,user,key) {
 /////////////////
 // Delete User
 function deleteUser(td,user) {
-    
+
     var tdNew = document.createElement('td');// Create <td></td>
 
     // Convert delete button to cancel button
@@ -137,7 +137,7 @@ function deleteUser(td,user) {
         } else {
             alert(callback.msg);
         }
-        
+
     }
 
     tdNew.appendChild(confirmText);
@@ -151,7 +151,7 @@ function deleteUser(td,user) {
 /////////////////
 // Create User
 function createUser(form) {
-    
+
     event.preventDefault();// Disable default form submit action
     var table = document.getElementById('user-mgmt-table');// Save user table
 
@@ -182,7 +182,7 @@ function createUser(form) {
     } else {
         alert(callback.msg);
     }
-    
+
 }
 
 /*
@@ -242,14 +242,14 @@ function createCheckboxInput(selector) {
     input.className = "form-check-input med-checkbox";
     input.type = "checkbox";
     input.checked = isChecked;
-    
+
     container.appendChild(input);
     return container;
 }
 
 
 function select2_sites(user) {
-    
+
     // STEP 1: Initialize the Select2 object with all available sites
     const siteNames = GLOBAL.config.sites.map(value => value.siteName);// Create array from the siteName key in GLOBAL.config.sites
     var siteSelect = $('.select2-'+user).select2({
