@@ -95,7 +95,7 @@ if( $auth_type == 'sql' and isset($db_servername) and isset($db_username) and is
         $sites = ($authenticated)?getSites($db_conn):null;
 
         // Query `user` table for current logged in username's group memberships
-        $siteMemberships = ($authenticated)?getSiteMemberships($_SESSION["username"], $db_conn):null;
+        $siteMemberships = ($authenticated)?getSiteMemberships($db_conn, $_SESSION["username"]):null;
 
         // Query `user` table for ALL user information, save it in the session (only need to do this for admins)
         $AllUserData = ($isadmin and $authenticated)?getAllUserData($db_conn):null;

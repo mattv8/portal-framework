@@ -34,7 +34,8 @@ function getSites($db_conn) {
 }
 
 # Simple function to pretty-print out all the field names from an associative array
-function getSiteMemberships(String $username, mysqli $db_conn) {
+function getSiteMemberships(mysqli $db_conn, String $username)
+{
     $UserData = mysqli_query($db_conn, "SELECT * FROM users WHERE username = '" . $username . "';");
     $siteMemberships = array();// Preallocate
     if((mysqli_num_rows($UserData)) > 0) {

@@ -55,8 +55,8 @@ if (isset($db_servername) and isset($db_username) and isset($db_password) and is
         # Handle AJAX requests to query form submissions
         if (strcmp('site-memberships', $request) == 0) {
 
-            $siteMemberships = getSiteMemberships($username, $db_conn);
             $username = $_GET["user"];
+            $siteMemberships = getSiteMemberships($db_conn, $username);
 
             # Create return variable in Select2 JSON data format (https://select2.org/data-sources/formats)
             $sub_options = array();
