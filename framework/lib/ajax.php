@@ -56,6 +56,7 @@ if (isset($db_servername) and isset($db_username) and isset($db_password) and is
         if (strcmp('site-memberships', $request) == 0) {
 
             $siteMemberships = getSiteMemberships($username, $db_conn);
+            $username = $_GET["user"];
 
             # Create return variable in Select2 JSON data format (https://select2.org/data-sources/formats)
             $sub_options = array();
