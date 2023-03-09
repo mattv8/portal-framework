@@ -20,14 +20,12 @@
 #==============================================================================
 require_once($_SERVER['DOCUMENT_ROOT'] . '/framework/conf/config.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/framework/lib/functions.php');
-
-
-# Store GET request as variable to control which PHP is executed in this script.
-if (isset($_GET["request"]) and $_GET["request"]) {
+session_start();// Continue the session
 
 #==============================================================================
 # Request
 #==============================================================================
+if (isset($_GET["request"]) and $_GET["request"] and $_SESSION['authenticated']) {
     $request = $_GET["request"];
 }
 
