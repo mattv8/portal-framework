@@ -40,7 +40,10 @@ function auth_sql($username, $password) {
                     $_SESSION["isadmin"] = $isadmin;
                     $_SESSION["displayname"] = (!empty($firstName) || !empty($lastName))?trim($displayname):$username;
 
-                } 
+                    $auditFields = array('actionId' => 'logon', 'description' => "$username logged on.");
+                    auditLog($db_conn, $auditFields); // Add row to the audit log
+
+                }
                 elseif (!password_verify($password, $hashed_password)) {
                     $autherror = "passwordrefused";
                 }
