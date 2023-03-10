@@ -58,7 +58,7 @@ function auth_sql($username, $password) {
         } else {
             $autherror = "Error connecting to database: " . mysqli_connect_error() . PHP_EOL;
         }// END DB connection check
-        
+
     } else {
         $autherror = "Please set database variables in config.";
     }// END DB configuration check
@@ -66,5 +66,3 @@ function auth_sql($username, $password) {
     return $autherror;
 
 }// END auth_sql()
-
-?>

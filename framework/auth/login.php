@@ -23,13 +23,13 @@ session_start();
 
 // Logon was requested.
 if(isset($_POST["username"]) and isset($_POST["password"]) and isset($auth_type)) {
-    
+
     $username = strtolower($_POST["username"]);
     $password = $_POST["password"];
-    
+
     // Input validations
     if(!empty($_POST["username"]) and !empty($_POST["password"])) {
-        
+
         switch ($auth_type) {
             case 'ldap':
                 $autherror = auth_ldap($username, $password);// Do the login
@@ -76,6 +76,3 @@ function logoff() {
 	session_destroy();// Destroy the session
 
 }// End logoff()
-
-
-?>
