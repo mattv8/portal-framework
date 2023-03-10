@@ -91,9 +91,9 @@ if (isset($db_servername) and isset($db_username) and isset($db_password) and is
 
                 $editQuery = "UPDATE users SET " . $key . " = '" . $edits . "' WHERE username = '" . $username . "';";
                 if ($db_conn->query($editQuery) === TRUE) {
-                    $auditFields = array('actionId' => $request, 'affectedField' => $key, 'description' => "$username's $key was changed from $previousValue to $edits.", 'from' => $previousValue, 'to' => $edits);
+                    $auditFields = array('actionId' => $request, 'affectedField' => $key, 'description' => "$username\'s $key was changed from ".json_encode($previousValue)." to ".json_encode($edits), 'from' => $previousValue, 'to' => $edits);
                     $auditLogged = auditLog($db_conn, $auditFields); // Add row to the audit log
-                    echo json_encode(array('success' => $auditLogged, 'msg' => "Error logging to the audit log"));
+                    echo json_encode(array('success' => $auditLogged, 'msg' => "Error logging to the audit log" . $db_conn->error));
                 } else {
                     echo json_encode(array('sucesss' => false, 'msg' => "Error updating record: " . $db_conn->error));
                 }
@@ -114,7 +114,7 @@ if (isset($db_servername) and isset($db_username) and isset($db_password) and is
             if ($db_conn->query($deleteQuery) === TRUE) {
                 $auditFields = array('actionId' => $request, 'description' => "User $username was deleted.");
                 $auditLogged = auditLog($db_conn, $auditFields); // Add row to the audit log
-                echo json_encode(array('success' => $auditLogged, 'msg' => "Error logging to the audit log"));
+                echo json_encode(array('success' => $auditLogged, 'msg' => "Error logging to the audit log" . $db_conn->error));
             } else {
                 echo json_encode(array('sucesss' => false, 'msg' => "Error updating record: " . $conn->error));
             }
@@ -134,7 +134,7 @@ if (isset($db_servername) and isset($db_username) and isset($db_password) and is
             if ($db_conn->query($createQuery) === TRUE) {
                 $auditFields = array('actionId' => $request, 'description' => "User " . $submission['username'] . " was created.");
                 $auditLogged = auditLog($db_conn, $auditFields); // Add row to the audit log
-                echo json_encode(array('success' => $auditLogged, 'msg' => "Error logging to the audit log"));
+                echo json_encode(array('success' => $auditLogged, 'msg' => "Error logging to the audit log" . $db_conn->error));
             } else {
                 echo json_encode(array('sucesss' => false, 'msg' => "Error updating record: " . $db_conn->error));
             }
