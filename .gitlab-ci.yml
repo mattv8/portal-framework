@@ -14,7 +14,7 @@ deploy-to-development-server:
     stage: development
     tags:
         - webguy-development-server #Only runner with this tag will run this pipeline
-    only: 
+    only:
         refs:
             - branches #Changes to branches trigger pipeline
     except:
@@ -32,7 +32,7 @@ update-fairyland-dev-portal-framework:
     stage: staging
     tags:
         - webguy-development-server #Only runner with this tag will run this pipeline
-    only: 
+    only:
         refs:
             - branches #Changes to branches trigger pipeline
     except:
@@ -51,6 +51,31 @@ update-fairyland-dev-portal-framework:
         - sudo rsync -rv ./framework/ $fairyland_admin_dev_webroot/framework --delete --exclude-from=./_exclusions.txt --exclude='composer.*' #Sync and overwrite framework directory
         - sudo rsync -rv ./ $fairyland_admin_dev_webroot --exclude 'framework' --exclude-from=./_exclusions.txt #Sync root directory without overwrite
         - sudo chown fairyland:fairyland $fairyland_admin_dev_webroot -R
+
+#### WEBGUY ONENOTE API DEVELOPMENT ####
+update-webguy-onenote-api-dev-framework:
+    stage: staging
+    tags:
+        - webguy-development-server #Only runner with this tag will run this pipeline
+    only:
+        refs:
+            - branches #Changes to branches trigger pipeline
+    except:
+        changes: #Ignore changes to the following files
+            - "_exclusings.txt"
+            - .* #Ignore dot files
+            - "*.md" #Ignore .md files
+    # when: manual #Runner will only run with manual intervention
+    image: node:latest
+    script:
+        - npm install uglifyjs-folder -g #Install uglifyjs-folder if not already installed. No need for sudo, npm is installed under gitlab-runner
+        - uglifyjs-folder ./framework/js -eo ./framework/js/ -p "**/*.js" #Minify all JS in the folder with separate files
+        - uglifyjs-folder ./framework/vendor/datepicker-lightpick/js -eo ./framework/vendor/datepicker-lightpick/js/ -p "**/*.js" #Minify custom lightpick JS
+        - find ./framework/js ./framework/vendor/datepicker-lightpick/js -type f -name "*.js" -not -name "*.min.js" -delete #Remove the unminified JS
+        - if [ -z "$webguy_onenote_api_dev_webroot" ]; then echo "Need to set webroot as GitLab CI/CD variable" && exit 1; fi #Verify env var is set
+        - sudo rsync -rv ./framework/ $webguy_onenote_api_dev_webroot/framework --delete --exclude-from=./_exclusions.txt --exclude='composer.*' #Sync and overwrite framework directory
+        - sudo rsync -rv ./ $webguy_onenote_api_dev_webroot --exclude 'framework' --exclude-from=./_exclusions.txt #Sync root directory without overwrite
+        - sudo chown admin:admin $webguy_onenote_api_dev_webroot -R
 
 #### FAIRYLAND PRODUCTION ####
 update-fairyland-production-portal-framework:
