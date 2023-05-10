@@ -72,6 +72,7 @@ $smarty->assign('logout_link', $logout_link);
 $smarty->assign('default_page', $default_page);
 $smarty->assign('currentUser', $_SESSION['username']);
 $smarty->assign('nav_buttons', $nav_buttons);
+$smarty->assign('recaptcha_key', $recaptcha_key);
 
 #==============================================================================
 # Authentication

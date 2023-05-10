@@ -3,6 +3,10 @@
  * Authentication Handling
  */
 
+ require_once($_SERVER['DOCUMENT_ROOT'] . '/framework/conf/config.php');
+ require_once($_SERVER['DOCUMENT_ROOT'] . '/framework/lib/functions.php');
+ file_exists($_SERVER['DOCUMENT_ROOT'] . "/framework/auth/auth_$auth_type.php") ? require_once($_SERVER['DOCUMENT_ROOT'] . "/framework/auth/auth_$auth_type.php") : $error = 'specifyauth'; // Loads auth driver functions
+
 // Declare volatile variables
 $autherror = "";
 $displayname = "";
@@ -18,7 +22,6 @@ date_default_timezone_set('America/Denver');
 
 // Continue session variables
 session_start();
-
 
 
 // Logon was requested.
@@ -47,7 +50,7 @@ if(isset($_POST["username"]) and isset($_POST["password"]) and isset($auth_type)
     elseif (empty($_POST["password"])) {// Password field is empty
         $autherror = "passwordrequired";
     }
-    $smarty->assign('autherror',$autherror);// Pass any error code to Smarty
+    echo $autherror;// Pass any error code to Javascript
 
 }
 

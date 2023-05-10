@@ -12,10 +12,10 @@ function auth_ldap($username, $password)
 {
 
     # Load user configuration
-    require("framework/conf/config.php");
+    require($_SERVER['DOCUMENT_ROOT'] . "/framework/conf/config.php");
 
     # Load libraries
-    require_once("framework/lib/ldap.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/framework/lib/ldap.php");
 
     # Connect to LDAP
     $ldap_connection = wp_ldap_connect($ldap_url, $ldap_starttls, $ldap_binddn, $ldap_bindpw);

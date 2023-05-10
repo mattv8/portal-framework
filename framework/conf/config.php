@@ -78,6 +78,8 @@ $smarty_cache_dir = "cache/smarty";
 # Authentication
 // Specify whether you'd like to secure the portal with authentication.
 $auth_type = 'none';//Chose from 'none', 'ldap' or 'sql';
+$recaptcha_key = '6Le68_slAAAAAIY8g6THLGQ1NkiCOtlRYzXlTk_s';
+$recaptcha_secret = '6Le68_slAAAAAAWRS0qz1x5h-0cZwnJyAu_n82w8';
 
 
 # SQL Configuration
@@ -113,7 +115,7 @@ $ldap_disallowed_ous = array("OU=Guests,DC=example,DC=com");// Organizational Un
 # rather than overriding the variable. Objects written to the $js_config() can be overridden in a config.local.php
 # by redefining the key and/or variable. For example:
 #   $js_config['revealPassword'] = false;
-$js_config = array('revealPassword' => $revealPassword);
+$js_config = array('revealPassword' => $revealPassword, 'recaptcha_key' => $recaptcha_key);
 
 # Allow to override current settings with local configuration
 if (file_exists ($_SERVER['DOCUMENT_ROOT'].'/config.local.php')) {
