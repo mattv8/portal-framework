@@ -489,9 +489,9 @@ function navButtonShowOpen(page) {
  * Displays an alert message on the web page with the specified level.
  * If level is not provided or is falsy, the default level is 'warn'.
  * The message is displayed in the corresponding element based on the level.
+ * @param {string} alertId - The ID of the alert element where the message will be displayed.
  * @param {string} message - The message to be displayed.
  * @param {string} level - The level of the message ('error' or default 'warn').
- * @param {string} alertId - The ID of the alert element where the message will be displayed.
  *
  * Insert the following alert element where you would like it to display, update the ID accordingly:
     <div class="container-fluid px-2" id="<UPDATE_ME>" style="display: none;">
@@ -501,7 +501,7 @@ function navButtonShowOpen(page) {
         </div>
     </div>
  */
-function showAlert(message, alertId, level) {
+function showAlert(alertId, message, level) {
     var alert = document.getElementById(alertId);
     var alertBackground = document.querySelector(`${alertId} .row.alert`);
     var alertMessage = document.querySelector(`${alertId} .col-auto.me-auto.my-1`);
