@@ -484,3 +484,33 @@ function navButtonShowOpen(page) {
     });
 
 }
+
+/**
+ * Displays an alert message on the web page with the specified level.
+ * If level is not provided or is falsy, the default level is 'warn'.
+ * The message is displayed in the corresponding element based on the level.
+ * @param {string} message - The message to be displayed.
+ * @param {string} level - The level of the message ('error' or default 'warn').
+ * @param {string} alertId - The ID of the alert element where the message will be displayed.
+ *
+ * Insert the following alert element where you would like it to display, update the ID accordingly:
+    <div class="container-fluid px-2" id="<UPDATE_ME>" style="display: none;">
+        <div class="row alert" role="alert">
+            <div class="col-auto me-auto my-1"></div>
+            <div class="col-auto my-1"><button class="fa fa-fw fa-remove inline-icon" id="alert-dismiss" onclick="fadeOutAfter(document.getElementById('auth-alert'),0,false,this)"></button></div>
+        </div>
+    </div>
+ */
+function showAlert(message, alertId, level) {
+    var alert = document.getElementById(alertId);
+    var alertBackground = document.querySelector(`${alertId} .row.alert`);
+    var alertMessage = document.querySelector(`${alertId} .col-auto.me-auto.my-1`);
+    var icon = '<i class="fa fa-fw fa-info-circle me-2"></i>';
+
+    level = level || 'warning'; // Set default value if level is undefined or falsy
+    $(alertBackground).removeClass(function (index, className) { return (className.match(/(^|\s)alert-\S+/g) || []).join(' '); });
+    $(alertBackground).addClass(`alert-${level}`);
+    alertMessage.innerHTML = icon + messages[message];
+    alert.style.display = 'block';
+
+}

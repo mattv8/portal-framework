@@ -82,27 +82,6 @@ function login() {
 }
 
 /**
- * Displays a message on the web page with the specified level.
- * If level is not provided or is falsy, the default level is 'warn'.
- * The message is displayed in the corresponding element based on the level.
- * @param {string} message - The message to be displayed.
- * @param {string} level - The level of the message ('error' or default 'warn').
- */
-function showMessage(message, level) {
-    var banner = document.getElementById('auth-banner');
-    var bannerBackground = document.querySelector('#auth-banner .row.alert');
-    var bannerMessage = document.querySelector('#auth-banner .col-auto.me-auto.my-1');
-    var icon = '<i class="fa fa-fw fa-info-circle me-2"></i>';
-
-    level = level || 'warning'; // Set default value if level is undefined or falsy
-    $(bannerBackground).removeClass(function (index, className) { return (className.match(/(^|\s)alert-\S+/g) || []).join(' '); });
-    $(bannerBackground).addClass(`alert-${level}`);
-    bannerMessage.innerHTML = icon + messages[message];
-    banner.style.display = 'block';
-
-}
-
-/**
  * Listens for the Enter key press event on the username and password input fields
  * and triggers the desired action, such as calling the login function.
  */
