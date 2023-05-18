@@ -25,14 +25,16 @@ session_start(); // Continue the session
 #==============================================================================
 # Request
 #==============================================================================
-if (isset($_GET["request"]) and $_GET["request"] and $_SESSION['authenticated']) {
+
+// Authenticated
+if (isset($_GET["request"]) and $_GET["request"]) {
     $request = $_GET["request"];
 }
 
 #==============================================================================
-# Request Handlers
+# AUTHENTICATED Request Handlers
 #==============================================================================
-if (isset($db_servername) and isset($db_username) and isset($db_password) and isset($db_name)) { // DB configuration check
+if ($_SESSION['authenticated'] and isset($db_servername) and isset($db_username) and isset($db_password) and isset($db_name)) { // DB configuration check
 
     $db_conn = mysqli_connect($db_servername, $db_username, $db_password, $db_name); // Establish connection
 
@@ -139,10 +141,20 @@ if (isset($db_servername) and isset($db_username) and isset($db_password) and is
                 echo json_encode(array('sucesss' => false, 'msg' => "Error updating record: " . $db_conn->error));
             }
         }
+
     } else {
         echo json_encode(array('sucesss' => false, 'msg' => "Failed to connect to the MySQL database. Please check the database configuration settings and ensure that they are correct. If you are unsure what to do, please contact your system administrator for assistance."));
     } // END if ($db_conn)
 
-} else {
-    echo json_encode(array('sucesss' => false, 'msg' => "Failed to connect to the MySQL database. The database has not been configured. Please see `config.php` for more info."));
+}
+
+#==============================================================================
+# UNAUTHENTICATED Request Handlers
+#==============================================================================
+
+# Handle AJAX requests to query the dictionary
+if (strcmp('dictionaryLookup', $request) == 0) {
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/framework/lang/en.php');
+    $message = $_GET["message"];
+    echo json_encode($messages[$message]);
 }
