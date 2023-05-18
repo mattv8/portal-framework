@@ -36,11 +36,11 @@ function sendTokenToServer(token, successFunction) {
                 if (response.success) {// Proceed with the successFunction
                     successFunction();
                 } else {// Token verification failed, handle the error
-                    showMessage('reCaptcha token verification failed', 'error');
+                    showAlert('auth-banner', 'reCaptcha token verification failed', 'error');
                 }
             } else {
                 // Request failed, handle the error
-                showMessage('Request failed with status code: ' + xhr.status, 'error');
+                showAlert('auth-banner', 'Request failed with status code: ' + xhr.status, 'error');
             }
         }
     };
@@ -68,14 +68,14 @@ function login() {
         data: { username: username, password: password },
         success: function (response) {
             if (response === 'authsuccess') {
-                showMessage(response, 'success');
+                showAlert('auth-banner', response, 'success');
                 location.reload();
             } else {
-                showMessage(response);
+                showAlert('auth-banner', response);
             }
         },
         error: function (xhr, status, error) {
-            showMessage(error, 'error');
+            showAlert('auth-banner', error, 'error');
         }
     });
 

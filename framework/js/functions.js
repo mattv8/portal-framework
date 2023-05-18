@@ -503,8 +503,8 @@ function navButtonShowOpen(page) {
  */
 function showAlert(alertId, message, level) {
     var alert = document.getElementById(alertId);
-    var alertBackground = document.querySelector(`${alertId} .row.alert`);
-    var alertMessage = document.querySelector(`${alertId} .col-auto.me-auto.my-1`);
+    var alertBackground = document.querySelector(`#${alertId} .row.alert`);
+    var alertMessage = document.querySelector(`#${alertId} .col-auto.me-auto.my-1`);
     var icon = '<i class="fa fa-fw fa-info-circle me-2"></i>';
 
     level = level || 'warning'; // Set default value if level is undefined or falsy
