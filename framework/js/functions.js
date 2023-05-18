@@ -510,7 +510,40 @@ function showAlert(alertId, message, level) {
     level = level || 'warning'; // Set default value if level is undefined or falsy
     $(alertBackground).removeClass(function (index, className) { return (className.match(/(^|\s)alert-\S+/g) || []).join(' '); });
     $(alertBackground).addClass(`alert-${level}`);
-    alertMessage.innerHTML = icon + messages[message];
+    alertMessage.innerHTML = icon + dictionaryLookup(message);
     alert.style.display = 'block';
 
+}
+
+/**
+ * Performs a dictionary lookup using AJAX.
+ * @param {string} message - The key to look up in the dictionary.
+ * @returns {Object|null} - The parsed response object if successful, otherwise null.
+ */
+function dictionaryLookup(message) {
+    var req = {
+        request: 'dictionaryLookup',
+        message: message
+    };
+    var getURL = "framework/lib/ajax.php?" + $.param(req);
+
+    try {
+        var response = $.ajax({
+            dataType: 'json',
+            url: getURL,
+            async: false,
+            error: function (xhr, status, error) {
+                showErrorModal(xhr, getURL);
+            }
+        }).responseText;
+        var parsedResponse = JSON.parse(response);
+        if (parsedResponse) {
+            return parsedResponse;
+        } else {
+            console.error(`Dictionary lookup failed for key '${message}'\n${new Error().stack}`);
+        }
+    } catch (error) {// Handle any potential errors during the AJAX request or parsing the response
+        console.error(error);
+        return null;
+    }
 }

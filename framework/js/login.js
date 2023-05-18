@@ -92,17 +92,3 @@ $(document).ready(function () {
         }
     });
 });
-
-/**
- * Login Messages
- */
-var messages = {
-    'authsuccess': "Success, logging you in...",
-    'passwordrefused': "Password is incorrect",
-    'passwordrefused': 'Password is incorrect',
-    'passwordrequired': "Please enter a password",
-    'passwordrequired': 'Please enter a password',
-    'usernamerequired': "Please enter a username",
-    'usernotallowed': "Your account is not allowed to login. Please use an authorized account.",
-    'usernotfound': "The entered username was not found. Please try again.",
-};
