@@ -3,7 +3,6 @@
  * Authentication Handling
  */
 
- require_once($_SERVER['DOCUMENT_ROOT'] . '/framework/conf/config.php');
  require_once($_SERVER['DOCUMENT_ROOT'] . '/framework/lib/functions.php');
  file_exists($_SERVER['DOCUMENT_ROOT'] . "/framework/auth/auth_$auth_type.php") ? require_once($_SERVER['DOCUMENT_ROOT'] . "/framework/auth/auth_$auth_type.php") : $error = 'specifyauth'; // Loads auth driver functions
 
