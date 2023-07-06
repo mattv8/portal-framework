@@ -530,21 +530,28 @@ function dictionaryLookup(message) {
     var getURL = "framework/lib/ajax.php?" + $.param(req);
 
     try {
-        var response = $.ajax({
+        var parsedResponse = null;
+
+        $.ajax({
             dataType: 'json',
             url: getURL,
             async: false,
+            success: function (response) {
+                parsedResponse = response;
+            },
             error: function (xhr, status, error) {
                 showErrorModal(xhr, getURL);
             }
-        }).responseText;
-        var parsedResponse = JSON.parse(response);
+        });
+
         if (parsedResponse) {
             return parsedResponse;
         } else {
             console.error(`Dictionary lookup failed for key '${message}'\n${new Error().stack}`);
+            return null;
         }
-    } catch (error) {// Handle any potential errors during the AJAX request or parsing the response
+
+    } catch (error) {
         console.error(error);
         return null;
     }
