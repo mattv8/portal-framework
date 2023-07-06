@@ -31,30 +31,29 @@ function reCaptcha(button, successFunction) {
  * @param {Function} successFunction - The function to be executed if the token verification is successful.
  */
 function sendTokenToServer(token, successFunction) {
-    // Make an AJAX request to your backend server to verify the token
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'framework/lib/reCaptcha.php');
+    return new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'framework/lib/reCaptcha.php');
 
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                // Token verification successful, handle the response from the server
-                var response = JSON.parse(xhr.responseText);
-                if (response.success) {// Proceed with the successFunction
-                    successFunction();
-                } else {// Token verification failed, handle the error
-                    showAlert('auth-banner', 'reCaptcha token verification failed', 'error');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        resolve(successFunction()); // Resolve the promise with the successFunction
+                    } else {
+                        reject(new Error('reCaptcha token verification failed')); // Reject the promise with an error
+                    }
+                } else {
+                    reject(new Error('Request failed with status code: ' + xhr.status)); // Reject the promise with an error
                 }
-            } else {
-                // Request failed, handle the error
-                showAlert('auth-banner', 'Request failed with status code: ' + xhr.status, 'error');
             }
-        }
-    };
+        };
 
-    var params = 'token=' + encodeURIComponent(token);
-    xhr.send(params);
+        var params = 'token=' + encodeURIComponent(token);
+        xhr.send(params);
+    });
 }
 
 /**
