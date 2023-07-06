@@ -10,9 +10,17 @@
  */
 function reCaptcha(button, successFunction) {
     event.preventDefault();
+    button.disabled = true; // Disable the button initially
+
     grecaptcha.ready(function () {
         grecaptcha.execute(GLOBAL.config.recaptcha_key, { action: 'submit' }).then(function (token) {
-            sendTokenToServer(token, successFunction);// Send the token to your backend server for verification
+            sendTokenToServer(token, successFunction)
+                .then(function () {
+                    button.disabled = false; // Enable the button on success
+                })
+                .catch(function () {
+                    button.disabled = false; // Enable the button on failure
+                });
         });
     });
 }
