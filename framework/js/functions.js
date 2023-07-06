@@ -510,9 +510,11 @@ function showAlert(alertId, message, level) {
     level = level || 'warning'; // Set default value if level is undefined or falsy
     $(alertBackground).removeClass(function (index, className) { return (className.match(/(^|\s)alert-\S+/g) || []).join(' '); });
     $(alertBackground).addClass(`alert-${level}`);
-    alertMessage.innerHTML = icon + dictionaryLookup(message);
-    alert.style.display = 'block';
 
+    var lookupResult = dictionaryLookup(message);
+    alertMessage.innerHTML = icon + (lookupResult !== null ? lookupResult : message);
+
+    alert.style.display = 'block';
 }
 
 /**
