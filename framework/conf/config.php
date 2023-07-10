@@ -17,6 +17,9 @@ $date_specifiers = "%Y-%m-%d %H:%M:%S (%Z)";
 # Default page
 $default_page = "landingpage";// First page to show upon authentication
 
+# Array of pages accessible without authentication
+$public_pages = array("public");
+
 # How to display the nav-menu buttons
 $nav_buttons = array(
     'landingpage' =>

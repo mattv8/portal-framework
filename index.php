@@ -141,7 +141,11 @@ if ($authenticated) {
     $page = isset($default_page) ? $default_page : 'error';
 } // If authenticated, route to default page
 if (isset($_GET["page"]) and $_GET["page"] and !$authenticated) {
-    $page = "login";
+    if (in_array($_GET["page"], $public_pages)) {
+        $page = $_GET["page"];// Allow routing to public pages
+    } else {
+        $page = 'login';// Route to login
+    }
 } // If not authenticated, route to login
 if (isset($_GET["page"])  and $_GET["page"] and $_GET["page"] != "login" and $authenticated) {
     $page = $_GET["page"];
