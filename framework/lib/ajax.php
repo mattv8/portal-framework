@@ -74,8 +74,7 @@ if ($_SESSION['authenticated'] and isset($db_servername) and isset($db_username)
 
         if (strcmp('submitEdits', $request) == 0) {
 
-            $username = $_GET["user"];
-            $currentUser = $_GET["currentUser"];
+            $username = $_GET["uid"];
             $key = $_GET["key"];
             $edits = $_GET["edits"];
 
