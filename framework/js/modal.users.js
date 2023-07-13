@@ -64,7 +64,7 @@ function editAttr(selector,inputType,key) {
         }
 
         // Submit the edits
-        var callback = submitEdits(key,user,(typeof(edits)=='object')?JSON.stringify(edits):edits);
+        var callback = submitEdits(key,user,(typeof(edits)=='object')?JSON.stringify(edits):edits,'framework/lib/ajax.php');
         if ( callback.success ) {// Save the edits back to the database
             td.replaceWith(selector);// Swap back to original
             selector.innerHTML = innerHTML;// Replace innterText with values set above
@@ -185,36 +185,6 @@ function createUser(form) {
         alert(callback.msg);
     }
 
-}
-
-/*
-    Supporting functions for editUserAttr() function
-*/
-function submitEdits(key, user, edits) {
-    var callback = '';
-    var req = {
-        request: 'submitEdits',
-        key: key,
-        user: user,
-        edits: edits,
-    };
-    $.ajax({
-        type: 'GET',
-        url: 'framework/lib/ajax.php',
-        dataType: 'json',
-        data: req,
-        async: false,
-        success: function(data) {
-            callback = data;
-            // console.log(data);
-        }
-    });
-    // Final actions
-    if (callback.success) {// Do the UPDATE to the database on successful callback
-        return callback;
-    } else {
-        alert(callback.msg);
-    }
 }
 
 

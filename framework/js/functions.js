@@ -556,3 +556,47 @@ function dictionaryLookup(message) {
         return null;
     }
 }
+
+
+/**
+    Utility function for submitting edits to a database via AJAX.
+    @param {string} key - The key value for identifying the column (i.e. database key).
+    @param {string} uid - The unique id for identifying the row.
+    @param {string|object} edits - The edits to be submitted. Can be a string or an object.
+    @param {string} getURL - The URL for the AJAX request.
+    @returns {object} - The callback object containing success status and message.
+
+    Example use:
+        var callback = submitEdits(key,user,(typeof(edits)=='object')?JSON.stringify(edits):edits,'framework/lib/ajax.php');
+        if ( callback.success ) {
+            // Do stuff
+        } else {
+            alert(callback.msg);// Show an error
+        }
+*/
+function submitEdits(key, uid, edits, getURL) {
+    var callback = '';
+    var req = {
+        request: 'submitEdits',
+        key: key,
+        uid: uid,
+        edits: edits,
+    };
+    $.ajax({
+        type: 'GET',
+        url: getURL,
+        dataType: 'json',
+        data: req,
+        async: false,
+        success: function (data) {
+            callback = data;
+            // console.log(data);
+        }
+    });
+    // Final actions
+    if (callback.success) {// Do the UPDATE to the database on successful callback
+        return callback;
+    } else {
+        alert(callback.msg);
+    }
+}
