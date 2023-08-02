@@ -31,7 +31,7 @@ stages:
         - if [ -z "$WEBROOT" ]; then echo "Need to set webroot as GitLab CI/CD variable" && exit 1; fi # Verify env var is set
         - sudo rsync -rv ./framework/ $WEBROOT/framework --delete --exclude-from=./_exclusions.txt --exclude='composer.*' # Sync and overwrite framework directory
         - sudo rsync -rv ./ $WEBROOT --exclude 'framework' --exclude-from=./_exclusions.txt # Sync root directory without overwrite
-        - sudo chown admin:admin $WEBROOT -R
+        - sudo chown $USER:$USER $WEBROOT -R
 
 ### PRODUCTION ###
 .production-job-template: &production-job-template
@@ -66,6 +66,7 @@ deploy-to-development-server:
     <<: *staging-job-template
     variables:
         WEBROOT: $portal_development_root
+        USER: admin
 
 # FAIRYLAND DEVELOPMENT
 update-fairyland-dev-portal-framework:
@@ -73,6 +74,7 @@ update-fairyland-dev-portal-framework:
     <<: *staging-job-template
     variables:
         WEBROOT: $fairyland_admin_dev_webroot
+        USER: fairyland
 
 # WEBGUY ONENOTE API DEVELOPMENT
 update-webguy-onenote-api-dev-framework:
@@ -80,6 +82,7 @@ update-webguy-onenote-api-dev-framework:
     <<: *staging-job-template
     variables:
         WEBROOT: $webguy_onenote_api_dev_webroot
+        USER: admin
 
 # FAIRYLAND ADMIN PRODUCTION
 update-fairyland-production-portal-framework:
