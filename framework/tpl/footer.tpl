@@ -22,7 +22,7 @@
       });
       GLOBAL.btnClasses[id] = btnClass;
   });
-  
+
   {/literal}
   navButtonShowOpen('{$page}');
 
@@ -34,7 +34,7 @@
 {/if}
 
 {* Load Admin Navbar Modals *}
-{if ($auth_type neq "none" and $authenticated) and $isadmin}
+{if ($auth_type neq "none" and $authenticated) and $isadmin and not $page|in_array:$public_pages}
   {include file="framework/tpl/modals/modal.navbuttons.tpl"}{* Load Nav Button Modals *}
 {/if}
 

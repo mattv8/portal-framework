@@ -6,18 +6,18 @@
     {else}
       <a class="navbar-brand" href="index.php">{$msg_title}</a>
     {/if}
-    
+
     {* Navbar Collapse Button *}
     <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    
+
     {* Collapsable Menu Items *}
     <div class="container-fluid px-2 collapse navbar-collapse" id="navbarSupportedContent">
 
-      {if ($auth_type neq "none" and $authenticated) and $isadmin}
+      {if ($auth_type neq "none" and $authenticated) and $isadmin  and not $page|in_array:$public_pages}
       <div class="col d-grid gap-2 d-md-flex">
-        
+
         {* Nav Buttons *}
         {foreach from=$nav_buttons item=button key=btn_name}
         {if $button.btn_type == 'modal'}
@@ -26,19 +26,19 @@
         <button class="btn btn-{$button.btn_color} mb-1" id="{$btn_name}Button" onclick="goToPage('{$btn_name}','page-content')"><i class="fa fa-fw fa-{$button.faclass} me-1"></i>{$button.title|@ucfirst}</button>
         {else if $button.btn_type == 'page'}
         <button class="btn btn-{$button.btn_color} mb-1" id="{$btn_name}Button" onclick="window.location = '?page={$btn_name}'"><i class="fa fa-fw fa-{$button.faclass} me-1"></i>{$button.title|@ucfirst}</button>
-        {/if}  
+        {/if}
         {/foreach}
 
       </div>
       {/if}
-      
+
       {* Logout/Login Button*}
-      {if $auth_type neq "none" and isset($authenticated) and $authenticated}
+      {if $auth_type neq "none" and isset($authenticated) and $authenticated  and not $page|in_array:$public_pages}
       <div class="col d-grid gap-2 d-md-flex my-2 justify-content-lg-end">
         <button type="submit" class="btn btn-success" id="logoutButton" onclick="logoff()" title="Log off"><i class="fa fa-fw fa-sign-out"></i> {$msg_logout}</button>
       </div>
       {/if}
-      
+
     </div>{* END Collapsable Menu Items *}
 
   </div>{* END container-fluid *}
@@ -46,7 +46,7 @@
 </nav>{* END nav *}
 
 {* Welcome Banner *}
-{if ($auth_type neq "none" and $authenticated) and $page eq $default_page}
+{if ($auth_type neq "none" and $authenticated) and $page eq $default_page and not $page|in_array:$public_pages}
   <div class="container-fluid inset-1" id="welcome-banner">
     <div class="row alert alert-success" role="alert">
       <div class="col-auto me-auto my-1"><i class="fa fa-fw fa-info-circle"></i> Welcome, {$displayname}.</div>
