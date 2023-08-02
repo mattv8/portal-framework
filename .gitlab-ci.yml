@@ -66,7 +66,7 @@ deploy-to-development-server:
     <<: *staging-job-template
     variables:
         WEBROOT: $portal_development_root
-        USER: admin
+        USER: admin #This is the webserver user or group
 
 # FAIRYLAND DEVELOPMENT
 update-fairyland-dev-portal-framework:
@@ -74,7 +74,7 @@ update-fairyland-dev-portal-framework:
     <<: *staging-job-template
     variables:
         WEBROOT: $fairyland_admin_dev_webroot
-        USER: fairyland
+        USER: fairyland #This is the webserver user or group
 
 # WEBGUY ONENOTE API DEVELOPMENT
 update-webguy-onenote-api-dev-framework:
@@ -82,7 +82,7 @@ update-webguy-onenote-api-dev-framework:
     <<: *staging-job-template
     variables:
         WEBROOT: $webguy_onenote_api_dev_webroot
-        USER: admin
+        USER: admin #This is the webserver user or group
 
 # FAIRYLAND ADMIN PRODUCTION
 update-fairyland-production-portal-framework:
