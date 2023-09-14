@@ -293,35 +293,51 @@ function refreshOnModalClose(modalId, logOff) {
     });
 }
 
-/////////////////
-// Gets all inputs from a particular selector (wether that be a form, div, etc)
-// and returns an object as an associative array of the input fields and values.
-// I tried to make this as reusable as possible, but will need to add cases as they come up.
-// Example use:
-//      var inputObj = getInputs(form);
+/**
+ * Gets all input elements (e.g., input, select, button) within a specified selector,
+ * such as a form or a div, and returns an object as an associative array of the
+ * input fields and their corresponding values.
+ *
+ * This function is designed to be reusable for various input scenarios and types.
+ *
+ * @param {HTMLElement} selector - The selector (e.g., form, div) containing input elements.
+ * @returns {Object} An associative array where keys are input field names and values are input values.
+ *
+ * @example
+ * // Example use:
+ * var inputObj = getInputs(form);
+ */
 function getInputs(selector) {
-    const inputObj = Object();
-    const formElements = Array.from(selector.elements);
+    const inputObj = {};
+    const formElements = Array.from(selector.querySelectorAll('input, select, button')); // Select input and select elements within the modal body
+
     const nonEmptyElements = formElements.filter(element => element.name.trim() !== '');
-    nonEmptyElements.forEach(function (element, i) {
-        // console.log("type: "+element.type+", idx: "+i+", name: "+element.name);
+
+    nonEmptyElements.forEach(function (element) {
         switch (element.type) {
-            default: console.warn("Some inputs not included (input type: " + element.type + ", name: " + element.name + ", id: " + element.id + ")"); break;// Show warning
+            default:
+                console.warn("Some inputs not included (input type: " + element.type + ", name: " + element.name + ", id: " + element.id + ")");
+                break; // Show warning
             case 'checkbox':
-                inputObj[element.name] = (element.checked) ? 1 : 0; break;
+                inputObj[element.name] = (element.checked) ? 1 : 0;
+                break;
             case 'select-multiple':
-                inputObj[element.name] = JSON.stringify($('#' + element.id).val()); break;
+                inputObj[element.name] = JSON.stringify($('#' + element.id).val());
+                break;
             case 'select-one':
-                inputObj[element.name] = $('#' + element.id).val(); break;
+                inputObj[element.name] = $('#' + element.id).val();
+                break;
             case 'submit':
             case 'hidden':
             case 'text':
-                inputObj[element.name] = element.value.replace(/'/g, "\\'"); break;
+                inputObj[element.name] = element.value.replace(/'/g, "\\'");
+                break;
             case 'password':
-                inputObj[element.name] = element.value; break;
-        };
+                inputObj[element.name] = element.value;
+                break;
+        }
     });
-    // console.log(inputObj);
+
     return inputObj;
 }
 
