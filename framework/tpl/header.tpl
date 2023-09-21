@@ -20,9 +20,11 @@
   <script>
     "use strict";
 
-    {if $auth_type eq "none" or isset($authenticated) and $authenticated  or $page|in_array:$public_pages}
-      window.GLOBAL = {}; // GLOBAL Object namespace
-      GLOBAL.config = {$js_config|json_encode nofilter};
+    window.GLOBAL = {}; // GLOBAL Object namespace
+    GLOBAL.config = {$js_config|json_encode nofilter};
+
+    {* These are protected global JS variables *}
+    {if $auth_type eq "none" or isset($authenticated) and $authenticated}
       GLOBAL.config.sites = {$sites|json_encode nofilter};
       GLOBAL.config.siteMemberships = {$siteMemberships|json_encode nofilter};
       GLOBAL.config.currentUser = {$currentUser|json_encode nofilter};
