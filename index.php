@@ -96,7 +96,7 @@ if ($auth_type == 'sql' and isset($db_servername) and isset($db_username) and is
     if ($db_conn) { // DB connection check
 
         // Query `site` table for list of site names and ID's.
-        $sites = ($authenticated) ? getSites($db_conn) : null;
+        $sites = getSites($db_conn);
 
         // Query `user` table for current logged in username's group memberships
         $siteMemberships = ($authenticated) ? getSiteMemberships($db_conn, $_SESSION["username"]) : null;
