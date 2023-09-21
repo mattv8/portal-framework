@@ -426,24 +426,34 @@ function htmlToElement(html) {
  * Accepts either a DOM selector, like selector = document.getElementById('#EventDate_Open')
  * or a string indicating an ID or class, like '#EventDate_Open' or '.EventDate_Open'.
 */
-function animateBackgroundColor(selector, transitionTime, color) {
+function animateBackgroundColor(selector, transitionTime, initialColor, finalColor) {
+    const element = typeof selector === 'string' ? document.querySelector(selector) :
+        selector instanceof jQuery ? selector.get(0) : selector;
 
-    var element;
-    if (typeof selector === "string") {
-        element = document.querySelector(selector);
-    } else {
-        element = selector;
+    if (!element) {
+        console.error('Element not found with selector:', selector);
+        return;
     }
-    element.style.backgroundColor = (color) ? color : 'lightblue';// Defaults to 'lightblue'
-    element.addEventListener("transitionend", function (event) {
-        this.style.removeProperty("transition");
-    }, false);
 
-    var dwellTime = transitionTime / 2;
+    // Set the initial background color
+    element.style.backgroundColor = initialColor || 'lightblue';
+
+    // Add a delay before changing to the final color
     setTimeout(() => {
+        // Set the final background color
+        element.style.backgroundColor = finalColor || 'transparent';
+
+        // Add a transition for a smooth color change
         element.style.transition = `background-color ${transitionTime}ms`;
-        element.style.backgroundColor = '';
-    }, dwellTime);
+
+        // Remove the transition property after the transition is complete
+        const transitionEndHandler = () => {
+            element.style.removeProperty('transition');
+            element.removeEventListener('transitionend', transitionEndHandler);
+        };
+
+        element.addEventListener('transitionend', transitionEndHandler, false);
+    }, 0);
 }
 
 /**
