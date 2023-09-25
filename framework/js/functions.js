@@ -435,25 +435,31 @@ function animateBackgroundColor(selector, transitionTime, initialColor, finalCol
         return;
     }
 
+    // If a transition is currently in progress, remove it
+    element.style.transition = 'none';
+
     // Set the initial background color
     element.style.backgroundColor = initialColor || 'lightblue';
 
-    // Add a delay before changing to the final color
-    setTimeout(() => {
-        // Set the final background color
-        element.style.backgroundColor = finalColor || 'transparent';
+    // Use requestAnimationFrame to force a repaint before changing styles
+    requestAnimationFrame(() => {
+        // Add a delay before changing to the final color
+        setTimeout(() => {
+            // Set the final background color
+            element.style.backgroundColor = finalColor || 'transparent';
 
-        // Add a transition for a smooth color change
-        element.style.transition = `background-color ${transitionTime}ms`;
+            // Add a transition for a smooth color change
+            element.style.transition = `background-color ${transitionTime}ms`;
 
-        // Remove the transition property after the transition is complete
-        const transitionEndHandler = () => {
-            element.style.removeProperty('transition');
-            element.removeEventListener('transitionend', transitionEndHandler);
-        };
+            // Remove the transition property after the transition is complete
+            const transitionEndHandler = () => {
+                element.style.removeProperty('transition');
+                element.removeEventListener('transitionend', transitionEndHandler);
+            };
 
-        element.addEventListener('transitionend', transitionEndHandler, false);
-    }, 0);
+            element.addEventListener('transitionend', transitionEndHandler, false);
+        }, 0);
+    });
 }
 
 /**
