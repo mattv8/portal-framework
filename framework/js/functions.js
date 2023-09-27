@@ -292,6 +292,7 @@ function refreshOnModalClose(modalId, logOff) {
         location.reload();// Do the refresh
     });
 }
+
 /**
  * Gets all input elements (e.g., input, select, button) within a specified selector,
  * such as a form or a div, and returns an object as an associative array of the
@@ -300,20 +301,15 @@ function refreshOnModalClose(modalId, logOff) {
  * This function is designed to be reusable for various input scenarios and types.
  *
  * @param {HTMLElement} selector - The selector (e.g., form, div) containing input elements.
- * @param {Array} additionalInputs - An array of additional input element names to include (optional).
  * @returns {Object} An associative array where keys are input field names and values are input values.
  *
  * @example
  * // Example use:
- * var inputObj = getInputs(form, ['color', 'otherInput']);
+ * var inputObj = getInputs(form);
  */
-function getInputs(selector, additionalInputs = []) {
+function getInputs(selector) {
     const inputObj = {};
-
-    // Select input and select elements within the modal body
-    const formElements = Array.from(
-        selector.querySelectorAll('input, select, button' + additionalInputs.map(input => `[name="${input}"]`).join(', '))
-    );
+    const formElements = Array.from(selector.querySelectorAll('input, select, button')); // Select input and select elements within the modal body
 
     const nonEmptyElements = formElements.filter(element => element.name.trim() !== '');
 
@@ -344,7 +340,6 @@ function getInputs(selector, additionalInputs = []) {
 
     return inputObj;
 }
-
 
 function findElementWithInnerText(innerText) {
     // Find all elements in the document with the specified inner text
