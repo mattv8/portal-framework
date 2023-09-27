@@ -309,7 +309,7 @@ function refreshOnModalClose(modalId, logOff) {
  */
 function getInputs(selector) {
     const inputObj = {};
-    const formElements = Array.from(selector.querySelectorAll('input, select, button')); // Select input and select elements within the modal body
+    const formElements = Array.from(selector.querySelectorAll('input, select, button, color')); // Select input and select elements within the modal body
 
     const nonEmptyElements = formElements.filter(element => element.name.trim() !== '');
 
@@ -328,6 +328,7 @@ function getInputs(selector) {
                 inputObj[element.name] = $('#' + element.id).val();
                 break;
             case 'submit':
+            case 'color':
             case 'hidden':
             case 'text':
                 inputObj[element.name] = element.value.replace(/'/g, "\\'");
