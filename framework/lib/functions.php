@@ -138,3 +138,49 @@ function auditLog($db_conn, $otherColumns = null)
     ";
     return $db_conn->query($insertAuditLogQuery);
 }
+
+
+
+
+/**
+ * Retrieves all user data for managers who are members of a specific site.
+ *
+ * @param mysqli $db_conn The MySQL database connection.
+ * @param int $siteId The ID of the site to query for managers.
+ * @param bool $adminsOnly Returns only admins. If false, will return all members of the given $siteId.
+ *
+ * @return array|false An array of manager data for matching rows or false on failure.
+ *
+ * @example
+ * Example Use:
+ *   $siteId = $submission['siteId'];
+ *   $managers = getManagers($db_conn, $siteId);
+ */
+function getMembers($db_conn, $siteId, $adminsOnly = false)
+{
+    $managers = array();
+
+    $query = "SELECT *
+              FROM users u
+              JOIN sites s ON JSON_CONTAINS(u.siteMemberships, JSON_QUOTE(s.SiteName))
+              WHERE s.SiteId = $siteId
+              AND active = '1'
+              ";
+
+    $query .= ($adminsOnly) ? "AND isadmin = '1';" : ";";
+
+    $result = mysqli_query($db_conn, $query);
+
+    if ($result) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $managers[] = $row;
+        }
+        mysqli_free_result($result);
+    } else {
+        return false; // Return false on query execution failure
+    }
+
+    mysqli_close($db_conn); // Explicitly close the connection
+
+    return $managers; // Return the array of managers
+}
