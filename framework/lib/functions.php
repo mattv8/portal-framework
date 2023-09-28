@@ -180,7 +180,5 @@ function getMembers($db_conn, $siteId, $adminsOnly = false)
         return false; // Return false on query execution failure
     }
 
-    mysqli_close($db_conn); // Explicitly close the connection
-
     return $managers; // Return the array of managers
 }
