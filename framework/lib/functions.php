@@ -3,7 +3,7 @@
     Custom PHP Functions
 */
 require_once($_SERVER['DOCUMENT_ROOT'] . '/framework/conf/config.php');
-session_start();// Continue session variables
+session_start(); // Continue session variables
 
 # Fetches array from subarrays by key. Only works on uniform multidimensional arrays, i.e.
 # $entries_map = array(
