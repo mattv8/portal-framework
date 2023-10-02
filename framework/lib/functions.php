@@ -63,6 +63,27 @@ function getSites($db_conn)
     return $SiteData;
 }
 
+
+/**
+ * Get the siteName based on the provided siteId.
+ *
+ * @param int $siteId The siteId for which you want to retrieve the siteName.
+ * @param mysqli $db_conn The MySQLi database connection object.
+ *
+ * @return string The siteName associated with the given siteId, or an empty string if not found.
+ */
+function getSiteNameFromId($db_conn, $siteId)
+{
+    $sites = getSites($db_conn);
+
+    $siteName = array_reduce($sites, function ($carry, $item) use ($siteId) {
+        return ($item['siteId'] == $siteId) ? $item['siteName'] : $carry;
+    }, '');
+
+    return $siteName;
+}
+
+
 # Simple function to pretty-print out all the field names from an associative array
 function getSiteMemberships(mysqli $db_conn, String $currentUser)
 {
