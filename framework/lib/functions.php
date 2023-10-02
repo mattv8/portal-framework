@@ -19,20 +19,45 @@ function array_from_subarray($array, $subkey)
     return $subarray;
 }
 
-# Fetches list of sites
+/**
+ * Retrieves all records from the 'sites' table and returns them as an associative array.
+ *
+ * This function queries the 'sites' table to dynamically fetch all columns for each site,
+ * and returns the data as an associative array with column names as keys.
+ *
+ * @param mysqli $db_conn The MySQLi database connection object.
+ *
+ * @return array An associative array containing site data with column names as keys.
+ *               Returns an empty array if no data is found or an error occurs.
+ */
 function getSites($db_conn)
 {
-    $SiteDataQuery = mysqli_query($db_conn, "SELECT * FROM `sites` ORDER BY SiteId ASC;");
-    $SiteData = array(); // Preallocate
-    if ((mysqli_num_rows($SiteDataQuery)) > 0) {
-        $i = 0;
+    $SiteData = array(); // Initialize the result array
+
+    // Query to retrieve all columns for all sites from the 'sites' table
+    $query = "SELECT * FROM `sites` ORDER BY SiteId ASC";
+    $SiteDataQuery = mysqli_query($db_conn, $query);
+
+    if (!$SiteDataQuery) {
+        // Handle query execution error
+        return $SiteData; // Return empty array on error
+    }
+
+    if (mysqli_num_rows($SiteDataQuery) > 0) {
         while ($rows = $SiteDataQuery->fetch_assoc()) {
-            $SiteData[$i]['siteId'] = $rows['SiteId']; // Store groups into array
-            $SiteData[$i]['siteName'] = $rows['SiteName']; // Store groups into array
-            $SiteData[$i]['siteHTMLName'] = strtolower(str_replace(" ", "-", $rows['SiteName'])); // Store groups into array
-            $i++;
+            foreach ($rows as $column_name => $value) {
+                if ($column_name === 'SiteId') {
+                    $SiteData['siteId'] = $rows['SiteId']; //Change the case of the key for consistency
+                    $SiteData['siteHTMLName'] = strtolower(str_replace(" ", "-", $rows['SiteName'])); // Append siteHTMLName
+                } else if ($column_name === 'SiteName') {
+                    $SiteData['siteName'] = $rows['SiteName']; //Change the case of the key for consistency
+                } else {
+                    $SiteData[$column_name] = $value; // Retrieve the rest of the columns
+                }
+            }
         }
     }
+
     return $SiteData;
 }
 
