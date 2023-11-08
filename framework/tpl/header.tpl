@@ -28,6 +28,8 @@
       GLOBAL.config.sites = {$sites|json_encode nofilter};
       GLOBAL.config.siteMemberships = {$siteMemberships|json_encode nofilter};
       GLOBAL.config.currentUser = {$currentUser|json_encode nofilter};
+      GLOBAL.config.authenticated = {($authenticated) ? 'true' : 'false'};
+      GLOBAL.config.isAdmin = {($isadmin) ? 'true' : 'false'};
     {/if}
 
     {if !isset($debug) or !$debug }
