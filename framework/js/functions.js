@@ -110,14 +110,12 @@ function getSessionVar(key) {
         request: 'getSessionVar',
         key: key
     };
+
     var response = $.ajax({
-        url: "index.php?" + $.param(req),
+        url: 'index.php?' + $.param(req),
         async: false,
-        success: function (data) {
-            var _data = JSON.parse(data);
-            return _data.value;
-        }
     }).responseText;
+
     return JSON.parse(response).value;
 }
 
@@ -130,16 +128,20 @@ function getSessionVar(key) {
     asynchronous and therefore the response is handled via a callback function.
     Use this function to save data to the session variable without blocking the UI thread.
 */
-function saveSessionVar(key, value) {
-    // AJAX request to save session data
-    var req = {
+function saveSessionVar(value) {
+    // Determine the variable name dynamically
+    var key = Object.keys(window).find(key => window[key] === value);
+
+    // Check if value is an object or array, then stringify it
+    if (typeof value === 'object' && value !== null) {
+        value = JSON.stringify(value);
+    }
+
+    // AJAX request to save session data using $.get
+    $.get('index.php', {
         request: 'saveSessionVar',
         key: key,
-        value: value,
-    };
-    $.get("index.php?" + $.param(req), function (data) {
-        var _data = JSON.parse(data)
-        return _data.success;// Extract JSON response
+        value: value
     });
 }
 
