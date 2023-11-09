@@ -4,3 +4,12 @@
 */
 
 console.log("This line of text demonstrates "+document.currentScript.src+" is being loaded.");
+
+var test = {
+    one: 'one',
+    two: 2,
+    three: Array(3),
+}
+saveSessionVar(test);
+
+console.log('Testing retrieval of a session variable:', getSessionVar('test'));
