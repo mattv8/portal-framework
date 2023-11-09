@@ -26,8 +26,6 @@ stages:
     script:
         - npm install uglifyjs-folder -g # Install uglifyjs-folder if not already installed. No need for sudo, npm is installed under gitlab-runner
         - uglifyjs-folder ./framework/js -eo ./framework/js/ -p "**/*.js" # Minify all JS in the folder with separate files
-        - uglifyjs-folder ./framework/vendor/datepicker-lightpick/js -eo ./framework/vendor/datepicker-lightpick/js/ -p "**/*.js" # Minify custom lightpick JS
-        - find ./framework/js ./framework/vendor/datepicker-lightpick/js -type f -name "*.js" -not -name "*.min.js" -delete # Remove the unminified JS
         - if [ -z "$WEBROOT" ]; then echo "Need to set webroot as GitLab CI/CD variable" && exit 1; fi # Verify env var is set
         - sudo rsync -rv ./framework/ $WEBROOT/framework --delete --exclude-from=./_exclusions.txt --exclude='composer.*' # Sync and overwrite framework directory
         - sudo rsync -rv ./ $WEBROOT --exclude 'framework' --exclude-from=./_exclusions.txt # Sync root directory without overwrite
@@ -53,8 +51,6 @@ stages:
     script:
         - sudo npm install uglifyjs-folder -g # Install uglifyjs-folder if not already installed. No need for sudo, npm is installed under gitlab-runner
         - uglifyjs-folder ./framework/js -eo ./framework/js/ -p "**/*.js" # Minify all JS in the folder with separate files
-        - uglifyjs-folder ./framework/vendor/datepicker-lightpick/js -eo ./framework/vendor/datepicker-lightpick/js/ -p "**/*.js" # Minify custom lightpick JS
-        - find ./framework/js ./framework/vendor/datepicker-lightpick/js -type f -name "*.js" -not -name "*.min.js" -delete # Remove the unminified JS
         - if [ -z "$WEBROOT" ]; then echo "Need to set webroot" && exit 1; fi # Verify webroot env var is set
         - sudo rsync -rv ./framework/ $WEBROOT/framework --delete --exclude-from=./_exclusions.txt --exclude='composer.*' # Sync and overwrite framework directory
         - sudo rsync -rv ./ $WEBROOT --exclude 'framework' --exclude-from=./_exclusions.txt # Sync root directory without overwrite

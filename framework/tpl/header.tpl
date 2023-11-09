@@ -12,7 +12,6 @@
   <link rel="stylesheet" type="text/css" href="framework/vendor/bootstrap5/css/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" href="framework/vendor/font-awesome/css/all.min.css" />
   <link rel="stylesheet" type="text/css" href="framework/vendor/datatables/dataTables.bootstrap5.min.css" />
-  <link rel="stylesheet" type="text/css" href="framework/vendor/datepicker-lightpick/css/lightpick.css" />
   <link rel="stylesheet" type="text/css" href="framework/vendor/select2/css/select2.min.css" />
   <link rel="stylesheet" type="text/css" href="framework/css/portal.css" />
 
@@ -55,11 +54,6 @@
   <script src="framework/vendor/select2/js/select2.full.min.js"></script>
 
   {* NOTE: The following JS files get minified by CI/CD and are only referenced here for development *}
-  {if file_exists('framework/vendor/datepicker-lightpick/js/lightpick.min.js')}
-    <script src="framework/vendor/datepicker-lightpick/js/lightpick.min.js"></script>{* This file gets minified by CI/CD *}
-  {else}
-    <script src="framework/vendor/datepicker-lightpick/js/lightpick.js"></script>
-  {/if}
   {if file_exists('framework/js/functions.min.js')}
     <script src="framework/js/functions.min.js"></script>
   {else}
