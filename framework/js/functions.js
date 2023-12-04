@@ -148,6 +148,39 @@ function saveSessionVar(value, key) {
 }
 
 
+/**
+ * Synchronously fetches existing site memberships for a given user through an AJAX call.
+ *
+ * @param {string} user - The username for which to retrieve site memberships.
+ * @returns {Array} The site memberships array, or an empty array if an error occurs.
+ *
+ * @example
+ * // Example usage:
+ * const memberships = getSiteMemberships('yourUsername');
+ * console.log('Site Memberships:', memberships);
+ */
+function getSiteMemberships(user) {
+    let memberships = [];
+
+    // Do AJAX call to get existing site memberships
+    $.ajax({
+        type: 'GET',
+        url: 'framework/lib/ajax.php',
+        data: { request: 'siteMemberships', user: user },
+        dataType: 'json',
+        async: false,
+        success: function (data) {
+            memberships = data || [];
+        },
+        error: function (error) {
+            console.error('Error fetching site memberships:', error);
+        }
+    });
+
+    return memberships;
+}
+
+
 /////////////////
 // Pull a list of sites from the database
 function getSites() {

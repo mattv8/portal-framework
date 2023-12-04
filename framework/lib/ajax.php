@@ -55,7 +55,7 @@ if ($_SESSION['authenticated'] and isset($db_servername) and isset($db_username)
 
 
         # Handle AJAX requests to query form submissions
-        if (strcmp('site-memberships', $request) == 0) {
+        if (strcmp('siteOptions', $request) == 0) {
 
             $username = $_GET["user"];
             $siteMemberships = getSiteMemberships($db_conn, $username);
@@ -68,6 +68,17 @@ if ($_SESSION['authenticated'] and isset($db_servername) and isset($db_username)
             }
             $results = array_values($sub_options);
             echo json_encode($results); // Pass the results to javascript
+
+        }
+
+
+        # Handle AJAX requests to query form submissions
+        if (strcmp('siteMemberships', $request) == 0) {
+
+            $username = $_GET["user"];
+            $siteMemberships = getSiteMemberships($db_conn, $username);
+
+            echo json_encode($siteMemberships); // Pass the results to javascript
 
         }
 
@@ -92,7 +103,7 @@ if ($_SESSION['authenticated'] and isset($db_servername) and isset($db_username)
 
                 $editQuery = "UPDATE users SET " . $key . " = '" . $edits . "' WHERE username = '" . $username . "';";
                 if ($db_conn->query($editQuery) === TRUE) {
-                    $auditFields = array('actionId' => $request, 'affectedField' => $key, 'description' => "$username\'s $key was changed from ".json_encode($previousValue)." to ".json_encode($edits), 'from' => $previousValue, 'to' => $edits);
+                    $auditFields = array('actionId' => $request, 'affectedField' => $key, 'description' => "$username\'s $key was changed from " . json_encode($previousValue) . " to " . json_encode($edits), 'from' => $previousValue, 'to' => $edits);
                     $auditLogged = auditLog($db_conn, $auditFields); // Add row to the audit log
                     echo json_encode(array('success' => $auditLogged, 'msg' => "Error logging to the audit log" . $db_conn->error));
                 } else {
@@ -140,7 +151,6 @@ if ($_SESSION['authenticated'] and isset($db_servername) and isset($db_username)
                 echo json_encode(array('sucesss' => false, 'msg' => "Error updating record: " . $db_conn->error));
             }
         }
-
     } else {
         echo json_encode(array('sucesss' => false, 'msg' => "Failed to connect to the MySQL database. Please check the database configuration settings and ensure that they are correct. If you are unsure what to do, please contact your system administrator for assistance."));
     } // END if ($db_conn)

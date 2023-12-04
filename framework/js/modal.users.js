@@ -242,7 +242,7 @@ function select2_sites(user) {
         type: 'GET',
         url: 'framework/lib/ajax.php',
         dataType: 'json',
-        data: {request: 'site-memberships', user: user},
+        data: {request: 'siteOptions', user: user},
     }).done(function (memberships) {// THEN add JSON response to Select2 Options
         if(memberships) {// If there are any existing memberships
             const preselected = new Array(); var i = 0;// Initialize some variables
