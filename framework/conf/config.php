@@ -35,6 +35,7 @@ $nav_buttons = array(
             'faclass' => 'users',
             'btn_color' => 'secondary',
             'btn_type' => 'modal',
+            'fullscreen' => true,
             'modalId' => 'UserMgmtModal',
             'modalclass' => 'modal-xl',
         ),

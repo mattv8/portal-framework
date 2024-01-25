@@ -7,6 +7,7 @@
                 <div class="modal-header">
                     <h2 class="modal-title" id="{$button.modalId}Title">{$button.title}</h2>
                     <div class="text-right">
+                        {if $button.fullscreen}<button id="{$button.modalId}Fullscreen" type="button" class="btn btn-secondary me-1" onclick="fullscreenModal(this)"><i class="fa fa-expand-alt"></i></button>{/if}
                         <button id="{$button.modalId}Close" type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-remove"></i></button>
                     </div>
                 </div>

@@ -687,3 +687,31 @@ function submitEdits(key, uid, edits, getURL) {
         alert(callback.msg);
     }
 }
+
+
+/**
+ * Toggles the fullscreen mode of a modal and adjusts the icon on the provided button.
+ *
+ * @param {HTMLButtonElement} button - The button that triggers the fullscreen toggle.
+ *
+ * @example
+ * // Usage example within a button click event
+ * const fullscreenButton = document.getElementById('FullscreenButton');
+ * fullscreenButton.onclick = function () {
+ *   fullscreenModal(this);
+ * };
+ */
+function fullscreenModal(button) {
+    const modalDialog = button.closest('.modal-dialog');
+
+    if (modalDialog) {
+        // Toggle the modal's fullscreen class
+        modalDialog.classList.toggle('modal-fullscreen');
+
+        // Adjust the icon based on the modal's state
+        const icon = modalDialog.classList.contains('modal-fullscreen') ? 'fa-compress-alt' : 'fa-expand-alt';
+        button.innerHTML = `<i class="fa ${icon}"></i>`;
+    } else {
+        console.error('Element modalDialog was not found.');
+    }
+}
