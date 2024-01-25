@@ -72,7 +72,7 @@ $custom_css = "";
 $page_bg_color_class = 'bg-light';// See https://getbootstrap.com/docs/5.0/utilities/background/ for examples of valid classes
 
 # Debug mode
-$debug = false;
+$debug = true;
 $smarty_debug = false;
 
 # Cache directory

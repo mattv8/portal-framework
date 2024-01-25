@@ -24,8 +24,6 @@ stages:
     # when: manual # Uncomment if you want to enable manual intervention
     image: node:latest
     script:
-        - npm install uglifyjs-folder -g # Install uglifyjs-folder if not already installed. No need for sudo, npm is installed under gitlab-runner
-        - uglifyjs-folder ./framework/js -eo ./framework/js/ -p "**/*.js" # Minify all JS in the folder with separate files
         - if [ -z "$WEBROOT" ]; then echo "Need to set webroot as GitLab CI/CD variable" && exit 1; fi # Verify env var is set
         - sudo rsync -rv ./framework/ $WEBROOT/framework --delete --exclude-from=./_exclusions.txt --exclude='composer.*' # Sync and overwrite framework directory
         - sudo rsync -rv ./ $WEBROOT --exclude 'framework' --exclude-from=./_exclusions.txt # Sync root directory without overwrite
