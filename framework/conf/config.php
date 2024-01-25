@@ -130,5 +130,3 @@ if (file_exists ($_SERVER['DOCUMENT_ROOT'].'/config.local.php')) {
 if (!defined("SMARTY")) {
     define("SMARTY", "framework/vendor/smarty4/libs/Smarty.class.php");
 }
-
-?>
