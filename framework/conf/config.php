@@ -38,6 +38,7 @@ $nav_buttons = array(
             'fullscreen' => true,
             'modalId' => 'UserMgmtModal',
             'modalclass' => 'modal-xl',
+            'modalFunction' => 'modalFunctionTest'
         ),
     'examplepage' =>
         array(

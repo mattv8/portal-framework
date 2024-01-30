@@ -219,21 +219,27 @@ function logoff() {
 /////////////////
 // Open Nav Buttons as Modals
 // This function is called from the menu button
-function openModal(modalId, navButton) {
+function openModal(modalId, navButton, modalFunction = null) {
 
-    ////////////////
     // Add event listener for modal close/dismiss
     modalId.addEventListener('hidden.bs.modal', function (e) {
         $(navButton).addClass('btn-secondary');
         $(navButton).removeClass('btn-primary');
-    })
+    });
 
-    ////////////////
     // Initialize the modal
     $(modalId).modal('toggle');
     $(navButton).removeClass('btn-secondary');
     $(navButton).addClass('btn-primary');
 
+    // Call the modalFunction if provided
+    if (modalFunction && typeof modalFunction === 'function') {
+        modalFunction();
+    }
+}
+
+function modalFunctionTest () {
+    console.log("This function is ran when the Users modal button is clicked.");
 }
 
 /////////////////

@@ -21,7 +21,7 @@
         {* Nav Buttons *}
         {foreach from=$nav_buttons item=button key=btn_name}
         {if $button.btn_type == 'modal'}
-        <button class="btn btn-{$button.btn_color} mb-1" id="{$btn_name}Button" onclick="openModal({$button.modalId},this)"><i class="fa fa-fw fa-{$button.faclass} me-1"></i>{$button.title|@ucfirst}</button>
+        <button class="btn btn-{$button.btn_color} mb-1" id="{$btn_name}Button" onclick="openModal({$button.modalId},this,{$button.modalFunction})"><i class="fa fa-fw fa-{$button.faclass} me-1"></i>{$button.title|@ucfirst}</button>
         {else if $button.btn_type == 'pageSmooth'}
         <button class="btn btn-{$button.btn_color} mb-1" id="{$btn_name}Button" onclick="goToPage('{$btn_name}','page-content')"><i class="fa fa-fw fa-{$button.faclass} me-1"></i>{$button.title|@ucfirst}</button>
         {else if $button.btn_type == 'page'}
