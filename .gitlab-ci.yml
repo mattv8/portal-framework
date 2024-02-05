@@ -83,3 +83,11 @@ update-fairyland-production-portal-framework:
     <<: *production-job-template
     variables:
         WEBROOT: $fairyland_admin_production_webroot
+
+# WEBGUY STRIPE API DEVELOPMENT
+update-webguy-stripe-api-dev-framework:
+    stage: staging
+    <<: *staging-job-template
+    variables:
+        WEBROOT: $webguy_stripe_api_dev_webroot
+        USER: admin #This is the webserver user or group
