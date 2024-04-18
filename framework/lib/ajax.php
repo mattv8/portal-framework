@@ -151,6 +151,23 @@ if ($_SESSION['authenticated'] and isset($db_servername) and isset($db_username)
                 echo json_encode(array('sucesss' => false, 'msg' => "Error updating record: " . $db_conn->error));
             }
         }
+
+
+        // Handle AJAX requests to get server time
+        if (strcmp('getServerTime', $request) == 0) {
+            // Perform server-side operations to retrieve server time
+            $serverTime = date("Y-m-d H:i:s"); // Replace this with your actual server time retrieval logic
+
+            // Check if server time retrieval was successful
+            if ($serverTime !== false) {
+                echo json_encode(['success' => true, 'serverTime' => $serverTime]);
+            } else {
+                // If there was an error in retrieving the server time, provide an error message
+                echo json_encode(['success' => false, 'msg' => "Failed to retrieve server time."]);
+            }
+        }
+
+
     } else {
         echo json_encode(array('sucesss' => false, 'msg' => "Failed to connect to the MySQL database. Please check the database configuration settings and ensure that they are correct. If you are unsure what to do, please contact your system administrator for assistance."));
     } // END if ($db_conn)

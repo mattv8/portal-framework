@@ -720,4 +720,33 @@ function fullscreenModal(button) {
     } else {
         console.error('Element modalDialog was not found.');
     }
+}/**
+ * Fetches the current server time asynchronously.
+ * @returns {Promise<Date>} A Promise that resolves with the current server time as a Date object.
+ * @throws {Error} If there is an error fetching the server time.
+ *
+ * @example
+ * // Example of usage:
+ * getServerTime()
+ *   .then(function(serverTime) {
+ *       console.log("Server time:", serverTime);
+ *   })
+ *   .catch(function(error) {
+ *       console.error("Error fetching server time:", error);
+ *   });
+ */
+function getServerTime() {
+    return $.ajax({
+        url: 'framework/lib/ajax.php?request=getServerTime', // Replace '/get-server-time' with the actual URL to fetch server time
+        method: 'GET',
+        dataType: 'json' // Expecting JSON response
+    }).then(function (response) {
+        if (response.success) {
+            return new Date(response.serverTime);
+        } else {
+            throw new Error("Failed to fetch server time: " + response.msg);
+        }
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        throw new Error("Failed to fetch server time: " + errorThrown);
+    });
 }
