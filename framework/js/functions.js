@@ -238,7 +238,7 @@ function openModal(modalId, navButton, modalFunction = null) {
     }
 }
 
-function modalFunctionTest () {
+function modalFunctionTest() {
     console.log("This function is ran when the Users modal button is clicked.");
 }
 
@@ -720,7 +720,10 @@ function fullscreenModal(button) {
     } else {
         console.error('Element modalDialog was not found.');
     }
-}/**
+}
+
+
+/**
  * Fetches the current server time asynchronously.
  * @returns {Promise<Date>} A Promise that resolves with the current server time as a Date object.
  * @throws {Error} If there is an error fetching the server time.

@@ -3,7 +3,7 @@
     which will still be executed when the goToPage() function is ran.
 */
 
-console.log("This line of text demonstrates "+document.currentScript.src+" is being loaded.");
+console.log("This line of text demonstrates " + document.currentScript.src + " is being loaded.");
 
 var test = {
     one: 'one',
@@ -13,6 +13,7 @@ var test = {
 saveSessionVar(test);
 
 console.log('Testing retrieval of a session variable:', getSessionVar('test'));
+
 getServerTime()
     .then(function (serverTime) {
         console.log("Server time:", serverTime);
