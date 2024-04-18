@@ -2,6 +2,7 @@
 <script src="framework/js/examplepage.js"></script>
 
 <div class="text-center">
+<button class="btn btn-primary" onclick="printJSTime()">Console Log Server Time</button>
   <a href="index.php">
     <marquee behavior="alternate" scrollamount="5" direction="right">
         <img src="framework/images/dont-panic.jpg" alt="Portal Framework 2.0" class="img-fluid py-5">
