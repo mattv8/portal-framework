@@ -11,65 +11,80 @@
 let serverTimeOffset = 0; // Offset to adjust client time to server time
 let lastSyncTime = 0; // Timestamp of last synchronization with server
 
-
 /**
- * Fetches the current server time asynchronously.
- * @returns {Promise<Date>} A Promise that resolves with the current server time as a Date object.
- * @throws {Error} If there is an error fetching the server time.
+ * Object to manage server time-related functions.
  *
  * @example
- * var now = serverTime();
+ * // Fetch the current server time asynchronously
+ * time.getServerTime().then(function(serverTime) {
+ *     console.log("Server time:", serverTime);
+ * }).catch(function(error) {
+ *     console.error("Error fetching server time:", error);
+ * });
+ *
+ * @example
+ * // Get the adjusted server time for the client
+ * var now = time.serverTime();
+ * console.log("Server time:", adjustedTime);
+ *
+ * @example
+ * // Periodically sync with the server time
+ * time.syncWithServerTime(3600); // Sync every hour
  */
-function getServerTime() {
-    return $.ajax({
-        url: 'framework/lib/ajax.php?request=getServerTime',
-        method: 'GET',
-        dataType: 'json'
-    }).then(function (response) {
-        if (response.success) {
-            const serverTime = new Date(response.serverTime);
-            const currentTime = new Date();
-            serverTimeOffset = serverTime.getTime() - currentTime.getTime(); // Calculate time difference
-            lastSyncTime = currentTime.getTime(); // Update last sync time
-        } else {
-            throw new Error("Failed to fetch server time: " + response.msg);
+const time = {
+    /**
+     * Fetches the current server time asynchronously.
+     * @returns {Promise<Date>} A Promise that resolves with the current server time as a Date object.
+     * @throws {Error} If there is an error fetching the server time.
+     */
+    getServerTime: function () {
+        return $.ajax({
+            url: 'framework/lib/ajax.php?request=getServerTime',
+            method: 'GET',
+            dataType: 'json'
+        }).then(function (response) {
+            if (response.success) {
+                const serverTime = new Date(response.serverTime);
+                const currentTime = new Date();
+                serverTimeOffset = serverTime.getTime() - currentTime.getTime(); // Calculate time difference
+                lastSyncTime = currentTime.getTime(); // Update last sync time
+            } else {
+                throw new Error("Failed to fetch server time: " + response.msg);
+            }
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            throw new Error("Failed to fetch server time: " + errorThrown);
+        });
+    },
+
+    /**
+     * Gets the adjusted server time for the client.
+     * @returns {Date} The adjusted server time as a Date object.
+     */
+    serverTime: function () {
+        const currentTime = new Date().getTime();
+        const adjustedTime = new Date(currentTime + serverTimeOffset);
+        return adjustedTime;
+    },
+
+    /**
+     * Periodically syncs with the server time.
+     * @param {number} syncIntervalSeconds - The synchronization interval in seconds.
+     */
+    syncWithServerTime: function (syncIntervalSeconds) {
+        const currentTime = new Date().getTime();
+        const syncIntervalMilliseconds = syncIntervalSeconds * 1000;
+        if (currentTime - lastSyncTime >= syncIntervalMilliseconds) {
+            this.getServerTime(); // Sync with server time
         }
-    }).fail(function (jqXHR, textStatus, errorThrown) {
-        throw new Error("Failed to fetch server time: " + errorThrown);
-    });
-}
-
-
-/**
- * Gets the adjusted server time for the client.
- * @returns {Date} The adjusted server time as a Date object.
- */
-function serverTime() {
-    const currentTime = new Date().getTime();
-    const adjustedTime = new Date(currentTime + serverTimeOffset);
-    return adjustedTime;
-}
-
-
-/**
- * Periodically syncs with the server time.
- * @param {number} syncIntervalSeconds - The synchronization interval in seconds.
- */
-function syncWithServerTime(syncIntervalSeconds) {
-    const currentTime = new Date().getTime();
-    const syncIntervalMilliseconds = syncIntervalSeconds * 1000;
-    if (currentTime - lastSyncTime >= syncIntervalMilliseconds) {
-        getServerTime(); // Sync with server time
     }
-}
-
+};
 
 /**
  * Periodically check if synchronization is needed every 5 seconds, it checks if
  * an hour has passed since the last synchronization, and if so, it syncs the time with the server.
  */
 setInterval(function () {
-    syncWithServerTime(3600); // Sync every hour
+    time.syncWithServerTime(3600); // Sync every hour
 }, 5000); // Check every 5 seconds if sync is needed
 
 

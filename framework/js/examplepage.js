@@ -14,9 +14,10 @@ saveSessionVar(test);
 
 console.log('Testing retrieval of a session variable:', getSessionVar('test'));
 
-var now = serverTime();
-console.log("New local clock:", now);
+var now = time.serverTime();
+console.log("Server time at page load:", now);
 
-function printJSTime(){
-    console.log(`Local JS time is: ${serverTime()}`);
+function printJSTime() {
+    const localTime = time.serverTime();
+    console.log(`Local JS time is: ${localTime}`);
 }
