@@ -65,7 +65,8 @@ function syncWithServerTime(syncIntervalSeconds) {
 
 
 /**
- * Periodically check if synchronization is needed
+ * Periodically check if synchronization is needed every 5 seconds, it checks if
+ * an hour has passed since the last synchronization, and if so, it syncs the time with the server.
  */
 setInterval(function () {
     syncWithServerTime(3600); // Sync every hour
