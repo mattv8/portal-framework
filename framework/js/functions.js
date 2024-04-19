@@ -48,6 +48,7 @@ const time = {
                 const currentTime = new Date();
                 serverTimeOffset = serverTime.getTime() - currentTime.getTime(); // Calculate time difference
                 lastSyncTime = currentTime.getTime(); // Update last sync time
+                return serverTime; // Resolve with server time
             } else {
                 throw new Error("Failed to fetch server time: " + response.msg);
             }
@@ -64,6 +65,14 @@ const time = {
         const currentTime = new Date().getTime();
         const adjustedTime = new Date(currentTime + serverTimeOffset);
         return adjustedTime;
+    },
+
+    /**
+     * Gets the server time as a Moment.js object.
+     * @returns {Object} The server time as a Moment.js object.
+     */
+    serverTimeMoment: function () {
+        return moment(this.serverTime());
     },
 
     /**
