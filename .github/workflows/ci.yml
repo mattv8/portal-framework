@@ -18,6 +18,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
       - name: Sync Framework Directory
         run: |
           if [ -z "$WEBROOT" ]; then echo "Need to set webroot as GitHub Actions secret" && exit 1; fi
