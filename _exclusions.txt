@@ -8,6 +8,7 @@ _exclusions.txt
 
 # GIT & GitLab System Files
 .git
+.github
 .gitignore
 .gitlab-ci.yml
 .nfs*
