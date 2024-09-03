@@ -4,6 +4,13 @@ on:
   push:
     branches:
       - '**' # Trigger on all branches
+    paths-ignore:
+      - '.git/**'
+      - '.github/**'
+      - '.gitignore'
+      - '**/*.md'
+    paths: # Overrides paths-ignore
+      - '.github/workflows/ci.yml' # Changes to the ci will still trigger
   workflow_dispatch: # Manual trigger
 
 jobs:
