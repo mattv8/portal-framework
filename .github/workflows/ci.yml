@@ -4,16 +4,20 @@ on:
   push:
     branches:
       - '**' # Trigger on all branches
+    paths-ignore:
+      - '.git/**'
+      - '.gitignore'
+      - '**/*.md'
   workflow_dispatch: # Manual trigger
 
 jobs:
   deploy-to-development-server:
     name: Deploy to Development Server
-    runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    runs-on: self-hosted
+    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
     env:
       WEBROOT: ${{ secrets.PORTAL_DEVELOPMENT_ROOT }}
-      USER: admin
+      USER: ${{ secrets.WEBROOT_USER }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -25,17 +29,18 @@ jobs:
 
       - name: Sync Framework Directory
         run: |
-          if [ -z "$WEBROOT" ]; then echo "Need to set webroot as GitHub Actions secret" && exit 1; fi
-          sudo rsync -rv ./framework/ $WEBROOT/framework --delete --exclude-from=./_exclusions.txt --exclude='composer.*'
-          sudo rsync -rv ./ $WEBROOT --exclude 'framework' --exclude-from=./_exclusions.txt
-          sudo chown $USER:$USER $WEBROOT -R
+          if [ -z "${{env.WEBROOT}}" ]; then echo "Need to set webroot as GitHub Actions secret" && exit 1; fi
+          sudo rsync -rv ./framework/ ${{env.WEBROOT}}/framework --delete --exclude-from=./_exclusions.txt --exclude='composer.*'
+          sudo rsync -rv ./ ${{env.WEBROOT}} --exclude 'framework' --exclude-from=./_exclusions.txt
+          sudo chown $USER:$USER ${{env.WEBROOT}} -R
 
-  production-ai-qr-labels-framework:
-    name: Update AI QR Labels Production Portal Framework
-    runs-on: ubuntu-latest
+  staging_ai-qr-framework:
+    name: Update AI QR Labels Development Portal Framework
+    runs-on: self-hosted
     if: github.event_name == 'workflow_dispatch'
     env:
       WEBROOT: ${{ secrets.QR_LABELS_PRODUCTION_WEBROOT }}
+      USER: ${{ secrets.WEBROOT_USER }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -52,7 +57,7 @@ jobs:
 
       - name: Sync Framework Directory
         run: |
-          if [ -z "$WEBROOT" ]; then echo "Need to set webroot as GitHub Actions secret" && exit 1; fi
-          sudo rsync -rv ./framework/ $WEBROOT/framework --delete --exclude-from=./_exclusions.txt --exclude='composer.*'
-          sudo rsync -rv ./ $WEBROOT --exclude 'framework' --exclude-from=./_exclusions.txt
-          sudo chown 1004:users $WEBROOT -R
+          if [ -z "${{env.WEBROOT}}" ]; then echo "Need to set webroot as GitHub Actions secret" && exit 1; fi
+          sudo rsync -rv ./framework/ ${{env.WEBROOT}}/framework --delete --exclude-from=./_exclusions.txt --exclude='composer.*'
+          sudo rsync -rv ./ ${{env.WEBROOT}} --exclude 'framework' --exclude-from=./_exclusions.txt
+          sudo chown $USER:$USER ${{env.WEBROOT}} -R
