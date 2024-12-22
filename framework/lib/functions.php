@@ -156,34 +156,31 @@ function getUserIP()
  * @return bool Returns true if the insert was successful, false otherwise.
  */
 function auditLog($db_conn, $otherColumns = null)
-// function auditLog($db_conn, $currentUser, $action, $otherColumns = array('formId' => 1, 'eventId' => 2))
 {
     $ip = getUserIP();
     $currentUser = $_SESSION['username'];
 
-    // If $otherColumns is null or empty, set it to an empty array
-    if ($otherColumns) {
-        $columns = "`" . implode('`,`', array_keys($otherColumns)) . "`";
-        $values = "'" . implode('\', \'', array_values($otherColumns)) . "'";
-    } else {
-        $columns = $values = "";
+    // Initialize column and value arrays
+    $columns = ["`timestamp`", "`currentUser`", "`ipAddress`"];
+    $values = ["NOW()", "'$currentUser'", "'$ip'"];
+
+    // Add additional columns if provided
+    if (!empty($otherColumns)) {
+        foreach ($otherColumns as $key => $value) {
+            $columns[] = "`$key`";
+            $values[] = "'$value'";
+        }
     }
 
+    // Build the query dynamically
     $insertAuditLogQuery = "
-        INSERT INTO `audit` (
-            `id`,
-            `timestamp`,
-            `currentUser`,
-            `ipAddress`,
-            $columns
-        ) VALUES (
-            NULL,
-            NULL,
-            '$currentUser',
-            '$ip',
-            $values
-        );
+        INSERT INTO `audit` (" . implode(", ", $columns) . ")
+        VALUES (" . implode(", ", $values) . ");
     ";
+
+    // Log the query for debugging
+    error_log($insertAuditLogQuery);
+
     return $db_conn->query($insertAuditLogQuery);
 }
 
